@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: "Trebuchet MS";
+    --font-manrope: Georgia;
+    --color-primary-900: #0A1628;
+    --color-primary-800: #1E3A5F;
+    --color-primary-700: #334E68;
+    --color-gold-500: #C9A84C;
+    --color-gold-400: #DDAF33;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-error: #EF4444;
+    --color-info: #3B82F6;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-primary-900 font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-gold-500 to-gold-400 bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-primary-900 to-primary-700;
+  }
+
+  .bg-gradient-gold {
+    @apply bg-gradient-to-r from-gold-500 to-gold-400;
+  }
+
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold
+    bg-gold-500 text-white hover:bg-gold-600 transition-all duration-300
+    shadow-lg shadow-gold-500/25 hover:shadow-xl hover:shadow-gold-500/30
+    disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold
+    border-2 border-primary-800 text-primary-800 hover:bg-primary-800 hover:text-white
+    transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold
+    border-2 border-white text-white hover:bg-white hover:text-primary-900
+    transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-gold-500
+    focus:ring-2 focus:ring-gold-500/20 outline-none transition-all duration-200
+    bg-white text-primary-900 placeholder:text-gray-400;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-primary-900;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-gray-600 mt-4 max-w-2xl;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100
+    hover:shadow-xl hover:shadow-gray-200/80 transition-all duration-300;
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
