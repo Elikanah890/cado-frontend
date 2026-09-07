@@ -2,86 +2,76 @@
 
 import Link from 'next/link';
 import {
-  ArrowRight, Palette, Globe, Megaphone, Cpu, Briefcase,
-  Camera, Building2, Rocket, BookOpen, Hotel, HardHat,
+  ArrowRight, Rocket, BookOpen, Hotel, HardHat,
   HeartPulse, Handshake, ShoppingBag, TrendingUp, Zap,
   Sparkles, Phone
 } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
+import PortfolioCarousel from '@/components/PortfolioCarousel';
 import { publicApi } from '@/lib/api';
+import { useLanguage } from '@/lib/LanguageContext';
+import type { Service } from '@/types/service';
+import type { Portfolio } from '@/types';
+import { ServiceCard } from '@/components/services/ServiceCard';
 import { useEffect, useState } from 'react';
 
-const serviceIcons: Record<string, typeof Palette> = { palette: Palette, globe: Globe, megaphone: Megaphone, cpu: Cpu, briefcase: Briefcase, camera: Camera, building: Building2 };
-
-const fallbackServices = [
-  { title: 'Brand Identity', desc: 'Build a memorable brand that stands out from the competition.', icon: Palette, slug: 'brand-identity' },
-  { title: 'Website Development', desc: 'Professional websites optimized for performance and conversions.', icon: Globe, slug: 'website-development' },
-  { title: 'Digital Marketing', desc: 'Data-driven marketing that grows your business revenue.', icon: Megaphone, slug: 'digital-marketing' },
-  { title: 'AI & Automation', desc: 'Smart systems and chatbots that save time and money.', icon: Cpu, slug: 'ai-automation' },
-  { title: 'Business Solutions', desc: 'Custom ERP, CRM and business management systems.', icon: Briefcase, slug: 'business-solutions' },
-  { title: 'Creative Studio', desc: 'Photography, videography and creative content production.', icon: Camera, slug: 'creative-studio' },
-  { title: 'Company Registration', desc: 'Easy business registration and compliance in Tanzania.', icon: Building2, slug: 'company-registration' },
-];
-
 const industries = [
-  { name: 'Startups', icon: Rocket },
-  { name: 'Education', icon: BookOpen },
-  { name: 'Tourism', icon: Hotel },
-  { name: 'Construction', icon: HardHat },
-  { name: 'Healthcare', icon: HeartPulse },
-  { name: 'NGOs', icon: Handshake },
-  { name: 'Retail & Ecommerce', icon: ShoppingBag },
+  { key: 'home.industries.startups', icon: Rocket },
+  { key: 'home.industries.education', icon: BookOpen },
+  { key: 'home.industries.tourism', icon: Hotel },
+  { key: 'home.industries.construction', icon: HardHat },
+  { key: 'home.industries.healthcare', icon: HeartPulse },
+  { key: 'home.industries.ngos', icon: Handshake },
+  { key: 'home.industries.retail', icon: ShoppingBag },
 ];
 
-const process = [
-  { step: '01', title: 'Discovery', desc: 'We learn about your business, goals, and target audience.' },
-  { step: '02', title: 'Strategy', desc: 'We create a tailored plan to achieve your objectives.' },
-  { step: '03', title: 'Design & Dev', desc: 'Our team designs and builds your solution.' },
-  { step: '04', title: 'Launch', desc: 'We deploy, test, and launch your project.' },
-  { step: '05', title: 'Growth', desc: 'Ongoing support and optimization for success.' },
+const processSteps = [
+  { step: '01', titleKey: 'home.process.steps.discovery.title', descKey: 'home.process.steps.discovery.desc' },
+  { step: '02', titleKey: 'home.process.steps.strategy.title', descKey: 'home.process.steps.strategy.desc' },
+  { step: '03', titleKey: 'home.process.steps.design.title', descKey: 'home.process.steps.design.desc' },
+  { step: '04', titleKey: 'home.process.steps.launch.title', descKey: 'home.process.steps.launch.desc' },
+  { step: '05', titleKey: 'home.process.steps.growth.title', descKey: 'home.process.steps.growth.desc' },
 ];
 
 const whyUs = [
-  { title: 'Business Focused', desc: 'Every solution is designed to drive real business results and ROI.', icon: TrendingUp },
-  { title: 'Modern Technology', desc: 'We use cutting-edge tech stack for performance and scalability.', icon: Zap },
-  { title: 'Creative Excellence', desc: 'Award-winning designs that captivate and convert.', icon: Sparkles },
-  { title: 'Long-Term Support', desc: 'We stay with you beyond launch with maintenance and growth.', icon: Handshake },
+  { titleKey: 'home.why.business.title', descKey: 'home.why.business.desc', icon: TrendingUp },
+  { titleKey: 'home.why.technology.title', descKey: 'home.why.technology.desc', icon: Zap },
+  { titleKey: 'home.why.creative.title', descKey: 'home.why.creative.desc', icon: Sparkles },
+  { titleKey: 'home.why.support.title', descKey: 'home.why.support.desc', icon: Handshake },
 ];
 
 export default function HomePage() {
-  const [services, setServices] = useState(fallbackServices);
+  const { t } = useLanguage();
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [clientCount, setClientCount] = useState<number | null>(null);
+  const [projectCount, setProjectCount] = useState<number | null>(null);
+  const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
 
   useEffect(() => {
-    const fetchServices = () => {
-      publicApi.getServices().then((response) => {
-        // Only replace fallback if we got data; if API returns array (even empty) use it
-        if (Array.isArray(response.data)) {
-          if (response.data.length === 0) {
-            // Keep fallback for UX when DB is empty, but log
-            console.log('API returned 0 services, keeping fallback until data exists');
-            return;
-          }
-          setServices(response.data.map((service) => ({
-            title: service.name,
-            desc: service.description || service.overview || '',
-            icon: serviceIcons[service.icon || ''] || Globe,
-            slug: service.slug,
-          })));
-        }
-      }).catch((err: any) => {
-        console.error('Failed to fetch services:', err?.message, '| baseURL:', (err?.config?.baseURL || 'unknown'), '| url:', err?.config?.url, '| code:', err?.code, '| response:', err?.response?.status);
-        console.error('Full error:', err);
+    let mounted = true;
+    publicApi.getHomepage()
+      .then((res) => {
+        if (!mounted) return;
+        const data = res.data;
+        setServices(Array.isArray(data?.services) ? data.services : []);
+        setPortfolio(Array.isArray(data?.portfolio) ? data.portfolio : []);
+        setProjectCount(Array.isArray(data?.portfolio) ? data.portfolio.length : 0);
+        setClientCount(typeof data?.testimonials === 'number' ? data.testimonials : 0);
+        setError(null);
+      })
+      .catch((err) => {
+        if (!mounted) return;
+        console.error('Failed to fetch services:', err);
+        setError(t('home.services.error'));
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
       });
-    };
-    fetchServices();
-    const onFocus = () => fetchServices();
-    const onVisibility = () => { if (!document.hidden) fetchServices(); };
-    window.addEventListener('focus', onFocus);
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => {
-      window.removeEventListener('focus', onFocus);
-      document.removeEventListener('visibilitychange', onVisibility);
-    };
+
+    return () => { mounted = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -97,31 +87,30 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm mb-8">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              Tanzania&apos;s Leading Digital Agency
+              {t('home.hero.badge')}
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1]">
-              We Build Brands,
+              {t('home.hero.l1')}
               <br />
-              <span className="text-gradient">Digital Platforms</span>
+              <span className="text-gradient">{t('home.hero.l2')}</span>
               <br />
-              & Smart Systems That
+              {t('home.hero.l3')}
               <br />
-              Grow Businesses<span className="text-gold-500">.</span>
+              {t('home.hero.l4')}<span className="text-gold-500">.</span>
             </h1>
 
             <p className="text-lg md:text-xl text-white/60 mt-8 max-w-2xl mx-auto leading-relaxed">
-              CadorDigital helps startups, companies and organizations build professional brands,
-              websites, marketing systems and automation solutions that create real business growth.
+              {t('home.hero.sub')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
               <Link href="/contact" className="btn-primary text-base px-8 py-4 gap-2 group">
-                Start Your Project
+                {t('home.hero.startProject')}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="/portfolio" className="btn-outline-light text-base px-8 py-4">
-                View Portfolio
+                {t('home.hero.viewPortfolio')}
               </Link>
             </div>
 
@@ -134,9 +123,9 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-white/50 text-sm">
-                <span className="text-gold-400 font-bold">50+</span> Happy Clients
+                <span className="text-gold-400 font-bold">{clientCount ?? '10'}+</span> {t('home.hero.happyClients')}
                 {' '}&middot;{' '}
-                <span className="text-gold-400 font-bold">100+</span> Projects Delivered
+                <span className="text-gold-400 font-bold">{projectCount ?? '10'}+</span> {t('home.hero.projectsDelivered')}
               </p>
             </div>
           </div>
@@ -147,31 +136,40 @@ export default function HomePage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">Our Services</span>
-            <h2 className="section-title mt-2">Everything Your Business Needs</h2>
-            <p className="section-subtitle mx-auto">Comprehensive digital solutions for modern businesses in Tanzania and beyond.</p>
+            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.services.label')}</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-900 mt-2">{t('home.services.title')}</h2>
+            <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">{t('home.services.subtitle')}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="card p-8 group animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mb-5 group-hover:bg-gold-500/10 transition-colors">
-                  <service.icon className="w-7 h-7 text-primary-700 group-hover:text-gold-500 transition-colors" />
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="card p-8 animate-pulse">
+                  <div className="w-14 h-14 rounded-2xl bg-primary-50 mb-5" />
+                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-3" />
+                  <div className="h-4 bg-gray-200 rounded w-full mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-5/6" />
                 </div>
-                <h3 className="text-xl font-bold text-primary-900 mb-3 group-hover:text-gold-500 transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">{service.desc}</p>
-                <span className="text-gold-500 text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </span>
-              </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-500 mb-4">{error}</p>
+              <button onClick={() => window.location.reload()} className="btn-primary">
+                {t('common.retry')}
+              </button>
+            </div>
+          ) : services.length === 0 ? (
+            <div className="card p-12 text-center">
+              <p className="text-gray-400 text-lg">{t('home.services.emptyTitle')}</p>
+              <p className="text-gray-400 text-sm mt-2">{t('home.services.emptySub')}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => (
+                <ServiceCard key={service.id} service={service} style={{ animationDelay: `${index * 0.1}s` }} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -179,15 +177,15 @@ export default function HomePage() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">Industries We Serve</span>
-            <h2 className="section-title mt-2">Solutions Across Every Industry</h2>
-            <p className="section-subtitle mx-auto">We deliver tailored digital solutions for businesses across all sectors.</p>
+            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.industries.label')}</span>
+            <h2 className="section-title mt-2">{t('home.industries.title')}</h2>
+            <p className="section-subtitle mx-auto">{t('home.industries.subtitle')}</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
             {industries.map((ind) => (
-              <div key={ind.name} className="card p-6 text-center hover:border-gold-500/50 cursor-default transition-all">
+              <div key={ind.key} className="card p-6 text-center hover:border-gold-500/50 cursor-default transition-all">
                 <ind.icon className="w-8 h-8 text-primary-600 mx-auto mb-3" />
-                <p className="text-sm font-medium text-primary-800">{ind.name}</p>
+                <p className="text-sm font-medium text-primary-800">{t(ind.key)}</p>
               </div>
             ))}
           </div>
@@ -198,19 +196,19 @@ export default function HomePage() {
       <section className="section-padding bg-primary-900 text-white">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">Our Process</span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">How We Work</h2>
-            <p className="text-lg text-white/60 mt-4 max-w-2xl mx-auto">A proven approach to deliver exceptional results.</p>
+            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.process.label')}</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">{t('home.process.title')}</h2>
+            <p className="text-lg text-white/60 mt-4 max-w-2xl mx-auto">{t('home.process.subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {process.map((p, i) => (
+            {processSteps.map((p, i) => (
               <div key={i} className="relative">
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center h-full">
                   <span className="text-4xl font-bold text-gold-500/30">{p.step}</span>
-                  <h3 className="text-xl font-bold mt-3 mb-2">{p.title}</h3>
-                  <p className="text-white/60 text-sm">{p.desc}</p>
+                  <h3 className="text-xl font-bold mt-3 mb-2">{t(p.titleKey)}</h3>
+                  <p className="text-white/60 text-sm">{t(p.descKey)}</p>
                 </div>
-                {i < process.length - 1 && (
+                {i < processSteps.length - 1 && (
                   <div className="hidden lg:flex absolute top-1/2 -right-3 text-gold-500/50 justify-center">
                     <ArrowRight className="w-5 h-5" />
                   </div>
@@ -225,9 +223,9 @@ export default function HomePage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
-            <h2 className="section-title mt-2">Why CadorDigital?</h2>
-            <p className="section-subtitle mx-auto">What makes us the preferred digital partner for businesses.</p>
+            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.why.label')}</span>
+            <h2 className="section-title mt-2">{t('home.why.title')}</h2>
+            <p className="section-subtitle mx-auto">{t('home.why.subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {whyUs.map((item, i) => (
@@ -235,8 +233,8 @@ export default function HomePage() {
                 <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mx-auto mb-5">
                   <item.icon className="w-7 h-7 text-primary-700" />
                 </div>
-                <h3 className="text-lg font-bold text-primary-900 mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
+                <h3 className="text-lg font-bold text-primary-900 mb-2">{t(item.titleKey)}</h3>
+                <p className="text-gray-600 text-sm">{t(item.descKey)}</p>
               </div>
             ))}
           </div>
@@ -249,23 +247,27 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl" />
         <div className="container-custom relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Ready to <span className="text-gold-500">Grow</span> Your Business?
+            {t('home.cta.pre')}<span className="text-gold-500">{t('home.cta.highlight')}</span>{t('home.cta.post')}
           </h2>
           <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto">
-            Let&apos;s build something amazing together. Get in touch today for a free consultation.
+            {t('home.cta.sub')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/contact" className="btn-primary text-lg px-10 py-4 gap-2 group">
-              Start Your Project
+              {t('home.hero.startProject')}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a href="https://wa.me/255716168903" target="_blank" rel="noopener noreferrer" className="btn-outline-light text-lg px-10 py-4 flex items-center gap-2">
               <Phone className="w-5 h-5" />
-              WhatsApp Us
+              {t('nav.whatsappUs')}
             </a>
           </div>
         </div>
       </section>
+
+      {/* Auto-Scrolling Portfolio Section */}
+      <PortfolioCarousel title={t('home.recentWork')} projects={portfolio} />
+
     </PublicLayout>
   );
 }

@@ -3,16 +3,24 @@
 import { useState, useEffect } from 'react';
 import { adminApi } from '@/lib/api';
 import { toast } from 'sonner';
+import { Trash2, Trash } from 'lucide-react';
 
 export default function AdminActivitiesPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [clearing, setClearing] = useState(false);
 
-  useEffect(() => {
-    adminApi.getActivities().then((res) => {
+  const load = async () => {
+    try {
+      const res = await adminApi.getActivities();
       setItems(res.data?.activities || []);
-    }).catch(() => toast.error('Failed to load')).finally(() => setLoading(false));
-  }, []);
+    } catch {
+      toast.error('Failed to load');
+    } finally { setLoading(false); }
+  };
+
+  useEffect(() => { load(); }, []);
 
   const getActionColor = (action: string) => {
     if (action.includes('Create')) return 'bg-green-100 text-green-700';
@@ -23,11 +31,38 @@ export default function AdminActivitiesPage() {
     return 'bg-gray-100 text-gray-700';
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this activity log?')) return;
+    setDeletingId(id);
+    try {
+      await adminApi.deleteActivity(id);
+      toast.success('Deleted');
+      setItems((prev) => prev.filter((i) => i.id !== id));
+    } catch { toast.error('Failed to delete'); } finally { setDeletingId(null); }
+  };
+
+  const handleClearAll = async () => {
+    if (!confirm('Clear ALL activity logs? This cannot be undone.')) return;
+    setClearing(true);
+    try {
+      await adminApi.clearActivities();
+      toast.success('All activities cleared');
+      setItems([]);
+    } catch { toast.error('Failed to clear'); } finally { setClearing(false); }
+  };
+
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-primary-900">Activity Logs</h1>
-        <p className="text-gray-500 mt-1">View all admin activities and actions.</p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-primary-900">Activity Logs</h1>
+          <p className="text-gray-500 mt-1">View all admin activities and actions.</p>
+        </div>
+        {items.length > 0 && (
+          <button onClick={handleClearAll} disabled={clearing} className="btn-secondary gap-2 inline-flex items-center border-red-200 text-red-600 hover:bg-red-50">
+            <Trash className="w-4 h-4" /> {clearing ? 'Clearing...' : 'Clear All'}
+          </button>
+        )}
       </div>
 
       {loading ? <p className="text-gray-500">Loading...</p> : items.length === 0 ? (
@@ -42,6 +77,7 @@ export default function AdminActivitiesPage() {
                 <th className="text-left py-3 px-4 text-gray-500 font-medium">Admin</th>
                 <th className="text-left py-3 px-4 text-gray-500 font-medium">IP Address</th>
                 <th className="text-left py-3 px-4 text-gray-500 font-medium">Date</th>
+                <th className="text-right py-3 px-4 text-gray-500 font-medium">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -51,9 +87,19 @@ export default function AdminActivitiesPage() {
                     <span className={`text-xs px-2 py-0.5 rounded-full ${getActionColor(item.action)}`}>{item.action}</span>
                   </td>
                   <td className="py-3 px-4 text-gray-600 capitalize">{item.module}</td>
-                  <td className="py-3 px-4 text-gray-600">{item.admin?.firstName} {item.admin?.lastName}</td>
+                  <td className="py-3 px-4 text-gray-600">{item.admin?.email || `${item.admin?.firstName || ''} ${item.admin?.lastName || ''}`.trim() || '-'}</td>
                   <td className="py-3 px-4 text-xs text-gray-500 font-mono">{item.ipAddress || '-'}</td>
                   <td className="py-3 px-4 text-xs text-gray-500">{new Date(item.createdAt).toLocaleString()}</td>
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      disabled={deletingId === item.id}
+                      className="p-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-50"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

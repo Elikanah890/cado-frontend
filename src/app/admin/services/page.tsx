@@ -1,12 +1,12 @@
 'use client';
 
-'use client';
-
 import { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { adminApi } from '@/lib/api';
+import { invalidateServicesCache } from '@/lib/api/services';
 import { toast } from 'sonner';
-import { formatCurrency, slugify } from '@/lib/utils';
+import { slugify } from '@/lib/utils';
+import type { Service } from '@/types/service';
 
 interface ServiceForm {
   slug: string;
@@ -42,8 +42,17 @@ const iconOptions = [
   { value: 'bar-chart', label: 'Chart' },
 ];
 
+function extractAdminServices(res: any): Service[] {
+  if (!res) return [];
+  if (Array.isArray(res)) return res;
+  if (Array.isArray(res.data)) return res.data;
+  if (Array.isArray(res.data?.services)) return res.data.services;
+  if (Array.isArray(res.services)) return res.services;
+  return [];
+}
+
 export default function AdminServicesPage() {
-  const [services, setServices] = useState<any[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -52,10 +61,14 @@ export default function AdminServicesPage() {
 
   const loadServices = async () => {
     try {
+      setLoading(true);
       const res = await adminApi.getServices();
-      setServices(res.data);
-    } catch { toast.error('Failed to load services'); }
-    finally { setLoading(false); }
+      setServices(extractAdminServices(res));
+    } catch {
+      toast.error('Failed to load services');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { loadServices(); }, []);
@@ -66,7 +79,7 @@ export default function AdminServicesPage() {
     setShowForm(true);
   };
 
-  const openEdit = (s: any) => {
+  const openEdit = (s: Service) => {
     setForm({
       slug: s.slug || '',
       name: s.name || '',
@@ -94,9 +107,13 @@ export default function AdminServicesPage() {
         toast.success('Service created');
       }
       setShowForm(false);
-      loadServices();
-    } catch { toast.error('Failed to save'); }
-    finally { setSaving(false); }
+      invalidateServicesCache();
+      await loadServices();
+    } catch {
+      toast.error('Failed to save');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -104,8 +121,11 @@ export default function AdminServicesPage() {
     try {
       await adminApi.deleteService(id);
       toast.success('Service deleted');
-      loadServices();
-    } catch { toast.error('Failed to delete'); }
+      invalidateServicesCache();
+      await loadServices();
+    } catch {
+      toast.error('Failed to delete');
+    }
   };
 
   return (
@@ -138,10 +158,6 @@ export default function AdminServicesPage() {
                   <option value="">Select icon</option>
                   {iconOptions.map((i) => <option key={i.value} value={i.value}>{i.label}</option>)}
                 </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Starting Price (TZS)</label>
-                <input type="number" value={form.startingPrice} onChange={(e) => setForm({ ...form, startingPrice: Number(e.target.value) })} className="input-field" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Sort Order</label>
@@ -177,7 +193,7 @@ export default function AdminServicesPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s: any) => (
+          {services.map((s) => (
             <div key={s.id} className="card p-6">
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -189,7 +205,6 @@ export default function AdminServicesPage() {
                 </span>
               </div>
               <p className="text-sm text-gray-600 mb-4 line-clamp-2">{s.description || 'No description'}</p>
-              {s.startingPrice > 0 && <p className="text-sm font-semibold text-gold-500 mb-4">From {formatCurrency(s.startingPrice)}</p>}
               <div className="flex gap-2">
                 <button className="flex-1 flex items-center justify-center gap-1 text-sm py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
                   onClick={() => openEdit(s)}>

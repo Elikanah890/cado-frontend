@@ -10,7 +10,8 @@ dist
 
 # Environment variables
 .env
-.env.local
+.env.*
+!.env.example
 .env.development.local
 .env.test.local
 .env.production.local
@@ -32,3 +33,4 @@ yarn-error.log*
 
 # Generated types
 .next/types
+.vercel

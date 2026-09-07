@@ -1,0 +1,374 @@
+{
+  "common": {
+    "retry": "Retry",
+    "reload": "Reload",
+    "loading": "Loading...",
+    "all": "All",
+    "whatsapp": "WhatsApp",
+    "viewDetails": "View Details",
+    "home": "Home"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "pricing": "Pricing",
+    "portfolio": "Portfolio",
+    "academy": "Academy",
+    "blog": "Blog",
+    "contact": "Contact",
+    "whatsappUs": "WhatsApp Us"
+  },
+  "footer": {
+    "tagline": "Build. Market. Automate. Grow. We help businesses build professional brands, websites, marketing systems and automation solutions.",
+    "servicesTitle": "Services",
+    "quickLinks": "Quick Links",
+    "getInTouch": "Get in Touch",
+    "location": "Mbeya, Tanzania",
+    "newsletter": "Newsletter",
+    "emailPlaceholder": "Your email",
+    "subscribe": "Subscribe",
+    "subscribeSuccess": "Subscribed successfully!",
+    "subscribeError": "Failed to subscribe. Try again.",
+    "noServices": "No services yet",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  },
+  "carousel": {
+    "loading": "Loading portfolio...",
+    "explore": "Explore some of our recent projects and see how we help businesses grow.",
+    "viewAll": "View All Projects"
+  },
+  "share": {
+    "share": "Share",
+    "whatsappTitle": "Share on WhatsApp",
+    "whatsappLabel": "WhatsApp",
+    "copyTitle": "Copy link",
+    "copyLabel": "Copy Link",
+    "copiedLabel": "Copied!",
+    "copiedTitle": "Copied",
+    "copySuccess": "Link copied to clipboard",
+    "copyError": "Could not copy link",
+    "facebookTitle": "Share on Facebook",
+    "twitterTitle": "Share on Twitter",
+    "linkedinTitle": "Share on LinkedIn"
+  },
+  "home": {
+    "hero": {
+      "badge": "Tanzania's Leading Digital Agency",
+      "l1": "We Build Brands,",
+      "l2": "Digital Platforms",
+      "l3": "& Smart Systems That",
+      "l4": "Grow Businesses",
+      "sub": "CadorDigital helps startups, companies and organizations build professional brands, websites, marketing systems and automation solutions that create real business growth.",
+      "startProject": "Start Your Project",
+      "viewPortfolio": "View Portfolio",
+      "happyClients": "Happy Clients",
+      "projectsDelivered": "Projects Delivered"
+    },
+    "services": {
+      "label": "Our Services",
+      "title": "Everything Your Business Needs",
+      "subtitle": "Comprehensive digital solutions for modern businesses in Tanzania and beyond.",
+      "emptyTitle": "No services available at the moment.",
+      "emptySub": "Please check back later or contact us for custom solutions.",
+      "error": "Failed to load services. Please try again later."
+    },
+    "industries": {
+      "label": "Industries We Serve",
+      "title": "Solutions Across Every Industry",
+      "subtitle": "We deliver tailored digital solutions for businesses across all sectors.",
+      "startups": "Startups",
+      "education": "Education",
+      "tourism": "Tourism",
+      "construction": "Construction",
+      "healthcare": "Healthcare",
+      "ngos": "NGOs",
+      "retail": "Retail & Ecommerce"
+    },
+    "process": {
+      "label": "Our Process",
+      "title": "How We Work",
+      "subtitle": "A proven approach to deliver exceptional results.",
+      "steps": {
+        "discovery": {
+          "title": "Discovery",
+          "desc": "We learn about your business, goals, and target audience."
+        },
+        "strategy": {
+          "title": "Strategy",
+          "desc": "We create a tailored plan to achieve your objectives."
+        },
+        "design": {
+          "title": "Design & Dev",
+          "desc": "Our team designs and builds your solution."
+        },
+        "launch": {
+          "title": "Launch",
+          "desc": "We deploy, test, and launch your project."
+        },
+        "growth": {
+          "title": "Growth",
+          "desc": "Ongoing support and optimization for success."
+        }
+      }
+    },
+    "why": {
+      "label": "Why Choose Us",
+      "title": "Why CadorDigital?",
+      "subtitle": "What makes us the preferred digital partner for businesses.",
+      "business": {
+        "title": "Business Focused",
+        "desc": "Every solution is designed to drive real business results and ROI."
+      },
+      "technology": {
+        "title": "Modern Technology",
+        "desc": "We use cutting-edge tech stack for performance and scalability."
+      },
+      "creative": {
+        "title": "Creative Excellence",
+        "desc": "Award-winning designs that captivate and convert."
+      },
+      "support": {
+        "title": "Long-Term Support",
+        "desc": "We stay with you beyond launch with maintenance and growth."
+      }
+    },
+    "cta": {
+      "pre": "Ready to ",
+      "highlight": "Grow",
+      "post": " Your Business?",
+      "sub": "Let's build something amazing together. Get in touch today for a free consultation."
+    },
+    "recentWork": "Our Recent Work"
+  },
+  "servicesList": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive digital solutions for modern businesses.",
+    "empty": "No services available at the moment.",
+    "customTitle": "Need a Custom Solution?",
+    "customSub": "We create tailored solutions for unique business needs. Let's discuss your project.",
+    "cta": "Get a Free Consultation"
+  },
+  "serviceDetail": {
+    "loading": "Loading service...",
+    "back": "Back to Services",
+    "notFound": "Service not found",
+    "notFoundSub": "The service you are looking for does not exist.",
+    "benefits": "Benefits",
+    "noBenefits": "No benefits listed.",
+    "process": "Our Process",
+    "noProcess": "No process steps listed.",
+    "interested": "Interested in {name}?",
+    "interestedSub": "Let's discuss how we can help you with our {name} services.",
+    "whatsappCTA": "Contact via WhatsApp",
+    "viewPricing": "View Pricing"
+  },
+  "portfolioList": {
+    "title": "Our Work",
+    "subtitle": "Explore our projects and see how we help businesses grow.",
+    "error": "Failed to load projects",
+    "empty": "No projects found.",
+    "viewProject": "View Project",
+    "featured": "Featured"
+  },
+  "portfolioDetail": {
+    "back": "Back to Portfolio",
+    "notFound": "Project not found",
+    "noImage": "No Featured Image",
+    "featured": "Featured",
+    "visitSite": "Visit Live Site",
+    "challenge": "The Challenge",
+    "noChallenge": "No challenge described.",
+    "solution": "Our Solution",
+    "noSolution": "No solution described.",
+    "results": "Results",
+    "noResults": "No results described.",
+    "projectVideo": "Project Video",
+    "techStack": "Tech Stack",
+    "wantSimilar": "Want Similar Results?",
+    "wantSub": "Let's build something amazing for your business. Get in touch today.",
+    "startProject": "Start Your Project"
+  },
+  "pricing": {
+    "title": "Transparent Pricing",
+    "loadingSub": "Loading pricing...",
+    "heroSub": "Choose the right package for your business. All prices in TZS.",
+    "bundlesTitle": "Startup Bundles",
+    "bundlesSub": "Complete packages for businesses at every stage.",
+    "noBundles": "No startup bundles available.",
+    "mostPopular": "Most Popular",
+    "getStarted": "Get Started",
+    "hostingTitle": "Website Hosting Plans",
+    "hostingSub": "Reliable and fast hosting for your website.",
+    "noHosting": "No hosting plans available.",
+    "choosePlan": "Choose Plan",
+    "customTitle": "Custom Services",
+    "customSub": "Individual services tailored to your goals.",
+    "noCustom": "No custom services available.",
+    "from": "From",
+    "finalTitle": "Need Something Custom?",
+    "finalSub": "We create tailored packages for your specific needs.",
+    "contactUs": "Contact Us"
+  },
+  "academy": {
+    "title": "Learn & Grow",
+    "subtitle": "Online courses to build your skills and grow your business.",
+    "loading": "Loading courses...",
+    "error": "Failed to load courses. Please reload the page.",
+    "empty": "No active courses yet. Check back soon.",
+    "by": "by",
+    "enrolled": "enrolled",
+    "free": "Free",
+    "enroll": "Enroll"
+  },
+  "academyDetail": {
+    "back": "Back to Academy",
+    "loading": "Loading course...",
+    "loadError": "Failed to load course",
+    "notFound": "Course not found",
+    "notFoundSub": "The course you are looking for does not exist or is not active.",
+    "hours": "h",
+    "lessons": "lessons",
+    "freePreviews": "free previews",
+    "enrolled": "enrolled",
+    "intro": "Course Introduction",
+    "about": "About This Course",
+    "noDescription": "No description.",
+    "curriculum": "Curriculum",
+    "noLessons": "No lessons yet.",
+    "courseContent": "Course Content",
+    "freePreview": "Free Preview",
+    "locked": "Locked",
+    "min": "min",
+    "startLearning": "Start Learning",
+    "oneTime": "One-time payment via WhatsApp",
+    "enrollNow": "Enroll Now",
+    "freePreviewLessons": "free preview lessons",
+    "hoursOfContent": "hours of content",
+    "lifetime": "Lifetime access",
+    "certificate": "Certificate of completion",
+    "clickEnroll": "Click Enroll to chat with us on WhatsApp and get full access to all lessons."
+  },
+  "coursePlayer": {
+    "backCourse": "Back to Course",
+    "loading": "Loading course...",
+    "notFound": "Course not found",
+    "backAcademy": "Back to Academy",
+    "noLessons": "No lessons yet for this course.",
+    "complete": "% Complete",
+    "lockedTitle": "This lesson is locked",
+    "lockedSub": "Enroll in this course to get full access to all lessons including this one.",
+    "enrollViaWhatsApp": "Enroll via WhatsApp",
+    "viewCourseDetails": "View course details",
+    "noVideo": "No video",
+    "lessonOf": "Lesson {a} of {b}",
+    "markComplete": "Mark as Complete",
+    "previous": "Previous",
+    "next": "Next",
+    "courseContent": "Course Content",
+    "free": "Free",
+    "locked": "Locked",
+    "videoLesson": "Video lesson",
+    "min": "min"
+  },
+  "blog": {
+    "title": "Insights & Resources",
+    "subtitle": "Expert tips, guides, and insights for your business growth.",
+    "searchPlaceholder": "Search articles...",
+    "search": "Search",
+    "loading": "Loading articles...",
+    "empty": "No articles found.",
+    "viewAll": "View all posts",
+    "minRead": "min read",
+    "comment": "Comment",
+    "comments": "Comments",
+    "subscribeTitle": "Subscribe to Our Newsletter",
+    "subscribeSub": "Get the latest tips and insights delivered to your inbox."
+  },
+  "blogDetail": {
+    "loading": "Loading post...",
+    "back": "Back to Blog",
+    "notFound": "Post not found",
+    "article": "Article",
+    "minRead": "min read",
+    "authorBio": "Digital strategy expert at CadorDigital. Passionate about helping businesses grow through technology and innovation.",
+    "gallery": "Gallery",
+    "comments": "Comments",
+    "namePlaceholder": "Your name *",
+    "emailOptional": "Email (optional)",
+    "commentPlaceholder": "Write your comment...",
+    "submitting": "Submitting...",
+    "postComment": "Post Comment",
+    "moderated": "Comments are moderated and will appear after approval.",
+    "noComments": "No comments yet. Be the first to comment!",
+    "related": "Related Articles",
+    "requiredError": "Name and comment are required",
+    "submittedToast": "Comment submitted. It will appear after approval.",
+    "submitError": "Failed to submit comment"
+  },
+  "contact": {
+    "title": "Let's Work Together",
+    "subtitle": "Have a project in mind? Get in touch with us today.",
+    "callTitle": "Call Us",
+    "callHours": "Mon-Fri, 8am-6pm",
+    "emailTitle": "Email Us",
+    "emailReply": "We reply within 24 hours",
+    "visitTitle": "Visit Us",
+    "visitNote": "By appointment only",
+    "formTitle": "Send Us a Message",
+    "firstName": "First Name *",
+    "lastName": "Last Name *",
+    "email": "Email *",
+    "phone": "Phone",
+    "company": "Company",
+    "serviceNeeded": "Service Needed",
+    "selectService": "Select a service",
+    "budgetRange": "Budget Range",
+    "selectBudget": "Select budget",
+    "message": "Message *",
+    "sending": "Sending...",
+    "sendMessage": "Send Message",
+    "emailDirect": "Email Directly",
+    "toastSuccess": "Message sent! We will get back to you soon.",
+    "toastError": "Failed to send. Please try again.",
+    "opt": {
+      "brand": "Brand Identity",
+      "website": "Website Development",
+      "marketing": "Digital Marketing",
+      "ai": "AI & Automation",
+      "business": "Business Solutions",
+      "studio": "Creative Studio",
+      "registration": "Company Registration",
+      "other": "Other"
+    }
+  },
+  "terms": {
+    "title": "Terms & Conditions",
+    "lastUpdated": "Last updated: June 2024",
+    "s1Title": "1. Acceptance of Terms",
+    "s1Body": "By accessing and using the CadorDigital website and services, you agree to be bound by these Terms and Conditions.",
+    "s2Title": "2. Services",
+    "s2Body": "CadorDigital provides digital agency services including branding, web development, digital marketing, AI automation, creative services, and business solutions. All services are subject to separate agreements or proposals.",
+    "s3Title": "3. Service Discussions",
+    "s3Body": "Project scope, pricing, and delivery terms are discussed directly with CadorDigital and confirmed in an individual service agreement.",
+    "s4Title": "4. Intellectual Property",
+    "s4Body": "Upon completion of the agreed engagement, clients receive ownership of final deliverables. CadorDigital retains rights to display work in our portfolio unless otherwise agreed.",
+    "s5Title": "5. Limitation of Liability",
+    "s5Body": "CadorDigital shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: June 2024",
+    "s1Title": "1. Information We Collect",
+    "s1Body": "We collect information you provide directly to us when you fill out forms or communicate with us. This includes your name, email address, phone number, and company name.",
+    "s2Title": "2. How We Use Your Information",
+    "s2Body": "We use the information we collect to provide, maintain, and improve our services and communicate with you about your project.",
+    "s3Title": "3. Information Sharing",
+    "s3Body": "We do not sell, trade, or rent your personal information to third parties. We may share information with trusted service providers who assist us in operating our website and conducting our business.",
+    "s4Title": "4. Data Security",
+    "s4Body": "We implement appropriate security measures to protect your personal information.",
+    "s5Title": "5. Contact Us",
+    "s5Body": "If you have questions about this Privacy Policy, please contact us at admin@cador.digital."
+  }
+}

@@ -46,11 +46,9 @@ export function whatsappLink(subject: string): string {
 
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Store', href: '/store' },
   { label: 'Academy', href: '/academy' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },

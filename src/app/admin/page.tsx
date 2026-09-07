@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Users, Briefcase, FolderOpen, Newspaper,
-  ShoppingBag, GraduationCap, ArrowRight, Plus
+  GraduationCap, ArrowRight, Plus
 } from 'lucide-react';
 import { adminApi } from '@/lib/api';
 
@@ -20,14 +20,12 @@ export default function AdminDashboard() {
     { label: 'Services', value: stats?.stats?.servicesCount || 0, icon: Briefcase, color: 'bg-purple-500' },
     { label: 'Portfolio', value: stats?.stats?.portfolioCount || 0, icon: FolderOpen, color: 'bg-yellow-500' },
     { label: 'Blog Posts', value: stats?.stats?.blogPostsCount || 0, icon: Newspaper, color: 'bg-pink-500' },
-    { label: 'Products', value: stats?.stats?.productsCount || 0, icon: ShoppingBag, color: 'bg-orange-500' },
     { label: 'Courses', value: stats?.stats?.coursesCount || 0, icon: GraduationCap, color: 'bg-indigo-500' },
   ];
 
   const quickActions = [
     { label: 'Add Service', href: '/admin/services', icon: Plus },
     { label: 'Create Blog Post', href: '/admin/blog', icon: Plus },
-    { label: 'Add Product', href: '/admin/store', icon: Plus },
     { label: 'Create Course', href: '/admin/academy', icon: Plus },
     { label: 'View Leads', href: '/admin/leads', icon: ArrowRight },
   ];

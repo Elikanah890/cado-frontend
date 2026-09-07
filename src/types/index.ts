@@ -1,31 +1,4 @@
-export interface Service {
-  id: string;
-  slug: string;
-  name: string;
-  description: string | null;
-  overview: string | null;
-  benefits: any;
-  process: any;
-  icon: string | null;
-  featuredImage: string | null;
-  startingPrice: number | null;
-  isActive: boolean;
-  sortOrder: number | null;
-  packages: ServicePackage[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface ServicePackage {
-  id: string;
-  serviceId: string;
-  name: string;
-  price: number;
-  currency: string;
-  features: any;
-  isHighlighted: boolean;
-  sortOrder: number | null;
-}
+export type { Service, ServicePackage } from './service';
 
 export interface Portfolio {
   id: string;
@@ -34,37 +7,27 @@ export interface Portfolio {
   clientName: string | null;
   clientLogo: string | null;
   industry: string | null;
-  category: string;
+  category: string | null;
+  projectUrl: string | null;
   challenge: string | null;
   solution: string | null;
   results: string | null;
   testimonialText: string | null;
   testimonialAuthor: string | null;
   testimonialPosition: string | null;
+  clientTestimonial: { quote: string; author: string; role: string } | null;
   featuredImage: string | null;
-  galleryImages: any;
+  galleryImages: { url: string; alt?: string }[] | null;
+  videoUrl: string | null;
+  techStack: string[];
+  status: 'COMPLETED' | 'IN_PROGRESS';
+  completionDate: string | null;
+  sortOrder: number;
+  seo: { metaTitle?: string; metaDescription?: string; keywords?: string; ogImage?: string } | null;
   servicesProvided: any;
   resultMetrics: any;
   isFeatured: boolean;
   publishedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface StoreProduct {
-  id: string;
-  slug: string;
-  name: string;
-  description: string | null;
-  category: string;
-  price: number;
-  currency: string;
-  fileUrl: string | null;
-  fileSize: string | null;
-  previewImages: any;
-  isActive: boolean;
-  isFeatured: boolean;
-  downloadsCount: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -79,7 +42,10 @@ export interface Course {
   instructorBio: string | null;
   instructorAvatar: string | null;
   thumbnail: string | null;
-  price: number;
+  featuredImage: string | null;
+  introVideo: string | null;
+  whatsappNumber: string | null;
+  price: number | null;
   currency: string;
   level: string | null;
   category: string | null;
@@ -87,15 +53,28 @@ export interface Course {
   isPublished: boolean;
   isFeatured: boolean;
   enrolledCount: number;
+  modules: CourseModule[];
+  instructor: string | null;
+  sortOrder: number;
+  isActive: boolean;
+  _count?: { lessons: number; modules: number };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CourseModule {
+  id: string;
+  courseId: string;
+  title: string | null;
+  sortOrder: number;
   lessons: CourseLesson[];
-  _count?: { lessons: number };
   createdAt: string;
   updatedAt: string;
 }
 
 export interface CourseLesson {
   id: string;
-  courseId: string;
+  moduleId: string;
   title: string;
   description: string | null;
   videoUrl: string | null;
@@ -113,13 +92,25 @@ export interface BlogPost {
   excerpt: string | null;
   content: string | null;
   featuredImage: string | null;
+  galleryImages: { url: string; alt?: string }[] | null;
   categoryId: string | null;
   category: BlogCategory | null;
   authorName: string | null;
   status: string;
   views: number;
+  viewCount: number;
+  readTime: number | null;
+  sortOrder: number;
+  scheduledAt: string | null;
+  seo: { metaTitle?: string; metaDescription?: string; keywords?: string; ogImage?: string } | null;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  metaKeywords: string | null;
+  ogImage: string | null;
   publishedAt: string | null;
   tags: BlogPostTag[];
+  comments?: Comment[];
+  _count?: { comments: number };
   createdAt: string;
   updatedAt: string;
 }
@@ -132,10 +123,29 @@ export interface BlogCategory {
   _count?: { posts: number };
 }
 
+export interface BlogTag {
+  id: string;
+  name: string;
+  slug: string;
+  _count?: { posts: number };
+  createdAt?: string;
+}
+
 export interface BlogPostTag {
   postId: string;
   tagId: string;
   tag: { id: string; name: string };
+}
+
+export interface Comment {
+  id: string;
+  name: string;
+  email: string | null;
+  content: string;
+  postId: string;
+  post?: { title: string; slug: string };
+  isApproved: boolean;
+  createdAt: string;
 }
 
 export interface Testimonial {
@@ -177,8 +187,38 @@ export interface HostingPlan {
   currency: string;
   billingPeriod: string;
   features: any;
+  isPopular?: boolean;
   isActive: boolean;
   sortOrder: number | null;
+}
+
+export interface PricingPlan {
+  id: string;
+  slug: string;
+  name: string;
+  tagline: string | null;
+  price: number;
+  currency: string;
+  features: string[];
+  isPopular: boolean;
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CustomService {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  currency: string;
+  features: string[];
+  icon: string | null;
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ApiResponse<T> {

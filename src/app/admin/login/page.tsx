@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import axios from 'axios';
 import { adminApi } from '@/lib/api';
 import { toast } from 'sonner';
 
@@ -20,8 +21,11 @@ export default function AdminLoginPage() {
       await adminApi.login(email, password);
       toast.success('Login successful!');
       router.push('/admin');
-    } catch {
-      toast.error('Invalid credentials');
+    } catch (error: unknown) {
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.message || 'Unable to connect to the server'
+        : 'An unexpected error occurred';
+      toast.error(message);
     } finally {
       setLoading(false);
     }

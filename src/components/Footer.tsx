@@ -8,11 +8,24 @@ import {
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { publicApi } from '@/lib/api';
+import { useLanguage } from '@/lib/LanguageContext';
+import { useServices } from '@/lib/ServicesContext';
+
+const quickLinks = [
+  { key: 'nav.pricing', href: '/pricing' },
+  { key: 'nav.portfolio', href: '/portfolio' },
+  { key: 'nav.academy', href: '/academy' },
+  { key: 'nav.blog', href: '/blog' },
+  { key: 'nav.contact', href: '/contact' },
+  { key: 'nav.whatsappUs', href: 'https://wa.me/255716168903' },
+];
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showScroll, setShowScroll] = useState(false);
+  const services = useServices();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setShowScroll(window.scrollY > 500);
@@ -26,10 +39,10 @@ export default function Footer() {
     setLoading(true);
     try {
       await publicApi.subscribeNewsletter(email);
-      toast.success('Subscribed successfully!');
+      toast.success(t('footer.subscribeSuccess'));
       setEmail('');
     } catch {
-      toast.error('Failed to subscribe. Try again.');
+      toast.error(t('footer.subscribeError'));
     } finally {
       setLoading(false);
     }
@@ -44,12 +57,14 @@ export default function Footer() {
               <img
                 src="/cador-logo.png"
                 alt="CadorDigital"
+                width={140}
+                height={56}
+                loading="lazy"
                 className="h-14 w-auto"
               />
             </Link>
             <p className="mt-4 text-gray-400 text-sm leading-relaxed">
-              Build. Market. Automate. Grow. We help businesses build professional brands,
-              websites, marketing systems and automation solutions.
+              {t('footer.tagline')}
             </p>
             <div className="flex gap-3 mt-6">
               {[
@@ -71,40 +86,32 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.servicesTitle')}</h4>
             <ul className="space-y-2.5">
-              {[
-                'Brand Identity', 'Website Development', 'Digital Marketing',
-                'AI & Automation', 'Business Solutions', 'Creative Studio', 'Company Registration',
-              ].map((s) => (
-                <li key={s}>
-                  <Link
-                    href={`/services/${s.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-                    className="text-gray-400 hover:text-gold-500 text-sm transition-colors"
-                  >
-                    {s}
-                  </Link>
-                </li>
-              ))}
+              {services.length > 0 ? (
+                services.map((s) => (
+                  <li key={s.id}>
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="text-gray-400 hover:text-gold-500 text-sm transition-colors"
+                    >
+                      {s.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500 text-sm">{t('footer.noServices')}</li>
+              )}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2.5">
-              {[
-                { label: 'About Us', href: '/about' },
-                { label: 'Pricing', href: '/pricing' },
-                { label: 'Portfolio', href: '/portfolio' },
-                { label: 'Digital Store', href: '/store' },
-                { label: 'Academy', href: '/academy' },
-                { label: 'Blog', href: '/blog' },
-                { label: 'Contact', href: '/contact' },
-                { label: 'WhatsApp Us', href: 'https://wa.me/255716168903' },
-              ].map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
-                    {link.label}
+                    {t(link.key)}
                   </Link>
                 </li>
               ))}
@@ -112,11 +119,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Get in Touch</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.getInTouch')}</h4>
             <ul className="space-y-3 text-gray-400 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
-                <span>Mbeya, Tanzania</span>
+                <span>{t('footer.location')}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-gold-500 flex-shrink-0" />
@@ -132,18 +139,18 @@ export default function Footer() {
               </li>
             </ul>
 
-            <h4 className="text-lg font-semibold mt-8 mb-3">Newsletter</h4>
+            <h4 className="text-lg font-semibold mt-8 mb-3">{t('footer.newsletter')}</h4>
             <form onSubmit={handleSubscribe} className="flex gap-2">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email"
+                placeholder={t('footer.emailPlaceholder')}
                 className="flex-1 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:outline-none focus:border-gold-500 text-sm"
                 required
               />
               <button type="submit" disabled={loading} className="btn-primary text-sm py-2.5 px-4 whitespace-nowrap">
-                {loading ? '...' : 'Subscribe'}
+                {loading ? '...' : t('footer.subscribe')}
               </button>
             </form>
           </div>
@@ -153,14 +160,14 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} CadorDigital. All rights reserved.
+            &copy; {new Date().getFullYear()} CadorDigital. {t('footer.rights')}
           </p>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
-              Privacy Policy
+              {t('footer.privacy')}
             </Link>
             <Link href="/terms" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
-              Terms & Conditions
+              {t('footer.terms')}
             </Link>
           </div>
         </div>

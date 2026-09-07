@@ -1,0 +1,10 @@
+{
+  "name": "CadorDigital - Build. Market. Automate. Grow.",
+  "short_name": "CadorDigital",
+  "description": "Professional digital agency in Tanzania - brands, websites, marketing and automation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0A1628",
+  "icons": [{ "src": "/cador-logo.png", "sizes": "512x512", "type": "image/png" }]
+}

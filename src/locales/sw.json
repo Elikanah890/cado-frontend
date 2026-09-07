@@ -1,0 +1,374 @@
+{
+  "common": {
+    "retry": "Jaribu Tena",
+    "reload": "Pakia Upya",
+    "loading": "Inapakia...",
+    "all": "Zote",
+    "whatsapp": "WhatsApp",
+    "viewDetails": "Tazama Maelezo",
+    "home": "Nyumbani"
+  },
+  "nav": {
+    "home": "Nyumbani",
+    "services": "Huduma",
+    "pricing": "Bei",
+    "portfolio": "Kazi Zetu",
+    "academy": "Chuo",
+    "blog": "Blogi",
+    "contact": "Wasiliana",
+    "whatsappUs": "Wasiliana Nasi kwa WhatsApp"
+  },
+  "footer": {
+    "tagline": "Jenga. Uza. Otomatiki. Kua. Tunasidia biashara kujenga chapa za kitaalamu, tovuti, mifumo ya masoko na suluhisho za uendeshaji kiotomatiki.",
+    "servicesTitle": "Huduma",
+    "quickLinks": "Viungo vya Haraka",
+    "getInTouch": "Wasiliana Nasi",
+    "location": "Mbeya, Tanzania",
+    "newsletter": "Jarida",
+    "emailPlaceholder": "Barua pepe yako",
+    "subscribe": "Jisajili",
+    "subscribeSuccess": "Umejisajili kwa mafanikio!",
+    "subscribeError": "Imeshindikana kujisajili. Jaribu tena.",
+    "noServices": "Hakuna huduma bado",
+    "rights": "Haki zote zimehifadhiwa.",
+    "privacy": "Sera ya Faragha",
+    "terms": "Sheria na Masharti"
+  },
+  "carousel": {
+    "loading": "Inapakia kwingineko...",
+    "explore": "Chunguza baadhi ya miradi yetu ya hivi karibuni na uone jinsi tunavyosaidia biashara kukua.",
+    "viewAll": "Tazama Miradi Yote"
+  },
+  "share": {
+    "share": "Shiriki",
+    "whatsappTitle": "Shiriki kwenye WhatsApp",
+    "whatsappLabel": "WhatsApp",
+    "copyTitle": "Nakili kiungo",
+    "copyLabel": "Nakili Kiungo",
+    "copiedLabel": "Imenakiliwa!",
+    "copiedTitle": "Imenakiliwa",
+    "copySuccess": "Kiungo kimenakiliwa kwenye ubao wa kunakili",
+    "copyError": "Imeshindikana kunakili kiungo",
+    "facebookTitle": "Shiriki kwenye Facebook",
+    "twitterTitle": "Shiriki kwenye Twitter",
+    "linkedinTitle": "Shiriki kwenye LinkedIn"
+  },
+  "home": {
+    "hero": {
+      "badge": "Wakala wa Kwanza wa Dijitali Tanzania",
+      "l1": "Tunajenga Chapa,",
+      "l2": "Majukwaa ya Dijitali",
+      "l3": "na Mifumo Mahiri",
+      "l4": "Inayokuza Biashara",
+      "sub": "CadorDigital inawasaidia biashara mpya, makampuni na mashirika kujenga chapa za kitaalamu, tovuti, mifumo ya masoko na suluhisho za uendeshaji kiotomatiki zinazoleta ukuaji halisi wa biashara.",
+      "startProject": "Anzisha Mradi Wako",
+      "viewPortfolio": "Tazama Kazi Zetu",
+      "happyClients": "Wateja Waliofurahi",
+      "projectsDelivered": "Miradi Iliyokamilishwa"
+    },
+    "services": {
+      "label": "Huduma Zetu",
+      "title": "Kila Kitu Biashara Yako Inachohitaji",
+      "subtitle": "Suluhisho kamili za dijitali kwa biashara za kisasa Tanzania na kwingineko.",
+      "emptyTitle": "Hakuna huduma zinazopatikana kwa sasa.",
+      "emptySub": "Tafadhali rudi baadaye au wasiliana nasi kwa suluhisho maalum.",
+      "error": "Imeshindikana kupakia huduma. Tafadhali jaribu tena baadaye."
+    },
+    "industries": {
+      "label": "Sekta Tunazozihudumia",
+      "title": "Suluhisho kwa Kila Sekta",
+      "subtitle": "Tunatoa suluhisho maalum za dijitali kwa biashara katika sekta zote.",
+      "startups": "Biashara Mpya",
+      "education": "Elimu",
+      "tourism": "Utalii",
+      "construction": "Ujenzi",
+      "healthcare": "Afya",
+      "ngos": "Asasi za Kijamii",
+      "retail": "Rejareja na Biashara Mtandaoni"
+    },
+    "process": {
+      "label": "Mchakato Wetu",
+      "title": "Tunavyofanya Kazi",
+      "subtitle": "Mbinu iliyothibitishwa ya kutoa matokeo bora.",
+      "steps": {
+        "discovery": {
+          "title": "Ugunduzi",
+          "desc": "Tunajifunza kuhusu biashara yako, malengo na hadhira unayolenga."
+        },
+        "strategy": {
+          "title": "Mkakati",
+          "desc": "Tunatengeneza mpango maalum wa kufikia malengo yako."
+        },
+        "design": {
+          "title": "Ubunifu na Uundaji",
+          "desc": "Timu yetu hubuni na kujenga suluhisho lako."
+        },
+        "launch": {
+          "title": "Kuzinduliwa",
+          "desc": "Tunatuma, kujaribu na kuzindua mradi wako."
+        },
+        "growth": {
+          "title": "Ukuaji",
+          "desc": "Msaada unaoendelea na uboreshaji kwa mafanikio."
+        }
+      }
+    },
+    "why": {
+      "label": "Kwa Nini Uchague Sisi",
+      "title": "Kwa Nini CadorDigital?",
+      "subtitle": "Kinachotufanya kuwa mshirika wa dijitali anayependekezwa na biashara.",
+      "business": {
+        "title": "Kulenga Biashara",
+        "desc": "Kila suluhisho limeundwa kuleta matokeo halisi ya biashara na kurudi kwa uwekezaji (ROI)."
+      },
+      "technology": {
+        "title": "Teknolojia ya Kisasa",
+        "desc": "Tunatumia teknolojia za hali ya juu kwa utendaji bora na upanuzi."
+      },
+      "creative": {
+        "title": "Ubunifu wa Kipekee",
+        "desc": "Miundo bora inayovutia na kuongoa mauzo."
+      },
+      "support": {
+        "title": "Msaada wa Muda Mrefu",
+        "desc": "Tunakaa nawe baada ya kuzinduliwa kwa matengenezo na ukuaji."
+      }
+    },
+    "cta": {
+      "pre": "Tayari ",
+      "highlight": "Kukuza",
+      "post": " Biashara Yako?",
+      "sub": "Wacha tujenge kitu cha ajabu pamoja. Wasiliana nasi leo kwa ushauri wa bure."
+    },
+    "recentWork": "Kazi Zetu za Hivi Karibuni"
+  },
+  "servicesList": {
+    "title": "Huduma Zetu",
+    "subtitle": "Suluhisho kamili za dijitali kwa biashara za kisasa.",
+    "empty": "Hakuna huduma zinazopatikana kwa sasa.",
+    "customTitle": "Unahitaji Suluhisho Maalum?",
+    "customSub": "Tunatengeneza suluhisho maalum kwa mahitaji ya kipekee ya biashara. Wacha tujadili mradi wako.",
+    "cta": "Pata Ushauri Bila Malipo"
+  },
+  "serviceDetail": {
+    "loading": "Inapakia huduma...",
+    "back": "Rudi kwenye Huduma",
+    "notFound": "Huduma haikupatikana",
+    "notFoundSub": "Huduma unayoitafuta haipo.",
+    "benefits": "Faida",
+    "noBenefits": "Hakuna faida zilizoorodheshwa.",
+    "process": "Mchakato Wetu",
+    "noProcess": "Hakuna hatua za mchakato zilizoorodheshwa.",
+    "interested": "Je, Unavutiwa na {name}?",
+    "interestedSub": "Wacha tujadili jinsi tunavyoweza kukusaidia kwa huduma zetu za {name}.",
+    "whatsappCTA": "Wasiliana Kupitia WhatsApp",
+    "viewPricing": "Tazama Bei"
+  },
+  "portfolioList": {
+    "title": "Kazi Zetu",
+    "subtitle": "Chunguza miradi yetu na uone jinsi tunavyosaidia biashara kukua.",
+    "error": "Imeshindikana kupakia miradi",
+    "empty": "Hakuna miradi iliyopatikana.",
+    "viewProject": "Tazama Mradi",
+    "featured": "Inayoangaziwa"
+  },
+  "portfolioDetail": {
+    "back": "Rudi kwenye Kazi Zetu",
+    "notFound": "Mradi haukupatikana",
+    "noImage": "Hakuna Picha",
+    "featured": "Inayoangaziwa",
+    "visitSite": "Tembelea Tovuti",
+    "challenge": "Changamoto",
+    "noChallenge": "Hakuna changamoto iliyoelezwa.",
+    "solution": "Suluhisho Letu",
+    "noSolution": "Hakuna suluhisho lililoelezwa.",
+    "results": "Matokeo",
+    "noResults": "Hakuna matokeo yaliyoelezwa.",
+    "projectVideo": "Video ya Mradi",
+    "techStack": "Teknolojia Zinazotumika",
+    "wantSimilar": "Unataka Matokeo Kama Haya?",
+    "wantSub": "Wacha tujenge kitu cha ajabu kwa biashara yako. Wasiliana nasi leo.",
+    "startProject": "Anzisha Mradi Wako"
+  },
+  "pricing": {
+    "title": "Bei za Wazi",
+    "loadingSub": "Inapakia bei...",
+    "heroSub": "Chagua pakiti inayofaa biashara yako. Bei zote ni kwa TZS.",
+    "bundlesTitle": "Pakiti za Biashara Mpya",
+    "bundlesSub": "Pakiti kamili kwa biashara katika kila hatua.",
+    "noBundles": "Hakuna pakiti za biashara mpya zinazopatikana.",
+    "mostPopular": "Maarufu Zaidi",
+    "getStarted": "Anza",
+    "hostingTitle": "Mipango ya Ukaribishaji wa Tovuti",
+    "hostingSub": "Ukaribishaji wa kuaminika na wa haraka kwa tovuti yako.",
+    "noHosting": "Hakuna mipango ya ukaribishaji inayopatikana.",
+    "choosePlan": "Chagua Mpango",
+    "customTitle": "Huduma Maalum",
+    "customSub": "Huduma binafsi zilizolengwa kulingana na malengo yako.",
+    "noCustom": "Hakuna huduma maalum zinazopatikana.",
+    "from": "Kuanzia",
+    "finalTitle": "Unahitaji Kitu Maalum?",
+    "finalSub": "Tunatengeneza pakiti maalum kwa mahitaji yako mahususi.",
+    "contactUs": "Wasiliana Nasi"
+  },
+  "academy": {
+    "title": "Jifunze na Kukua",
+    "subtitle": "Kozi za mtandaoni za kukuza ujuzi wako na biashara yako.",
+    "loading": "Inapakia kozi...",
+    "error": "Imeshindikana kupakia kozi. Tafadhali pakia ukurasa upya.",
+    "empty": "Hakuna kozi zinazoendelea bado. Rudi tena karibuni.",
+    "by": "na",
+    "enrolled": "wamejiandikisha",
+    "free": "Bure",
+    "enroll": "Jiandikisha"
+  },
+  "academyDetail": {
+    "back": "Rudi kwenye Chuo",
+    "loading": "Inapakia kozi...",
+    "loadError": "Imeshindikana kupakia kozi",
+    "notFound": "Kozi haikupatikana",
+    "notFoundSub": "Kozi unayoitafuta haipo au haijawashwa.",
+    "hours": "saa",
+    "lessons": "masomo",
+    "freePreviews": "hakiki za bure",
+    "enrolled": "wamejiandikisha",
+    "intro": "Utangulizi wa Kozi",
+    "about": "Kuhusu Kozi Hii",
+    "noDescription": "Hakuna maelezo.",
+    "curriculum": "Mtaala",
+    "noLessons": "Hakuna masomo bado.",
+    "courseContent": "Maudhui ya Kozi",
+    "freePreview": "Hakiki ya Bure",
+    "locked": "Imefungwa",
+    "min": "dak.",
+    "startLearning": "Anza Kujifunza",
+    "oneTime": "Malipo ya mara moja kupitia WhatsApp",
+    "enrollNow": "Jiandikisha Sasa",
+    "freePreviewLessons": "masomo ya hakiki ya bure",
+    "hoursOfContent": "masaa ya maudhui",
+    "lifetime": "Ufikiaji wa kudumu",
+    "certificate": "Cheti cha kukamilisha",
+    "clickEnroll": "Bonyeza Jiandikisha kuongea nasi kwenye WhatsApp na upate ufikiaji kamili wa masomo yote."
+  },
+  "coursePlayer": {
+    "backCourse": "Rudi kwenye Kozi",
+    "loading": "Inapakia kozi...",
+    "notFound": "Kozi haikupatikana",
+    "backAcademy": "Rudi kwenye Chuo",
+    "noLessons": "Hakuna masomo bado kwa kozi hii.",
+    "complete": "% Imekamilika",
+    "lockedTitle": "Somo hili limefungwa",
+    "lockedSub": "Jiandikishe katika kozi hii kupata ufikiaji kamili wa masomo yote ikiwemo hili.",
+    "enrollViaWhatsApp": "Jiandikishe Kupitia WhatsApp",
+    "viewCourseDetails": "Tazama maelezo ya kozi",
+    "noVideo": "Hakuna video",
+    "lessonOf": "Somo {a} kati ya {b}",
+    "markComplete": "Weka Kama Limekamilika",
+    "previous": "Iliyopita",
+    "next": "Inayofuata",
+    "courseContent": "Maudhui ya Kozi",
+    "free": "Bure",
+    "locked": "Imefungwa",
+    "videoLesson": "Somo la video",
+    "min": "dak."
+  },
+  "blog": {
+    "title": "Maarifa na Rasilimali",
+    "subtitle": "Vidokezo vya wataalamu, miongozo na maarifa kwa ukuaji wa biashara yako.",
+    "searchPlaceholder": "Tafuta makala...",
+    "search": "Tafuta",
+    "loading": "Inapakia makala...",
+    "empty": "Hakuna makala zilizopatikana.",
+    "viewAll": "Tazama makala zote",
+    "minRead": "dak. za kusoma",
+    "comment": "Maoni",
+    "comments": "Maoni",
+    "subscribeTitle": "Jisajili kwenye Jarida Letu",
+    "subscribeSub": "Pata vidokezo na maarifa ya hivi karibuni kwenye barua pepe yako."
+  },
+  "blogDetail": {
+    "loading": "Inapakia makala...",
+    "back": "Rudi kwenye Blogi",
+    "notFound": "Makala haikupatikana",
+    "article": "Makala",
+    "minRead": "dak. za kusoma",
+    "authorBio": "Mtaalamu wa mkakati wa dijitali katika CadorDigital. Anapenda kusaidia biashara kukua kupitia teknolojia na uvumbuzi.",
+    "gallery": "Picha",
+    "comments": "Maoni",
+    "namePlaceholder": "Jina lako *",
+    "emailOptional": "Barua pepe (si lazima)",
+    "commentPlaceholder": "Andika maoni yako...",
+    "submitting": "Inatuma...",
+    "postComment": "Tuma Maoni",
+    "moderated": "Maoni yanakaguliwa na yataonekana baada ya kuidhinishwa.",
+    "noComments": "Hakuna maoni bado. Kuwa wa kwanza kutoa maoni!",
+    "related": "Makala Zinazohusiana",
+    "requiredError": "Jina na maoni vinahitajika",
+    "submittedToast": "Maoni yametumwa. Yataonekana baada ya kuidhinishwa.",
+    "submitError": "Imeshindikana kutuma maoni"
+  },
+  "contact": {
+    "title": "Wacha Tufanye Kazi Pamoja",
+    "subtitle": "Una mradi akilini? Wasiliana nasi leo.",
+    "callTitle": "Tupigie Simu",
+    "callHours": "Jumatatu-Ijumaa, 8:00 asubuhi - 6:00 jioni",
+    "emailTitle": "Tutumie Barua Pepe",
+    "emailReply": "Tunajibu ndani ya saa 24",
+    "visitTitle": "Tutembelee",
+    "visitNote": "Kwa miadi tu",
+    "formTitle": "Tutumie Ujumbe",
+    "firstName": "Jina la Kwanza *",
+    "lastName": "Jina la Mwisho *",
+    "email": "Barua Pepe *",
+    "phone": "Simu",
+    "company": "Kampuni",
+    "serviceNeeded": "Huduma Unayohitaji",
+    "selectService": "Chagua huduma",
+    "budgetRange": "Kiasi cha Bajeti",
+    "selectBudget": "Chagua kiasi cha bajeti",
+    "message": "Ujumbe *",
+    "sending": "Inatuma...",
+    "sendMessage": "Tuma Ujumbe",
+    "emailDirect": "Tuma Barua Pepe Moja kwa Moja",
+    "toastSuccess": "Ujumbe umetumwa! Tutawasiliana nawe hivi karibuni.",
+    "toastError": "Imeshindikana kutuma. Tafadhali jaribu tena.",
+    "opt": {
+      "brand": "Utambulisho wa Chapa",
+      "website": "Uundaji wa Tovuti",
+      "marketing": "Masoko ya Dijitali",
+      "ai": "AI na Uendeshaji Kiotomatiki",
+      "business": "Suluhisho za Biashara",
+      "studio": "Studio ya Ubunifu",
+      "registration": "Usajili wa Kampuni",
+      "other": "Nyingine"
+    }
+  },
+  "terms": {
+    "title": "Sheria na Masharti",
+    "lastUpdated": "Ilisasishwa mara ya mwisho: Juni 2024",
+    "s1Title": "1. Kukubali Masharti",
+    "s1Body": "Kwa kufikia na kutumia tovuti na huduma za CadorDigital, unakubali kufungwa na Sheria na Masharti haya.",
+    "s2Title": "2. Huduma",
+    "s2Body": "CadorDigital hutoa huduma za wakala wa dijitali zikiwemo utambulisho wa chapa, uundaji wa tovuti, masoko ya dijitali, uendeshaji kiotomatiki wa AI, huduma za ubunifu na suluhisho za biashara. Huduma zote zinategemea makubaliano au mapendekezo tofauti.",
+    "s3Title": "3. Majadiliano ya Huduma",
+    "s3Body": "Upeo wa mradi, bei na masharti ya utoaji hujadiliwa moja kwa moja na CadorDigital na kuthibitishwa katika makubaliano ya huduma ya mtu binafsi.",
+    "s4Title": "4. Haki Miliki",
+    "s4Body": "Baada ya kukamilika kwa ushirikiano uliokubaliwa, wateja hupokea umiliki wa matokeo ya mwisho. CadorDigital inahifadhi haki ya kuonyesha kazi katika kwingineko yetu isipokuwa itakubaliwa vinginevyo.",
+    "s5Title": "5. Kikomo cha Dhima",
+    "s5Body": "CadorDigital haitawajibika kwa uharibifu wowote usio wa moja kwa moja, wa bahati mbaya au wa matokeo unaotokana na matumizi ya huduma zetu."
+  },
+  "privacy": {
+    "title": "Sera ya Faragha",
+    "lastUpdated": "Ilisasishwa mara ya mwisho: Juni 2024",
+    "s1Title": "1. Taarifa Tunazokusanya",
+    "s1Body": "Tunakusanya taarifa unazotupatia moja kwa moja unapojaza fomu au kuwasiliana nasi. Hii inajumuisha jina lako, barua pepe, nambari ya simu na jina la kampuni yako.",
+    "s2Title": "2. Jinsi Tunavyotumia Taarifa Zako",
+    "s2Body": "Tunatumia taarifa tunazokusanya kutoa, kudumisha na kuboresha huduma zetu na kuwasiliana nawe kuhusu mradi wako.",
+    "s3Title": "3. Kushiriki Taarifa",
+    "s3Body": "Hatuziuza, hatuzibadilishi wala hatukopeshi taarifa zako za kibinafsi kwa wahusika wengine. Tunaweza kushiriki taarifa na watoa huduma wanaoaminika wanaotusaidia kuendesha tovuti yetu na kufanya biashara yetu.",
+    "s4Title": "4. Usalama wa Data",
+    "s4Body": "Tunatekeleza hatua sahihi za usalama kulinda taarifa zako za kibinafsi.",
+    "s5Title": "5. Wasiliana Nasi",
+    "s5Body": "Kama una maswali kuhusu Sera hii ya Faragha, tafadhali wasiliana nasi kupitia admin@cador.digital."
+  }
+}
