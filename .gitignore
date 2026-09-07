@@ -34,3 +34,21 @@ yarn-error.log*
 # Generated types
 .next/types
 .vercel
+# Build outputs
+.next/
+node_modules/
+out/
+dist/
+build/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
