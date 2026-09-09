@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
+import { resolveImageUrl } from '@/lib/imageUtils';
 
 interface PortfolioProject {
   id: string;
@@ -17,20 +18,6 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
   const { t } = useLanguage();
   const heading = title ?? t('home.recentWork');
   const [paused, setPaused] = useState(false);
-
-  const getBackendOrigin = () => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    return apiUrl.replace(/\/api\/?$/, '');
-  };
-
-  const resolveImageUrl = (url: string | null | undefined): string => {
-    if (!url) return '';
-    if (url.startsWith('http://') || url.startsWith('https://')) return url;
-    if (url.startsWith('/uploads/')) {
-      return `${getBackendOrigin()}${url}`;
-    }
-    return url;
-  };
 
   if (!projects || projects.length === 0) {
     return null;

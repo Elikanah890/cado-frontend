@@ -15,14 +15,22 @@ import BlogComments from './BlogComments';
 export const revalidate = 3600;
 
 async function getPost(slug: string) {
+  let res: Response;
   try {
     const base = getApiBase();
-    const res = await fetch(`${base}/blog/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
-    if (!res.ok) return null;
-    const json = await res.json();
-    const data = json.data ?? json;
-    return data;
-  } catch { return null; }
+    res = await fetch(`${base}/blog/${encodeURIComponent(slug)}`, {
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch {
+    throw new Error('Unable to reach the blog service. Please try again shortly.');
+  }
+
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Blog service returned an error (${res.status}).`);
+
+  const json = await res.json();
+  return json.data ?? json;
 }
 
 async function getRelated(slug: string) {
@@ -54,7 +62,12 @@ function stripHtml(html: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPost(slug);
+  let post: any = null;
+  try {
+    post = await getPost(slug);
+  } catch {
+    post = null;
+  }
   if (!post) return { title: 'Post Not Found' };
   const title: string = post.seo?.metaTitle || post.metaTitle || post.title;
   const rawDesc = post.seo?.metaDescription || post.metaDescription || post.excerpt || stripHtml(post.content || '').slice(0, 155);
@@ -89,7 +102,26 @@ function formatDate(date: string | Date) {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  let post: any;
+  try {
+    post = await getPost(slug);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Something went wrong while loading this post.';
+    return (
+      <PublicLayout>
+        <section className="section-padding">
+          <div className="container-custom max-w-2xl text-center">
+            <h1 className="text-3xl font-bold text-primary-900 mb-4">This page couldn&apos;t load</h1>
+            <p className="text-gray-600 mb-6">{message}</p>
+            <div className="flex items-center justify-center gap-3">
+              <Link href="/blog" className="btn-primary">← Back to Blog</Link>
+              <Link href="/" className="btn-secondary">Go Home</Link>
+            </div>
+          </div>
+        </section>
+      </PublicLayout>
+    );
+  }
   if (!post) notFound();
   const [related, services] = await Promise.all([getRelated(slug), getServices()]);
   const title: string = post.title;
