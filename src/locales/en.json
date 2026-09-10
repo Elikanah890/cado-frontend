@@ -140,7 +140,13 @@
       "post": " Your Business?",
       "sub": "Let's build something amazing together. Get in touch today for a free consultation."
     },
-    "recentWork": "Our Recent Work"
+    "recentWork": "Our Recent Work",
+    "testimonialsLabel": "Testimonials",
+    "testimonialsTitle": "What Our Clients Say",
+    "testimonialsSubtitle": "Real stories from businesses we've helped grow.",
+    "academyLabel": "Academy",
+    "academyTitle": "Learn & Grow With Our Academy",
+    "academySubtitle": "Practical courses to build your skills and business."
   },
   "servicesList": {
     "title": "Our Services",

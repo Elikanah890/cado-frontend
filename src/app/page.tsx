@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import {
   ArrowRight, Rocket, BookOpen, Hotel, HardHat,
-  HeartPulse, Handshake, ShoppingBag, TrendingUp, Zap,
-  Sparkles, Phone
+  HeartPulse, Handshake, ShoppingBag, Phone
 } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import PortfolioCarousel from '@/components/PortfolioCarousel';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import AcademyCarousel from '@/components/AcademyCarousel';
 import { publicApi } from '@/lib/api';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Service } from '@/types/service';
@@ -25,21 +26,6 @@ const industries = [
   { key: 'home.industries.retail', icon: ShoppingBag },
 ];
 
-const processSteps = [
-  { step: '01', titleKey: 'home.process.steps.discovery.title', descKey: 'home.process.steps.discovery.desc' },
-  { step: '02', titleKey: 'home.process.steps.strategy.title', descKey: 'home.process.steps.strategy.desc' },
-  { step: '03', titleKey: 'home.process.steps.design.title', descKey: 'home.process.steps.design.desc' },
-  { step: '04', titleKey: 'home.process.steps.launch.title', descKey: 'home.process.steps.launch.desc' },
-  { step: '05', titleKey: 'home.process.steps.growth.title', descKey: 'home.process.steps.growth.desc' },
-];
-
-const whyUs = [
-  { titleKey: 'home.why.business.title', descKey: 'home.why.business.desc', icon: TrendingUp },
-  { titleKey: 'home.why.technology.title', descKey: 'home.why.technology.desc', icon: Zap },
-  { titleKey: 'home.why.creative.title', descKey: 'home.why.creative.desc', icon: Sparkles },
-  { titleKey: 'home.why.support.title', descKey: 'home.why.support.desc', icon: Handshake },
-];
-
 export default function HomePage() {
   const { t } = useLanguage();
   const [services, setServices] = useState<Service[]>([]);
@@ -48,6 +34,8 @@ export default function HomePage() {
   const [clientCount, setClientCount] = useState<number | null>(null);
   const [projectCount, setProjectCount] = useState<number | null>(null);
   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [academy, setAcademy] = useState<any[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -58,7 +46,9 @@ export default function HomePage() {
         setServices(Array.isArray(data?.services) ? data.services : []);
         setPortfolio(Array.isArray(data?.portfolio) ? data.portfolio : []);
         setProjectCount(Array.isArray(data?.portfolio) ? data.portfolio.length : 0);
-        setClientCount(typeof data?.testimonials === 'number' ? data.testimonials : 0);
+        setClientCount(typeof data?.testimonialCount === 'number' ? data.testimonialCount : Array.isArray(data?.testimonials) ? data.testimonials.length : 0);
+        setTestimonials(Array.isArray(data?.testimonials) ? data.testimonials : []);
+        setAcademy(Array.isArray(data?.academy) ? data.academy : []);
         setError(null);
       })
       .catch((err) => {
@@ -192,54 +182,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Process */}
-      <section className="section-padding bg-primary-900 text-white">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.process.label')}</span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">{t('home.process.title')}</h2>
-            <p className="text-lg text-white/60 mt-4 max-w-2xl mx-auto">{t('home.process.subtitle')}</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {processSteps.map((p, i) => (
-              <div key={i} className="relative">
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center h-full">
-                  <span className="text-4xl font-bold text-gold-500/30">{p.step}</span>
-                  <h3 className="text-xl font-bold mt-3 mb-2">{t(p.titleKey)}</h3>
-                  <p className="text-white/60 text-sm">{t(p.descKey)}</p>
-                </div>
-                {i < processSteps.length - 1 && (
-                  <div className="hidden lg:flex absolute top-1/2 -right-3 text-gold-500/50 justify-center">
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Testimonials Carousel */}
+      <TestimonialsCarousel testimonials={testimonials} />
 
-      {/* Why CadorDigital */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.why.label')}</span>
-            <h2 className="section-title mt-2">{t('home.why.title')}</h2>
-            <p className="section-subtitle mx-auto">{t('home.why.subtitle')}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {whyUs.map((item, i) => (
-              <div key={i} className="card p-8 text-center">
-                <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mx-auto mb-5">
-                  <item.icon className="w-7 h-7 text-primary-700" />
-                </div>
-                <h3 className="text-lg font-bold text-primary-900 mb-2">{t(item.titleKey)}</h3>
-                <p className="text-gray-600 text-sm">{t(item.descKey)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Academy Carousel */}
+      <AcademyCarousel courses={academy} />
+
+      {/* Auto-Scrolling Portfolio Section */}
+      <PortfolioCarousel title={t('home.recentWork')} projects={portfolio} />
 
       {/* Final CTA */}
       <section className="section-padding bg-gradient-to-br from-primary-900 to-primary-700 relative overflow-hidden">
@@ -264,9 +214,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Auto-Scrolling Portfolio Section */}
-      <PortfolioCarousel title={t('home.recentWork')} projects={portfolio} />
 
     </PublicLayout>
   );

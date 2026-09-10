@@ -48,7 +48,8 @@ export const publicApi = {
     blog: BlogPost[];
     pricing: { plans: any[]; hosting: any[]; custom: any[] };
     academy: Course[];
-    testimonials: number;
+    testimonials: any[];
+    testimonialCount: number;
   }>>('/homepage').then((r) => r.data),
   getServicesPage: () => api.get<ApiResponse<{ services: Service[]; testimonials: Testimonial[] }>>('/services-page').then((r) => r.data),
   getPortfolioPage: () => api.get<ApiResponse<{ portfolio: Portfolio[]; categories: string[] }>>('/portfolio-page').then((r) => r.data),

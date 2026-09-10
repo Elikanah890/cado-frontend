@@ -140,7 +140,13 @@
       "post": " Biashara Yako?",
       "sub": "Wacha tujenge kitu cha ajabu pamoja. Wasiliana nasi leo kwa ushauri wa bure."
     },
-    "recentWork": "Kazi Zetu za Hivi Karibuni"
+    "recentWork": "Kazi Zetu za Hivi Karibuni",
+    "testimonialsLabel": "Shuhuda",
+    "testimonialsTitle": "Wateja Wetu Wanasema Nini",
+    "testimonialsSubtitle": "Hadithi halisi kutoka kwa biashara tulizosaidia kukua.",
+    "academyLabel": "Akademi",
+    "academyTitle": "Jifunze na Kukua Kupitia Akademi Yetu",
+    "academySubtitle": "Kozi za vitendo za kukuza ujuzi na biashara yako."
   },
   "servicesList": {
     "title": "Huduma Zetu",
