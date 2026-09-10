@@ -33,7 +33,8 @@ const menuItems: MenuItem[] = [
     { label: 'Tags', href: '/admin/blog/tags' },
   ]},
   { label: 'Pricing', icon: Package, children: [
-    { label: 'Startup Bundles', href: '/admin/pricing/plans' },
+    { label: 'Categories', href: '/admin/pricing/categories' },
+    { label: 'Plans', href: '/admin/pricing/plans' },
     { label: 'Hosting Plans', href: '/admin/pricing/hosting' },
     { label: 'Custom Services', href: '/admin/pricing/custom' },
   ]},

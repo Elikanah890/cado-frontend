@@ -9,7 +9,7 @@ import { useLanguage } from '@/lib/LanguageContext';
 
 export default function PricingPage() {
   const { t } = useLanguage();
-  const [bundles, setBundles] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [hosting, setHosting] = useState<any[]>([]);
   const [customServices, setCustomServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,10 +18,10 @@ export default function PricingPage() {
     let mounted = true;
     const fetchAll = async () => {
       try {
-        const res = await publicApi.getPricingPage().catch(() => ({ data: null }));
+        const res = await publicApi.getPricing().catch(() => ({ data: null }));
         if (!mounted) return;
         const data = (res as any)?.data ?? {};
-        setBundles(Array.isArray(data?.plans) ? data.plans : []);
+        setCategories(Array.isArray(data?.categories) ? data.categories : []);
         setHosting(Array.isArray(data?.hosting) ? data.hosting : []);
         setCustomServices(Array.isArray(data?.custom) ? data.custom : []);
       } catch (e) {
@@ -59,54 +59,68 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="section-padding">
-        <div className="container-custom">
-          <h2 className="text-3xl font-bold text-center text-primary-900 mb-4">{t('pricing.bundlesTitle')}</h2>
-          <p className="text-gray-600 text-center mb-12">{t('pricing.bundlesSub')}</p>
-          {bundles.length === 0 ? (
+      {categories.length === 0 ? (
+        <section className="section-padding">
+          <div className="container-custom">
             <div className="card p-12 text-center max-w-5xl mx-auto"><p className="text-gray-400">{t('pricing.noBundles')}</p></div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {bundles.map((bundle) => (
-                <div
-                  key={bundle.id || bundle.slug}
-                  className={`card p-8 relative ${bundle.isPopular ? 'ring-2 ring-gold-500 scale-[1.02] z-10' : ''}`}
-                >
-                  {bundle.isPopular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold-500 text-white px-6 py-1.5 rounded-full text-sm font-bold flex items-center gap-1">
-                      <Zap className="w-4 h-4" /> {t('pricing.mostPopular')}
-                    </div>
-                  )}
-                  <h3 className="text-2xl font-bold text-primary-900">{bundle.name}</h3>
-                  {bundle.tagline && <p className="text-gray-500 text-sm mt-1 mb-6">{bundle.tagline}</p>}
-                  <div className="mb-6">
-                    <span className="text-4xl font-bold text-primary-900">
-                      {Number(bundle.price).toLocaleString()}
-                    </span>
-                    <span className="text-gray-500 ml-1">{bundle.currency || 'TZS'}</span>
-                  </div>
-                  <ul className="space-y-3 mb-8">
-                    {(Array.isArray(bundle.features) ? bundle.features : []).map((f: string, index: number) => (
-                      <li key={`${bundle.id || bundle.slug}-feature-${index}`} className="flex items-start gap-2 text-sm text-gray-700">
-                        <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        {f}
-                      </li>
+          </div>
+        </section>
+      ) : (
+        categories.map((category, ci) => {
+          const plans: any[] = Array.isArray(category.plans) ? category.plans : [];
+          return (
+            <section key={category.id || category.slug || ci} className={`section-padding ${ci % 2 === 1 ? 'bg-gray-50' : ''}`}>
+              <div className="container-custom">
+                <h2 className="text-3xl font-bold text-center text-primary-900 mb-4">{category.name}</h2>
+                {category.description && <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">{category.description}</p>}
+                {plans.length === 0 ? (
+                  <div className="card p-12 text-center max-w-5xl mx-auto"><p className="text-gray-400">{t('pricing.noBundles')}</p></div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    {plans.map((plan) => (
+                      <div
+                        key={plan.id || plan.slug}
+                        className={`card p-8 relative ${plan.isPopular ? 'ring-2 ring-gold-500 scale-[1.02] z-10' : ''}`}
+                      >
+                        {plan.isPopular && (
+                          <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold-500 text-white px-6 py-1.5 rounded-full text-sm font-bold flex items-center gap-1">
+                            <Zap className="w-4 h-4" /> {t('pricing.mostPopular')}
+                          </div>
+                        )}
+                        <h3 className="text-2xl font-bold text-primary-900">{plan.name}</h3>
+                        {plan.tagline && <p className="text-gray-500 text-sm mt-1 mb-6">{plan.tagline}</p>}
+                        <div className="mb-6">
+                          <span className="text-4xl font-bold text-primary-900">
+                            {Number(plan.price).toLocaleString()}
+                          </span>
+                          <span className="text-gray-500 ml-1">{plan.currency || 'TZS'}</span>
+                          {plan.period && plan.period !== 'one-time' && <span className="text-gray-400 text-sm">/{plan.period}</span>}
+                        </div>
+                        <ul className="space-y-3 mb-8">
+                          {(Array.isArray(plan.features) ? plan.features : []).map((f: string, index: number) => (
+                            <li key={`${plan.id || plan.slug}-feature-${index}`} className="flex items-start gap-2 text-sm text-gray-700">
+                              <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                              {f}
+                            </li>
+                          ))}
+                        </ul>
+                        <Link
+                          href="/contact"
+                          className={`w-full text-center py-3 rounded-lg font-semibold block transition-all ${
+                            plan.isPopular ? 'btn-primary' : 'btn-secondary'
+                          }`}
+                        >
+                          {t('pricing.getStarted')}
+                        </Link>
+                      </div>
                     ))}
-                  </ul>
-                  <Link
-                    href="/contact"
-                    className={`w-full text-center py-3 rounded-lg font-semibold block transition-all ${
-                      bundle.isPopular ? 'btn-primary' : 'btn-secondary'
-                    }`}
-                  >
-                    {t('pricing.getStarted')}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+                  </div>
+                )}
+              </div>
+            </section>
+          );
+        })
+      )}
 
       <section className="section-padding bg-gray-50">
         <div className="container-custom">

@@ -16,6 +16,8 @@ interface PlanForm {
   isPopular: boolean;
   isActive: boolean;
   sortOrder: number;
+  categoryId: string;
+  period: string;
 }
 
 const emptyForm: PlanForm = {
@@ -28,10 +30,13 @@ const emptyForm: PlanForm = {
   isPopular: false,
   isActive: true,
   sortOrder: 0,
+  categoryId: '',
+  period: 'one-time',
 };
 
 export default function AdminPricingPlansPage() {
   const [items, setItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -47,7 +52,14 @@ export default function AdminPricingPlansPage() {
     } catch { toast.error('Failed to load plans'); } finally { setLoading(false); }
   };
 
-  useEffect(() => { load(); }, []);
+  const loadCategories = async () => {
+    try {
+      const res = await adminApi.getPricingCategories();
+      setCategories(Array.isArray(res.data) ? res.data : []);
+    } catch { /* non-fatal */ }
+  };
+
+  useEffect(() => { load(); loadCategories(); }, []);
 
   const openCreate = () => { setForm(emptyForm); setEditingId(null); setShowForm(true); };
   const openEdit = (item: any) => {
@@ -61,6 +73,8 @@ export default function AdminPricingPlansPage() {
       isPopular: !!item.isPopular,
       isActive: item.isActive ?? true,
       sortOrder: item.sortOrder || 0,
+      categoryId: item.categoryId || '',
+      period: item.period || 'one-time',
     });
     setEditingId(item.id);
     setShowForm(true);
@@ -78,7 +92,7 @@ export default function AdminPricingPlansPage() {
     e.preventDefault();
     setSaving(true);
     try {
-      const payload = { ...form, slug: slugify(form.name), price: Number(form.price), sortOrder: Number(form.sortOrder) };
+      const payload = { ...form, slug: slugify(form.name), price: Number(form.price), sortOrder: Number(form.sortOrder), categoryId: form.categoryId || null };
       if (editingId) { await adminApi.updatePricingPlan(editingId, payload); toast.success('Plan updated'); }
       else { await adminApi.createPricingPlan(payload); toast.success('Plan created'); }
       setShowForm(false);
@@ -107,6 +121,21 @@ export default function AdminPricingPlansPage() {
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Tagline</label><input type="text" value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} className="input-field" placeholder="For Startups & Small Businesses" /></div>
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Price (TZS)</label><input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} className="input-field" /></div>
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Sort Order</label><input type="number" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: Number(e.target.value) })} className="input-field" /></div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select value={form.categoryId} onChange={(e) => setForm({ ...form, categoryId: e.target.value })} className="input-field">
+                  <option value="">— Uncategorized —</option>
+                  {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Billing Period</label>
+                <select value={form.period} onChange={(e) => setForm({ ...form, period: e.target.value })} className="input-field">
+                  <option value="one-time">One-time</option>
+                  <option value="month">Monthly</option>
+                  <option value="year">Yearly</option>
+                </select>
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Features</label>
