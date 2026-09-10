@@ -7,7 +7,7 @@ import {
   LayoutDashboard, Briefcase, FolderOpen,
   GraduationCap, Newspaper, Settings,
   FileText, Activity, LogOut, Menu, X, ChevronDown, Tag,
-  Package, Server, Wrench, Users
+  Package, Server, Wrench, Users, MessageSquareQuote
 } from 'lucide-react';
 import { adminApi } from '@/lib/api';
 import { cn } from '@/lib/utils';
@@ -21,6 +21,7 @@ const menuItems: MenuItem[] = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
   { label: 'Visitors', icon: Users, href: '/admin/visitors' },
   { label: 'Services', icon: Briefcase, href: '/admin/services' },
+  { label: 'Testimonials', icon: MessageSquareQuote, href: '/admin/testimonials' },
   { label: 'Portfolio', icon: FolderOpen, children: [
     { label: 'Projects', href: '/admin/portfolio' },
     { label: 'Categories', href: '/admin/portfolio/categories' },
