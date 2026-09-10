@@ -20,7 +20,7 @@ export default function ShareButtons({ title, compact = true }: ShareButtonsProp
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const url = typeof window !== 'undefined' ? window.location.href : '';
-  const message = title || document.title || 'Check this out';
+  const message = title || (typeof document !== 'undefined' ? document.title : '') || 'Check this out';
 
   const shareWhatsApp = () => {
     window.open(`https://wa.me/?text=${encodeURIComponent(`${message} - ${url}`)}`, '_blank', 'noopener,noreferrer');

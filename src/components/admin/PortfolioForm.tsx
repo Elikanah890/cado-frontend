@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { X, Plus, Trash2, Upload, Loader2 } from 'lucide-react';
+import { X, Plus, Trash2, Upload, Loader2, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
@@ -36,6 +36,8 @@ export interface PortfolioFormData {
   featuredImage: string;
   galleryImages: { url: string; alt: string }[];
   videoUrl: string;
+  pdfUrl: string;
+  pdfName: string;
   clientTestimonial: { quote: string; author: string; role: string };
   techStack: string[];
   seo: { metaTitle: string; metaDescription: string; keywords: string; ogImage: string };
@@ -58,6 +60,8 @@ const emptyData: PortfolioFormData = {
   featuredImage: '',
   galleryImages: [],
   videoUrl: '',
+  pdfUrl: '',
+  pdfName: '',
   clientTestimonial: { quote: '', author: '', role: '' },
   techStack: [],
   seo: { metaTitle: '', metaDescription: '', keywords: '', ogImage: '' },
@@ -88,6 +92,9 @@ export default function PortfolioForm({ initialData, mode }: Props) {
   const [uploadingGallery, setUploadingGallery] = useState(false);
   const [dragOverGallery, setDragOverGallery] = useState(false);
   const galleryInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+  const [dragOverPdf, setDragOverPdf] = useState(false);
+  const pdfInputRef = useRef<HTMLInputElement>(null);
 
   // Sync form when initialData loads (edit mode) — fixes preview not showing
   useEffect(() => {
@@ -206,6 +213,27 @@ export default function PortfolioForm({ initialData, mode }: Props) {
     handleChange('galleryImages', form.galleryImages.filter((_, i) => i !== index));
   };
 
+  const handlePdfFile = async (files: FileList | File[]) => {
+    const file = Array.from(files)[0];
+    if (!file) return;
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      toast.error('Only PDF files are allowed');
+      return;
+    }
+    setUploadingPdf(true);
+    try {
+      const url = await uploadSingleFile(file, 'portfolio');
+      handleChange('pdfUrl', url);
+      handleChange('pdfName', file.name);
+      toast.success('PDF uploaded');
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || 'Upload failed');
+    } finally {
+      setUploadingPdf(false);
+      if (pdfInputRef.current) pdfInputRef.current.value = '';
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.title.trim()) {
@@ -236,6 +264,8 @@ export default function PortfolioForm({ initialData, mode }: Props) {
         featuredImage: form.featuredImage.trim() ? form.featuredImage.trim() : null,
         galleryImages: form.galleryImages.length > 0 ? form.galleryImages : null,
         videoUrl: form.videoUrl.trim() || null,
+        pdfUrl: form.pdfUrl.trim() ? form.pdfUrl.trim() : null,
+        pdfName: form.pdfName.trim() || null,
         clientTestimonial: form.clientTestimonial.quote.trim() ? form.clientTestimonial : null,
         techStack: form.techStack,
         seo: form.seo.metaTitle || form.seo.metaDescription || form.seo.keywords || form.seo.ogImage ? form.seo : null,
@@ -421,6 +451,39 @@ export default function PortfolioForm({ initialData, mode }: Props) {
               <label className="block text-sm font-medium text-gray-700 mb-1">Video URL (YouTube/Vimeo)</label>
               <input type="url" value={form.videoUrl} onChange={(e) => handleChange('videoUrl', e.target.value)} className="input-field" placeholder="https://www.youtube.com/embed/..." />
               <p className="text-xs text-gray-400 mt-1">Paste YouTube/Vimeo embed URL — keep as text, no upload needed.</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Company Profile / Document (PDF)</label>
+              <input ref={pdfInputRef} type="file" accept="application/pdf,.pdf" className="hidden" onChange={(e) => e.target.files && handlePdfFile(e.target.files)} />
+              {!form.pdfUrl ? (
+                <div
+                  onDragOver={(e) => { e.preventDefault(); setDragOverPdf(true); }}
+                  onDragLeave={() => setDragOverPdf(false)}
+                  onDrop={(e) => { e.preventDefault(); setDragOverPdf(false); if (e.dataTransfer.files) handlePdfFile(e.dataTransfer.files); }}
+                  onClick={() => pdfInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors ${dragOverPdf ? 'border-gold-500 bg-gold-50' : 'border-gray-200 hover:border-gold-300 hover:bg-gray-50'}`}
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    {uploadingPdf ? <Loader2 className="w-8 h-8 text-gold-500 animate-spin" /> : <Upload className="w-8 h-8 text-gray-400" />}
+                    <div>
+                      <p className="text-sm font-semibold text-gray-700">{uploadingPdf ? 'Uploading...' : 'Upload PDF (Company Profile)'}</p>
+                      <p className="text-xs text-gray-400 mt-1">Click or drag & drop a PDF (max 20MB)</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between gap-3 p-3 rounded-lg border bg-gray-50">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <FileText className="w-5 h-5 text-red-500 shrink-0" />
+                    <span className="text-sm text-gray-700 truncate">{form.pdfName || 'Document'}</span>
+                  </div>
+                  <button type="button" onClick={() => { handleChange('pdfUrl', ''); handleChange('pdfName', ''); }} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-600 text-white text-xs font-medium hover:bg-red-700 shrink-0">
+                    <Trash2 className="w-3.5 h-3.5" /> Remove
+                  </button>
+                </div>
+              )}
+              <p className="text-xs text-gray-400 mt-1">Optional — attach a PDF company profile or case study download.</p>
             </div>
           </div>
         )}

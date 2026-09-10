@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, ExternalLink, Calendar, Tag, User, CheckCircle, Clock, Star, Quote } from 'lucide-react';
+import { ArrowRight, ExternalLink, Calendar, Tag, User, CheckCircle, Clock, Star, Quote, FileText, Download } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import ShareButtons from '@/components/ShareButtons';
 import JsonLd from '@/components/JsonLd';
@@ -78,10 +78,32 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               {completionDate && <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {completionDate}</span>}
             </div>
             {project.projectUrl && <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" className="btn-primary mt-4 inline-flex items-center gap-2">Visit Site <ExternalLink className="w-4 h-4" /></a>}
+            {project.pdfUrl && (
+              <a href={resolveImageUrl(project.pdfUrl)} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-4 inline-flex items-center gap-2">
+                <Download className="w-4 h-4" /> {project.pdfName ? 'Download PDF' : 'View PDF'}
+              </a>
+            )}
             <div className="mt-4"><ShareButtons title={project.title} /></div>
           </div>
         </div>
       </section>
+
+      {project.pdfUrl && (
+        <section className="section-padding bg-gold-50">
+          <div className="container-custom max-w-4xl">
+            <div className="card p-8 flex flex-col sm:flex-row items-center gap-6 border-gold-200">
+              <div className="w-16 h-16 rounded-2xl bg-gold-500 text-white flex items-center justify-center shrink-0"><FileText className="w-8 h-8" /></div>
+              <div className="flex-1 text-center sm:text-left">
+                <h3 className="text-xl font-bold text-primary-900 mb-1">Company Profile</h3>
+                <p className="text-gray-600 text-sm">Download the full company profile / case study document for this project.</p>
+              </div>
+              <a href={resolveImageUrl(project.pdfUrl)} target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center gap-2 shrink-0">
+                <Download className="w-4 h-4" /> {project.pdfName || 'Download PDF'}
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="section-padding">
         <div className="container-custom max-w-4xl">

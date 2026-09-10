@@ -19,6 +19,8 @@ export interface Portfolio {
   featuredImage: string | null;
   galleryImages: { url: string; alt?: string }[] | null;
   videoUrl: string | null;
+  pdfUrl: string | null;
+  pdfName: string | null;
   techStack: string[];
   status: 'COMPLETED' | 'IN_PROGRESS';
   completionDate: string | null;

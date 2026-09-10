@@ -20,7 +20,7 @@ async function getPost(slug: string) {
     const base = getApiBase();
     res = await fetch(`${base}/blog/${encodeURIComponent(slug)}`, {
       next: { revalidate: 3600 },
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(8000),
     });
   } catch {
     throw new Error('Unable to reach the blog service. Please try again shortly.');
