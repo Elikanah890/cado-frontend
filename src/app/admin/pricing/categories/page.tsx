@@ -69,7 +69,7 @@ export default function AdminPricingCategoriesPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this category? Plans in it will be unassigned (not deleted).')) return;
+    if (!confirm('Delete this category? All plans in it will also be deleted.')) return;
     try { await adminApi.deletePricingCategory(id); toast.success('Deleted'); load(); } catch { toast.error('Failed to delete'); }
   };
 

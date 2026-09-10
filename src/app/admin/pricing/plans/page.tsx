@@ -108,7 +108,7 @@ export default function AdminPricingPlansPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <div><h1 className="text-2xl font-bold text-primary-900">Startup Bundles</h1><p className="text-gray-500 mt-1">Manage Launch, Grow, Dominate plans.</p></div>
+        <div><h1 className="text-2xl font-bold text-primary-900">Pricing Plans</h1><p className="text-gray-500 mt-1">Manage plans across all pricing categories.</p></div>
         <button onClick={openCreate} className="btn-primary gap-2 inline-flex items-center"><Plus className="w-4 h-4" /> Add Plan</button>
       </div>
 
@@ -163,12 +163,14 @@ export default function AdminPricingPlansPage() {
       ) : (
         <div className="card overflow-hidden">
           <table className="w-full text-sm">
-            <thead><tr className="border-b bg-gray-50"><th className="text-left py-3 px-4">Name</th><th className="text-left py-3 px-4">Price</th><th className="text-left py-3 px-4">Popular</th><th className="text-left py-3 px-4">Active</th><th className="text-right py-3 px-4">Actions</th></tr></thead>
+            <thead><tr className="border-b bg-gray-50"><th className="text-left py-3 px-4">Name</th><th className="text-left py-3 px-4">Category</th><th className="text-left py-3 px-4">Price</th><th className="text-left py-3 px-4">Period</th><th className="text-left py-3 px-4">Popular</th><th className="text-left py-3 px-4">Active</th><th className="text-right py-3 px-4">Actions</th></tr></thead>
             <tbody>
               {items.map((item: any) => (
                 <tr key={item.id} className="border-b hover:bg-gray-50">
-                  <td className="py-3 px-4"><div className="font-medium">{item.name}</div><div className="text-xs text-gray-500">{item.tagline}</div></td>
+                  <td className="py-3 px-4"><div className="font-medium">{item.name}</div><div className="text-xs text-gray-500">{item.description}</div></td>
+                  <td className="py-3 px-4 text-sm text-gray-600">{item.category?.name || '—'}</td>
                   <td className="py-3 px-4">{formatCurrency(item.price)}</td>
+                  <td className="py-3 px-4 text-sm text-gray-500">{item.period || '—'}</td>
                   <td className="py-3 px-4">{item.isPopular ? <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" /> : '-'}</td>
                   <td className="py-3 px-4"><span className={`text-xs px-2 py-1 rounded-full ${item.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{item.isActive ? 'Active' : 'Inactive'}</span></td>
                   <td className="py-3 px-4 text-right flex justify-end gap-2">

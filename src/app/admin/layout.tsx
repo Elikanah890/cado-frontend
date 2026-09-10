@@ -36,8 +36,6 @@ const menuItems: MenuItem[] = [
   { label: 'Pricing', icon: Package, children: [
     { label: 'Categories', href: '/admin/pricing/categories' },
     { label: 'Plans', href: '/admin/pricing/plans' },
-    { label: 'Hosting Plans', href: '/admin/pricing/hosting' },
-    { label: 'Custom Services', href: '/admin/pricing/custom' },
   ]},
   { label: 'Settings', icon: Settings, href: '/admin/settings' },
   { label: 'Activity Logs', icon: Activity, href: '/admin/activities' },

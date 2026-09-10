@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type {
   Service, Portfolio, Course, BlogPost,
-  BlogCategory, Testimonial, HostingPlan, Lead, Comment,
+  BlogCategory, Testimonial, Lead, Comment,
   ApiResponse, PaginatedResponse
 } from '@/types';
 
@@ -57,7 +57,7 @@ export const publicApi = {
     api.get<ApiResponse<{ posts: BlogPost[]; categories: BlogCategory[]; tags: any[]; pagination: { page: number; limit: number; total: number; pages: number } }>>('/blog-page', { params, cache: 'no-store' } as any).then((r) => r.data),
   getAcademyPage: () => api.get<ApiResponse<{ courses: Course[]; categories: string[] }>>('/academy-page').then((r) => r.data),
   getPricingPage: () => api.get<ApiResponse<{ plans: any[]; hosting: any[]; custom: any[] }>>('/pricing-page').then((r) => r.data),
-  getPricing: () => api.get<ApiResponse<{ categories: any[]; hosting: any[]; custom: any[] }>>('/pricing', { cache: 'no-store' } as any).then((r) => r.data),
+  getPricing: () => api.get<ApiResponse<{ categories: any[] }>>('/pricing', { cache: 'no-store' } as any).then((r) => r.data),
   getServices: () => api.get<ApiResponse<Service[]>>('/services', { cache: 'no-store' } as any).then((r) => r.data),
   getService: (slug: string) => api.get<ApiResponse<Service>>(`/services/${slug}`, { cache: 'no-store' } as any).then((r) => r.data),
   getPortfolio: (params?: { category?: string; featured?: string }) =>
@@ -77,10 +77,6 @@ export const publicApi = {
   createComment: (slug: string, data: { name: string; email?: string; content: string }) =>
     api.post<ApiResponse<Comment>>(`/blog/${slug}/comments`, data).then((r) => r.data),
   getTestimonials: () => api.get<ApiResponse<Testimonial[]>>('/testimonials', { cache: 'no-store' } as any).then((r) => r.data),
-  getHostingPlans: () => api.get<ApiResponse<HostingPlan[]>>('/hosting/plans', { cache: 'no-store' } as any).then((r) => r.data),
-  getPricingPlans: () => api.get<ApiResponse<any[]>>('/pricing/plans', { cache: 'no-store' } as any).then((r) => r.data),
-  getPricingHosting: () => api.get<ApiResponse<any[]>>('/pricing/hosting', { cache: 'no-store' } as any).then((r) => r.data),
-  getPricingCustom: () => api.get<ApiResponse<any[]>>('/pricing/custom', { cache: 'no-store' } as any).then((r) => r.data),
   getSettings: () => api.get<ApiResponse<Record<string, string | null>>>('/settings', { cache: 'no-store' } as any).then((r) => r.data),
   submitContact: (data: any) => api.post('/contact', data).then((r) => r.data),
   subscribeNewsletter: (email: string) => api.post('/newsletter', { email }).then((r) => r.data),
@@ -177,14 +173,6 @@ export const adminApi = {
   createPricingPlan: (data: any) => api.post('/admin/pricing/plans', data).then((r) => r.data),
   updatePricingPlan: (id: string, data: any) => api.put(`/admin/pricing/plans/${id}`, data).then((r) => r.data),
   deletePricingPlan: (id: string) => api.delete(`/admin/pricing/plans/${id}`).then((r) => r.data),
-  getHostingPlansAdmin: () => api.get('/admin/pricing/hosting').then((r) => r.data),
-  createHostingPlan: (data: any) => api.post('/admin/pricing/hosting', data).then((r) => r.data),
-  updateHostingPlan: (id: string, data: any) => api.put(`/admin/pricing/hosting/${id}`, data).then((r) => r.data),
-  deleteHostingPlan: (id: string) => api.delete(`/admin/pricing/hosting/${id}`).then((r) => r.data),
-  getCustomServices: () => api.get('/admin/pricing/custom').then((r) => r.data),
-  createCustomService: (data: any) => api.post('/admin/pricing/custom', data).then((r) => r.data),
-  updateCustomService: (id: string, data: any) => api.put(`/admin/pricing/custom/${id}`, data).then((r) => r.data),
-  deleteCustomService: (id: string) => api.delete(`/admin/pricing/custom/${id}`).then((r) => r.data),
 };
 
 export default api;
