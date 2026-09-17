@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Providers } from './providers';
 import VisitorTracker from '@/components/VisitorTracker';
-import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { siteConfig, absoluteUrl } from '@/lib/seo';
 import { organizationSchema, websiteSchema } from '@/lib/jsonLd';
 
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    google: '0-kpOCPwbbLFFgi03ydO8PUiBXwiWLYlZCMPwe71sME',
   },
   other: { 'theme-color': siteConfig.themeColor },
 };
@@ -74,11 +74,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
-        <GoogleAnalytics />
         <Providers>
           {children}
           <VisitorTracker />
         </Providers>
+        <GoogleAnalytics gaId="G-GYF5V0K6F2" />
       </body>
     </html>
   );
