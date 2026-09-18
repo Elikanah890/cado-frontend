@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
   icons: {
-    icon: [{ url: '/favicon.ico' }, { url: '/cador-logo.png', type: 'image/png' }],
-    apple: [{ url: '/cador-logo.png' }],
-    shortcut: '/favicon.ico',
+    icon: '/cador-logo.png',
+    shortcut: '/cador-logo.png',
+    apple: '/cador-logo.png',
   },
   manifest: '/manifest.json',
   verification: {
