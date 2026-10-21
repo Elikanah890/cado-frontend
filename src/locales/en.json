@@ -54,16 +54,17 @@
   },
   "home": {
     "hero": {
-      "badge": "Tanzania's Leading Digital Agency",
+      "badge": "Build. Market. Automate. Grow.",
       "l1": "We Build Brands,",
       "l2": "Digital Platforms",
       "l3": "& Smart Systems That",
       "l4": "Grow Businesses",
-      "sub": "CadorDigital helps startups, companies and organizations build professional brands, websites, marketing systems and automation solutions that create real business growth.",
-      "startProject": "Start Your Project",
+      "sub": "Tailored digital solutions for ambitious businesses in Tanzania and beyond.",
+      "startProject": "Chat on WhatsApp",
       "viewPortfolio": "View Portfolio",
       "happyClients": "Happy Clients",
-      "projectsDelivered": "Projects Delivered"
+      "projectsDelivered": "Projects Delivered",
+      "title": "We Build Brands & Smart Systems That Drive Real Growth."
     },
     "services": {
       "label": "Our Services",

@@ -16,6 +16,7 @@ import type { Service } from '@/types/service';
 import type { Portfolio } from '@/types';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const industries = [
   { key: 'home.industries.startups', icon: Rocket },
@@ -25,6 +26,15 @@ const industries = [
   { key: 'home.industries.healthcare', icon: HeartPulse },
   { key: 'home.industries.ngos', icon: Handshake },
   { key: 'home.industries.retail', icon: ShoppingBag },
+];
+
+const HERO_IMAGES = [
+  '/hero/hero1.jpeg',
+  '/hero/hero2.jpeg',
+  '/hero/hero3.jpeg',
+  '/hero/hero4.jpeg',
+  '/hero/hero5.jpeg',
+  '/hero/hero6.jpeg',
 ];
 
 export default function HomePage() {
@@ -65,6 +75,19 @@ export default function HomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setHeroIndex((i) => (i + 1) % HERO_IMAGES.length), 4000);
+    return () => clearInterval(id);
+  }, []);
+
+  const heroImages = {
+    main: HERO_IMAGES[heroIndex],
+    left: HERO_IMAGES[(heroIndex + 1) % HERO_IMAGES.length],
+    right: HERO_IMAGES[(heroIndex + 2) % HERO_IMAGES.length],
+  };
+
   return (
     <PublicLayout>
       {/* Hero Section */}
@@ -75,49 +98,84 @@ export default function HomePage() {
         </div>
 
         <div className="container-custom relative z-10 py-24 lg:py-32">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm mb-8">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              {t('home.hero.badge')}
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1]">
-              {t('home.hero.l1')}
-              <br />
-              <span className="text-gradient">{t('home.hero.l2')}</span>
-              <br />
-              {t('home.hero.l3')}
-              <br />
-              {t('home.hero.l4')}<span className="text-gold-500">.</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-white/60 mt-8 max-w-2xl mx-auto leading-relaxed">
-              {t('home.hero.sub')}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-8 py-4 gap-2 group">
-                {t('home.hero.startProject')}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link href="/portfolio" className="btn-outline-light text-base px-8 py-4">
-                {t('home.hero.viewPortfolio')}
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-8 mt-12">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 border-2 border-primary-900 flex items-center justify-center text-xs font-bold text-white">
-                    {i}
-                  </div>
-                ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left: copy */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-gold-500 uppercase tracking-wider text-sm mb-8">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                {t('home.hero.badge')}
               </div>
-              <p className="text-white/50 text-sm">
-                <span className="text-gold-400 font-bold">{clientCount ?? '10'}+</span> {t('home.hero.happyClients')}
-                {' '}&middot;{' '}
-                <span className="text-gold-400 font-bold">{projectCount ?? '10'}+</span> {t('home.hero.projectsDelivered')}
+
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1]">
+                {t('home.hero.title')}
+              </h1>
+
+              <p className="text-lg md:text-xl text-white/60 mt-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                {t('home.hero.sub')}
               </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center lg:justify-start">
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-8 py-4 gap-2 group">
+                  {t('home.hero.startProject')}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <Link href="/portfolio" className="btn-outline-light text-base px-8 py-4">
+                  {t('home.hero.viewPortfolio')}
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 mt-12">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 border-2 border-primary-900 flex items-center justify-center text-xs font-bold text-white">
+                      {i}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-white/50 text-sm">
+                  <span className="text-gold-400 font-bold">{clientCount ?? '10'}+</span> {t('home.hero.happyClients')}
+                  {' '}&middot;{' '}
+                  <span className="text-gold-400 font-bold">{projectCount ?? '10'}+</span> {t('home.hero.projectsDelivered')}
+                </p>
+              </div>
+            </div>
+
+            {/* Right: floating collage */}
+            <div className="relative w-full max-w-[650px] h-[500px] sm:h-[650px] mx-auto">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-gradient-to-tr from-gold-500/30 to-purple-500/30 blur-3xl rounded-full" />
+
+              {/* Top-left */}
+              <div className="absolute top-6 sm:top-10 left-0 w-[220px] sm:w-[280px] h-[280px] sm:h-[380px] -rotate-6 z-20">
+                <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}>
+                  <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={heroImages.left} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Center main */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[400px] h-[420px] sm:h-[520px] z-30">
+                <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
+                  <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={heroImages.main} alt="CadorDigital creative work" className="w-full h-full object-contain" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Bottom-right */}
+              <div className="absolute bottom-6 sm:bottom-10 right-0 w-[240px] sm:w-[300px] h-[300px] sm:h-[400px] rotate-6 z-20">
+                <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}>
+                  <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={heroImages.right} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>

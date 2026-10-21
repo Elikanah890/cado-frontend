@@ -54,16 +54,17 @@
   },
   "home": {
     "hero": {
-      "badge": "Wakala wa Kwanza wa Dijitali Tanzania",
+      "badge": "Jenga. Uza. Otomatiki. Kua.",
       "l1": "Tunajenga Chapa,",
       "l2": "Majukwaa ya Dijitali",
       "l3": "na Mifumo Mahiri",
       "l4": "Inayokuza Biashara",
-      "sub": "CadorDigital inawasaidia biashara mpya, makampuni na mashirika kujenga chapa za kitaalamu, tovuti, mifumo ya masoko na suluhisho za uendeshaji kiotomatiki zinazoleta ukuaji halisi wa biashara.",
-      "startProject": "Anzisha Mradi Wako",
+      "sub": "Suluhisho za kidijitali zinazolengwa kwa biashara zenye malengo makubwa Tanzania na zaidi.",
+      "startProject": "Wasiliana kwenye WhatsApp",
       "viewPortfolio": "Tazama Kazi Zetu",
       "happyClients": "Wateja Waliofurahi",
-      "projectsDelivered": "Miradi Iliyokamilishwa"
+      "projectsDelivered": "Miradi Iliyokamilishwa",
+      "title": "Tunajenga Chapa na Mifumo Mahiri Inayochochea Ukuaji Halisi."
     },
     "services": {
       "label": "Huduma Zetu",
