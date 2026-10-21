@@ -375,10 +375,6 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
               <input type="text" value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className="input-field" placeholder="e.g. Marketing" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Price (TZS)</label>
-              <input type="number" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} className="input-field" />
-            </div>
-            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Hours</label>
               <input type="number" value={form.estimatedHours} onChange={(e) => setForm((f) => ({ ...f, estimatedHours: Number(e.target.value) }))} className="input-field" />
             </div>

@@ -51,13 +51,6 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
   const introVideo: string | null = course.introVideo || null;
   const waLink = whatsappLink(`enrolling in ${course.title}`);
   const freeCount = lessons.filter((l) => l.isFree).length;
-  const currency = course.currency || 'TZS';
-  const formatPrice = (price: any) => {
-    if (price == null || price === '') return 'Free';
-    const n = Number(price);
-    if (Number.isNaN(n) || n === 0) return 'Free';
-    return `${n.toLocaleString()} ${currency}`;
-  };
   const breadcrumbJson = breadcrumbSchema([{ name: 'Home', url: siteConfig.url }, { name: 'Academy', url: absoluteUrl('/academy') }, { name: course.title, url: absoluteUrl(`/academy/${slug}`) }]);
   const courseJson = courseSchema({ title: course.title, description: course.subtitle || String(course.description || '').replace(/<[^>]*>/g, ' ').slice(0, 160), slug, image: cover });
 
@@ -107,8 +100,6 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
             </div>
             <div>
               <div className="card p-6 sticky top-28">
-                <div className="text-3xl font-bold text-primary-900 text-center mb-1">{formatPrice(course.price)}</div>
-                {course.price != null && Number(course.price) > 0 && <p className="text-center text-xs text-gray-400 mb-4">One-time payment</p>}
                 <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center py-3 mb-4 block"><MessageCircle className="w-4 h-4 inline mr-2" /> Enroll Now</a>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> {lessons.length} lessons</li>

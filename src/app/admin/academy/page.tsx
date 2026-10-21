@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import { adminApi } from '@/lib/api';
 import { toast } from 'sonner';
-import { formatCurrency } from '@/lib/utils';
 import { resolveImageUrl } from '@/lib/imageUtils';
 
 export default function AdminAcademyPage() {
@@ -68,7 +67,6 @@ export default function AdminAcademyPage() {
                     <span>{lessons} lessons</span>
                     <span>{Array.isArray(item.modules) ? item.modules.length : 0} modules</span>
                   </div>
-                  <p className="text-lg font-bold text-gold-500 mb-3">{formatCurrency(item.price)}</p>
                   <div className="flex gap-2">
                     <Link href={`/admin/academy/edit/${item.id}`} className="flex-1 flex items-center justify-center gap-1 text-sm py-2 rounded-lg border border-gray-200 hover:bg-gray-50"><Pencil className="w-3 h-3" /> Edit</Link>
                     <button className="flex items-center justify-center gap-1 text-sm py-2 px-3 rounded-lg border border-red-200 text-red-600 hover:bg-red-50" onClick={() => handleDelete(item)}><Trash2 className="w-3 h-3" /></button>

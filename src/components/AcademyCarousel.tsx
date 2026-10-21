@@ -37,11 +37,6 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
   const singleSetWidth = items.length * (CARD_WIDTH + GAP);
   const duration = items.length * 5;
 
-  const formatPrice = (price: number | null | undefined, currency?: string | null) => {
-    if (price == null || price === 0) return t('academy.free');
-    return `${Number(price).toLocaleString()} ${currency || 'TZS'}`;
-  };
-
   return (
     <section className="py-16 bg-gray-50 border-t border-gray-200 overflow-hidden">
       <div className="container-custom">
@@ -98,7 +93,6 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
                     <span className="text-sm text-gray-500 flex items-center gap-1 truncate">
                       <User className="w-3.5 h-3.5" /> {course.instructorName || course.instructor || 'CadorDigital'}
                     </span>
-                    <span className="font-bold text-gold-500">{formatPrice(course.price, course.currency)}</span>
                   </div>
                 </div>
               </Link>

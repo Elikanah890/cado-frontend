@@ -101,17 +101,6 @@ export default function ContactPage() {
                     <option value="Other">{t('contact.opt.other')}</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('contact.budgetRange')}</label>
-                  <select value={form.budgetRange} onChange={(e) => setForm({ ...form, budgetRange: e.target.value })} className="input-field">
-                    <option value="">{t('contact.selectBudget')}</option>
-                    <option>Under 500,000 TZS</option>
-                    <option>500,000 - 1,000,000 TZS</option>
-                    <option>1,000,000 - 5,000,000 TZS</option>
-                    <option>5,000,000 - 10,000,000 TZS</option>
-                    <option>10,000,000+ TZS</option>
-                  </select>
-                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('contact.message')}</label>

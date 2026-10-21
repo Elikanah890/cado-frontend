@@ -52,13 +52,6 @@ export default function AcademyPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const formatPrice = (price: any, currency = 'TZS') => {
-    if (price == null || price === '') return t('academy.free');
-    const n = Number(price);
-    if (Number.isNaN(n)) return t('academy.free');
-    return `${n.toLocaleString()} ${currency}`;
-  };
-
   if (loading) {
     return (
       <PublicLayout>
@@ -131,7 +124,6 @@ export default function AcademyPage() {
                     </Link>
                     <p className="text-sm text-gray-500 mb-4">{t('academy.by')} {course.instructor}</p>
                     <div className="flex items-center justify-between mb-4 mt-auto">
-                      <span className="font-bold text-primary-900">{formatPrice(course.price, course.currency)}</span>
                       <span className="text-xs text-gray-400">{course.students} {t('academy.enrolled')}</span>
                     </div>
                     <a
