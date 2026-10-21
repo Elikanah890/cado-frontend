@@ -11,7 +11,6 @@
   "nav": {
     "home": "Home",
     "services": "Services",
-    "pricing": "Pricing",
     "portfolio": "Portfolio",
     "academy": "Academy",
     "blog": "Blog",
@@ -195,27 +194,6 @@
     "wantSimilar": "Want Similar Results?",
     "wantSub": "Let's build something amazing for your business. Get in touch today.",
     "startProject": "Start Your Project"
-  },
-  "pricing": {
-    "title": "Transparent Pricing",
-    "loadingSub": "Loading pricing...",
-    "heroSub": "Choose the right package for your business. All prices in TZS.",
-    "bundlesTitle": "Startup Bundles",
-    "bundlesSub": "Complete packages for businesses at every stage.",
-    "noBundles": "No startup bundles available.",
-    "mostPopular": "Most Popular",
-    "getStarted": "Get Started",
-    "hostingTitle": "Website Hosting Plans",
-    "hostingSub": "Reliable and fast hosting for your website.",
-    "noHosting": "No hosting plans available.",
-    "choosePlan": "Choose Plan",
-    "customTitle": "Custom Services",
-    "customSub": "Individual services tailored to your goals.",
-    "noCustom": "No custom services available.",
-    "from": "From",
-    "finalTitle": "Need Something Custom?",
-    "finalSub": "We create tailored packages for your specific needs.",
-    "contactUs": "Contact Us"
   },
   "academy": {
     "title": "Learn & Grow",

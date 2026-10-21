@@ -40,14 +40,16 @@ export const SITE_TAGLINE = 'Build. Market. Automate. Grow.';
 export const SITE_DESCRIPTION = 'CadorDigital helps startups, companies and organizations build professional brands, websites, marketing systems and automation solutions that create real business growth.';
 export const WHATSAPP_NUMBER = '255716168903';
 
-export function whatsappLink(subject: string): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hello CadorDigital, I am interested in ${subject}.`)}`;
+export function whatsappLink(subject?: string): string {
+  const text = subject
+    ? `Habari CadorDigital, nahitaji huduma ya ${subject}`
+    : 'Habari CadorDigital, nahitaji msaada wa huduma';
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
-  { label: 'Pricing', href: '/pricing' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Academy', href: '/academy' },
   { label: 'Blog', href: '/blog' },

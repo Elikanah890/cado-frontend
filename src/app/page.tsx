@@ -11,6 +11,7 @@ import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import AcademyCarousel from '@/components/AcademyCarousel';
 import { publicApi } from '@/lib/api';
 import { useLanguage } from '@/lib/LanguageContext';
+import { whatsappLink } from '@/lib/utils';
 import type { Service } from '@/types/service';
 import type { Portfolio } from '@/types';
 import { ServiceCard } from '@/components/services/ServiceCard';
@@ -95,10 +96,10 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center">
-              <Link href="/contact" className="btn-primary text-base px-8 py-4 gap-2 group">
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-8 py-4 gap-2 group">
                 {t('home.hero.startProject')}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
               <Link href="/portfolio" className="btn-outline-light text-base px-8 py-4">
                 {t('home.hero.viewPortfolio')}
               </Link>
@@ -203,11 +204,11 @@ export default function HomePage() {
             {t('home.cta.sub')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="btn-primary text-lg px-10 py-4 gap-2 group">
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-lg px-10 py-4 gap-2 group">
               {t('home.hero.startProject')}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <a href="https://wa.me/255716168903" target="_blank" rel="noopener noreferrer" className="btn-outline-light text-lg px-10 py-4 flex items-center gap-2">
+            </a>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-outline-light text-lg px-10 py-4 flex items-center gap-2">
               <Phone className="w-5 h-5" />
               {t('nav.whatsappUs')}
             </a>

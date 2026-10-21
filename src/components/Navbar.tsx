@@ -12,7 +12,6 @@ import { useServices } from '@/lib/ServicesContext';
 const NAV_KEYS: Record<string, string> = {
   '/': 'nav.home',
   '/services': 'nav.services',
-  '/pricing': 'nav.pricing',
   '/portfolio': 'nav.portfolio',
   '/academy': 'nav.academy',
   '/blog': 'nav.blog',
@@ -25,7 +24,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
   const services = useServices();
-  const serviceLinks = services.map((s) => ({ label: s.name, href: `/services/${s.slug}` }));
+  const serviceLinks = services.map((s) => ({ label: s.name, href: whatsappLink(s.name) }));
 
   const isAdmin = pathname.startsWith('/admin');
   if (isAdmin) return null;
@@ -90,14 +89,16 @@ export default function Navbar() {
                   {servicesOpen && (
                     <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 animate-slide-down">
                       {serviceLinks.map((sl) => (
-                        <Link
+                        <a
                           key={sl.href}
                           href={sl.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-900 transition-colors"
                           onClick={() => setServicesOpen(false)}
                         >
                           {sl.label}
-                        </Link>
+                        </a>
                       ))}
                     </div>
                   )}
@@ -123,7 +124,7 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           {langToggle}
-          <a href={whatsappLink('a project or service')} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm py-2.5 px-5 gap-2">
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm py-2.5 px-5 gap-2">
             <MessageCircle className="w-4 h-4" /> {t('nav.whatsappUs')}
           </a>
         </div>
@@ -154,7 +155,7 @@ export default function Navbar() {
                 {t(NAV_KEYS[href])}
               </Link>
             ))}
-            <a href={whatsappLink('a project or service')} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center text-sm" onClick={() => setIsOpen(false)}>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center text-sm" onClick={() => setIsOpen(false)}>
               <MessageCircle className="w-4 h-4 inline mr-2" /> {t('nav.whatsappUs')}
             </a>
           </div>

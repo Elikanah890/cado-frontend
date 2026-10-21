@@ -96,7 +96,6 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">Let&apos;s discuss how {service.name.toLowerCase()} can help grow your business.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href={whatsappLink(service.name)} target="_blank" rel="noopener noreferrer" className="btn-primary text-lg px-8 py-4 gap-2">Chat on WhatsApp <MessageCircle className="w-5 h-5" /></a>
-            <Link href="/pricing" className="btn-secondary text-lg px-8 py-4">View Pricing</Link>
           </div>
         </div>
       </section>

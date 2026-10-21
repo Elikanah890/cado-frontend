@@ -1,4 +1,4 @@
-export type { Service, ServicePackage } from './service';
+export type { Service } from './service';
 
 export interface Portfolio {
   id: string;
@@ -194,34 +194,7 @@ export interface HostingPlan {
   sortOrder: number | null;
 }
 
-export interface PricingPlan {
-  id: string;
-  slug: string;
-  name: string;
-  tagline: string | null;
-  price: number;
-  currency: string;
-  features: string[];
-  isPopular: boolean;
-  isActive: boolean;
-  sortOrder: number;
-  createdAt: string;
-  updatedAt: string;
-}
 
-export interface CustomService {
-  id: string;
-  slug: string;
-  name: string;
-  price: number;
-  currency: string;
-  features: string[];
-  icon: string | null;
-  isActive: boolean;
-  sortOrder: number;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface ApiResponse<T> {
   status: string;

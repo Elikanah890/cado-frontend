@@ -1,7 +1,7 @@
 'use client';
 
 import { BookOpen, Globe, Palette, Cpu, Briefcase, Camera, Building2, Megaphone, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { whatsappLink } from '@/lib/utils';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Service } from '@/types';
 
@@ -30,8 +30,10 @@ export function ServiceCard({ service, showLink = true, showIcon = true, style }
   const IconComponent = showIcon ? (iconMap[(service.icon || '').toLowerCase()] || Globe) : null;
 
   return (
-    <Link
-      href={showLink ? `/services/${service.slug}` : '#'}
+    <a
+      href={showLink ? whatsappLink(service.name) : undefined}
+      target={showLink ? '_blank' : undefined}
+      rel={showLink ? 'noopener noreferrer' : undefined}
       className="card p-8 group animate-slide-up"
       style={style}
     >
@@ -49,6 +51,6 @@ export function ServiceCard({ service, showLink = true, showIcon = true, style }
           {t('common.viewDetails')} <ArrowRight className="w-4 h-4" />
         </span>
       )}
-    </Link>
+    </a>
   );
 }

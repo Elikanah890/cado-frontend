@@ -1,6 +1,7 @@
 'use client';
 
 import PublicLayout from '@/components/PublicLayout';
+import { whatsappLink } from '@/lib/utils';
 import { publicApi } from '@/lib/api';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Service } from '@/types/service';
@@ -84,7 +85,7 @@ export default function ServicesPage() {
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             {t('servicesList.customSub')}
           </p>
-          <a href="/contact" className="btn-primary text-lg px-8 py-4">
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-lg px-8 py-4">
             {t('servicesList.cta')}
           </a>
         </div>

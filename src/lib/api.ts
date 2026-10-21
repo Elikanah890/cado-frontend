@@ -46,7 +46,6 @@ export const publicApi = {
     services: Service[];
     portfolio: Portfolio[];
     blog: BlogPost[];
-    pricing: { plans: any[]; hosting: any[]; custom: any[] };
     academy: Course[];
     testimonials: any[];
     testimonialCount: number;
@@ -56,8 +55,6 @@ export const publicApi = {
   getBlogPage: (params?: { category?: string; search?: string; page?: number; limit?: number }) =>
     api.get<ApiResponse<{ posts: BlogPost[]; categories: BlogCategory[]; tags: any[]; pagination: { page: number; limit: number; total: number; pages: number } }>>('/blog-page', { params, cache: 'no-store' } as any).then((r) => r.data),
   getAcademyPage: () => api.get<ApiResponse<{ courses: Course[]; categories: string[] }>>('/academy-page').then((r) => r.data),
-  getPricingPage: () => api.get<ApiResponse<{ plans: any[]; hosting: any[]; custom: any[] }>>('/pricing-page').then((r) => r.data),
-  getPricing: () => api.get<ApiResponse<{ categories: any[] }>>('/pricing', { cache: 'no-store' } as any).then((r) => r.data),
   getServices: () => api.get<ApiResponse<Service[]>>('/services', { cache: 'no-store' } as any).then((r) => r.data),
   getService: (slug: string) => api.get<ApiResponse<Service>>(`/services/${slug}`, { cache: 'no-store' } as any).then((r) => r.data),
   getPortfolio: (params?: { category?: string; featured?: string }) =>
@@ -164,15 +161,6 @@ export const adminApi = {
   getActivities: (params?: any) => api.get('/admin/activities', { params }).then((r) => r.data),
   deleteActivity: (id: string) => api.delete(`/admin/activities/${id}`).then((r) => r.data),
   clearActivities: () => api.delete('/admin/activities/clear-all').then((r) => r.data),
-  // Pricing Admin
-  getPricingCategories: () => api.get('/admin/pricing/categories').then((r) => r.data),
-  createPricingCategory: (data: any) => api.post('/admin/pricing/categories', data).then((r) => r.data),
-  updatePricingCategory: (id: string, data: any) => api.put(`/admin/pricing/categories/${id}`, data).then((r) => r.data),
-  deletePricingCategory: (id: string) => api.delete(`/admin/pricing/categories/${id}`).then((r) => r.data),
-  getPricingPlans: () => api.get('/admin/pricing/plans').then((r) => r.data),
-  createPricingPlan: (data: any) => api.post('/admin/pricing/plans', data).then((r) => r.data),
-  updatePricingPlan: (id: string, data: any) => api.put(`/admin/pricing/plans/${id}`, data).then((r) => r.data),
-  deletePricingPlan: (id: string) => api.delete(`/admin/pricing/plans/${id}`).then((r) => r.data),
 };
 
 export default api;

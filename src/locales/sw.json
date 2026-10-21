@@ -11,7 +11,6 @@
   "nav": {
     "home": "Nyumbani",
     "services": "Huduma",
-    "pricing": "Bei",
     "portfolio": "Kazi Zetu",
     "academy": "Chuo",
     "blog": "Blogi",
@@ -195,27 +194,6 @@
     "wantSimilar": "Unataka Matokeo Kama Haya?",
     "wantSub": "Wacha tujenge kitu cha ajabu kwa biashara yako. Wasiliana nasi leo.",
     "startProject": "Anzisha Mradi Wako"
-  },
-  "pricing": {
-    "title": "Bei za Wazi",
-    "loadingSub": "Inapakia bei...",
-    "heroSub": "Chagua pakiti inayofaa biashara yako. Bei zote ni kwa TZS.",
-    "bundlesTitle": "Pakiti za Biashara Mpya",
-    "bundlesSub": "Pakiti kamili kwa biashara katika kila hatua.",
-    "noBundles": "Hakuna pakiti za biashara mpya zinazopatikana.",
-    "mostPopular": "Maarufu Zaidi",
-    "getStarted": "Anza",
-    "hostingTitle": "Mipango ya Ukaribishaji wa Tovuti",
-    "hostingSub": "Ukaribishaji wa kuaminika na wa haraka kwa tovuti yako.",
-    "noHosting": "Hakuna mipango ya ukaribishaji inayopatikana.",
-    "choosePlan": "Chagua Mpango",
-    "customTitle": "Huduma Maalum",
-    "customSub": "Huduma binafsi zilizolengwa kulingana na malengo yako.",
-    "noCustom": "Hakuna huduma maalum zinazopatikana.",
-    "from": "Kuanzia",
-    "finalTitle": "Unahitaji Kitu Maalum?",
-    "finalSub": "Tunatengeneza pakiti maalum kwa mahitaji yako mahususi.",
-    "contactUs": "Wasiliana Nasi"
   },
   "academy": {
     "title": "Jifunze na Kukua",

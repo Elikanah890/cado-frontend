@@ -12,7 +12,6 @@ import { useLanguage } from '@/lib/LanguageContext';
 import { useServices } from '@/lib/ServicesContext';
 
 const quickLinks = [
-  { key: 'nav.pricing', href: '/pricing' },
   { key: 'nav.portfolio', href: '/portfolio' },
   { key: 'nav.academy', href: '/academy' },
   { key: 'nav.blog', href: '/blog' },
