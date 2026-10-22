@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { ArrowRight, ExternalLink, Calendar, Tag, User, CheckCircle, Clock, Star, Quote, FileText, Download } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import ShareButtons from '@/components/ShareButtons';
+import PortfolioLightbox from '@/components/PortfolioLightbox';
+import PosterImage from '@/components/PosterImage';
 import JsonLd from '@/components/JsonLd';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { portfolioSchema, breadcrumbSchema } from '@/lib/jsonLd';
@@ -61,29 +63,54 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   return (
     <PublicLayout>
       <JsonLd data={[creativeJson, breadcrumbJson]} />
-      <section className="relative bg-primary-900">
-        {project.featuredImage ? <img src={resolveImageUrl(project.featuredImage)} alt={project.title} width={1200} height={600} loading="eager" className="w-full h-[300px] md:h-[500px] object-cover" /> : <div className="w-full h-[300px] md:h-[500px] bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 flex items-center justify-center"><div className="text-center"><p className="text-white/30 text-lg">No image available</p><p className="text-white/20 text-sm mt-1">{project.title}</p></div></div>}
-        <div className="absolute inset-0 bg-gradient-to-t from-primary-900/90 via-primary-900/30 to-transparent flex items-end">
-          <div className="container-custom max-w-4xl pb-8 w-full">
-            <Link href="/portfolio" className="text-white/60 hover:text-gold-500 text-sm mb-3 inline-block">← Back to Portfolio</Link>
-            <div className="flex flex-wrap gap-2 mb-3">
+      <section className="relative bg-primary-900 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-gold-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
+        </div>
+        <div className="container-custom relative z-10 py-12 md:py-16">
+          <Link href="/portfolio" className="text-white/60 hover:text-gold-500 text-sm mb-6 inline-block">← Back to Portfolio</Link>
+
+          <div className="w-full max-w-md sm:max-w-2xl md:max-w-3xl mx-auto">
+            {project.featuredImage ? (
+              <PortfolioLightbox src={resolveImageUrl(project.featuredImage)} alt={project.title} />
+            ) : (
+              <div className="aspect-[4/5] w-full rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-2xl flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-white/30 text-lg">No image available</p>
+                  <p className="text-white/20 text-sm mt-1">{project.title}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="mx-auto mt-8 max-w-3xl text-center">
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
               {project.category && <span className="bg-white/15 text-white px-3 py-1 rounded-full text-sm flex items-center gap-1"><Tag className="w-3 h-3" /> {project.category}</span>}
               {project.industry && <span className="bg-white/15 text-white px-3 py-1 rounded-full text-sm">{project.industry}</span>}
               {project.status && <span className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${project.status === 'COMPLETED' ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'}`}>{project.status === 'COMPLETED' ? <CheckCircle className="w-3 h-3" /> : <Clock className="w-3 h-3" />} {project.status.replace('_', ' ')}</span>}
               {project.isFeatured && <span className="bg-gold-500 text-white px-3 py-1 rounded-full text-sm flex items-center gap-1"><Star className="w-3 h-3" /> Featured</span>}
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{project.title}</h1>
-            <div className="flex flex-wrap items-center gap-4 text-white/70">
+
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">{project.title}</h1>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70">
               {project.clientName && <span className="flex items-center gap-1"><User className="w-4 h-4" /> {project.clientName}</span>}
               {completionDate && <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {completionDate}</span>}
             </div>
-            {project.projectUrl && <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" className="btn-primary mt-4 inline-flex items-center gap-2">Visit Site <ExternalLink className="w-4 h-4" /></a>}
-            {project.pdfUrl && (
-              <a href={resolveImageUrl(project.pdfUrl)} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-4 inline-flex items-center gap-2">
-                <Download className="w-4 h-4" /> {project.pdfName ? 'Download PDF' : 'View PDF'}
-              </a>
+
+            {(project.projectUrl || project.pdfUrl) && (
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                {project.projectUrl && <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center gap-2">Visit Site <ExternalLink className="w-4 h-4" /></a>}
+                {project.pdfUrl && (
+                  <a href={resolveImageUrl(project.pdfUrl)} target="_blank" rel="noopener noreferrer" className="btn-secondary inline-flex items-center gap-2">
+                    <Download className="w-4 h-4" /> {project.pdfName ? 'Download PDF' : 'View PDF'}
+                  </a>
+                )}
+              </div>
             )}
-            <div className="mt-4"><ShareButtons title={project.title} /></div>
+
+            <div className="mt-5 flex justify-center"><ShareButtons title={project.title} /></div>
           </div>
         </div>
       </section>
@@ -128,8 +155,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <section className="section-padding bg-gray-50">
           <div className="container-custom max-w-4xl">
             <h2 className="text-3xl font-bold text-primary-900 text-center mb-8">Project Gallery</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {galleryImages.map((img, i) => <div key={i} className="rounded-xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition-shadow"><img src={resolveImageUrl(img.url)} alt={img.alt || `${project.title} gallery ${i + 1}`} width={600} height={400} className="w-full h-56 object-cover" loading="lazy" /></div>)}
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              {galleryImages.map((img, i) => (
+                <div key={i} className="rounded-xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition-shadow">
+                  <PosterImage src={img.url} alt={img.alt || `${project.title} gallery ${i + 1}`} className="rounded-none" />
+                </div>
+              ))}
             </div>
           </div>
         </section>

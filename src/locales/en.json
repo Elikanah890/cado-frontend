@@ -14,6 +14,7 @@
     "portfolio": "Portfolio",
     "academy": "Courses",
     "blog": "Blog",
+    "shop": "Shop",
     "contact": "Contact",
     "whatsappUs": "WhatsApp Us"
   },
@@ -85,6 +86,12 @@
       "healthcare": "Healthcare",
       "ngos": "NGOs",
       "retail": "Retail & Ecommerce"
+    },
+    "shop": {
+      "label": "Shop",
+      "title": "Digital Products",
+      "subtitle": "Ready-made templates, graphics and digital tools to help your business grow.",
+      "viewAll": "View All Products"
     },
     "process": {
       "label": "Our Process",

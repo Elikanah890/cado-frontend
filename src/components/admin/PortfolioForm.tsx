@@ -6,7 +6,8 @@ import { X, Plus, Trash2, Upload, Loader2, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import { normalizePortraitImage } from '@/lib/portraitImage';
+import PosterImage from '@/components/PosterImage';
 
 type Tab = 'general' | 'content' | 'media' | 'testimonial' | 'tech' | 'seo' | 'advanced';
 
@@ -174,7 +175,8 @@ export default function PortfolioForm({ initialData, mode }: Props) {
     }
     setUploadingFeatured(true);
     try {
-      const url = await uploadSingleFile(file, 'portfolio');
+      const prepared = await normalizePortraitImage(file);
+      const url = await uploadSingleFile(prepared, 'portfolio');
       handleChange('featuredImage', url);
       toast.success('Featured image uploaded');
     } catch (err: any) {
@@ -195,7 +197,8 @@ export default function PortfolioForm({ initialData, mode }: Props) {
     try {
       const uploaded = await Promise.all(
         imageFiles.map(async (file) => {
-          const url = await uploadSingleFile(file, 'portfolio/gallery');
+          const prepared = await normalizePortraitImage(file);
+          const url = await uploadSingleFile(prepared, 'portfolio/gallery');
           return { url, alt: file.name.replace(/\.[^.]+$/, '') };
         })
       );
@@ -380,6 +383,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
             {/* Featured Image - Single Image Only */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Project Image (Featured)</label>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
               <input ref={featuredInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && handleFeaturedFiles(e.target.files)} />
               {!form.featuredImage ? (
                 <div
@@ -393,14 +397,14 @@ export default function PortfolioForm({ initialData, mode }: Props) {
                     {uploadingFeatured ? <Loader2 className="w-10 h-10 text-gold-500 animate-spin" /> : <Upload className="w-10 h-10 text-gray-400" />}
                     <div>
                       <p className="text-sm font-semibold text-gray-700">{uploadingFeatured ? 'Uploading...' : '📤 Upload Featured Image'}</p>
-                      <p className="text-xs text-gray-400 mt-1">Click or drag & drop (max 5MB - JPEG, PNG, WebP, GIF)</p>
+                      <p className="text-xs text-gray-400 mt-1">Click or drag & drop (max 5MB - JPEG, PNG, WebP, GIF). Best at 1080 × 1350 px (4:5).</p>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="relative">
-                    <img src={resolveImageUrl(form.featuredImage)} alt="Featured preview" className="w-full max-w-[400px] h-auto max-h-[300px] object-cover rounded-xl border mx-auto" />
+                  <div className="relative mx-auto w-full max-w-[320px]">
+                    <PosterImage src={form.featuredImage} alt="Featured preview" className="rounded-xl border" />
                     {uploadingFeatured && <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-xl"><Loader2 className="w-6 h-6 animate-spin text-gold-500" /> <span className="ml-2 text-sm">Uploading...</span></div>}
                   </div>
                   <div className="flex justify-center gap-3">
@@ -417,6 +421,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Gallery Images</label>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into 4:5 frames.</p>
               <input ref={galleryInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={(e) => e.target.files && handleGalleryFiles(e.target.files)} />
               <div
                 onDragOver={(e) => { e.preventDefault(); setDragOverGallery(true); }}
@@ -429,7 +434,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
                   {uploadingGallery ? <Loader2 className="w-8 h-8 text-gold-500 animate-spin" /> : <Upload className="w-8 h-8 text-gray-400" />}
                   <div>
                     <p className="text-sm font-semibold text-gray-700">{uploadingGallery ? 'Uploading...' : '📤 Upload Gallery Images'}</p>
-                    <p className="text-xs text-gray-400 mt-1">Click or drag & drop multiple images (JPEG, PNG, WEBP)</p>
+                    <p className="text-xs text-gray-400 mt-1">Click or drag & drop multiple images (JPEG, PNG, WEBP). Best at 1080 × 1350 px (4:5).</p>
                   </div>
                 </div>
               </div>
@@ -437,8 +442,8 @@ export default function PortfolioForm({ initialData, mode }: Props) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
                   {form.galleryImages.map((img, i) => (
                     <div key={i} className="relative group rounded-lg overflow-hidden border">
-                      <img src={resolveImageUrl(img.url)} alt={img.alt} className="w-full h-28 object-cover" />
-                      <button type="button" onClick={() => removeGalleryImage(i)} className="absolute top-1.5 right-1.5 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700">
+                      <PosterImage src={img.url} alt={img.alt} className="rounded-none" />
+                      <button type="button" onClick={() => removeGalleryImage(i)} className="absolute top-1.5 right-1.5 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 z-10">
                         <X className="w-3 h-3" />
                       </button>
                     </div>

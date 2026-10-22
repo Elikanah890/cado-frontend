@@ -14,6 +14,7 @@ const NAV_KEYS: Record<string, string> = {
   '/portfolio': 'nav.portfolio',
   '/courses': 'nav.academy',
   '/blog': 'nav.blog',
+  '/shop': 'nav.shop',
   '/contact': 'nav.contact',
 };
 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 
 interface PortfolioProject {
   id: string;
@@ -26,7 +26,7 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
   const items = projects.slice(0, 9);
   const doubled = [...items, ...items];
 
-  const CARD_WIDTH = 360;
+  const CARD_WIDTH = 320;
   const GAP = 24;
   const singleSetWidth = items.length * (CARD_WIDTH + GAP);
   const duration = items.length * 4;
@@ -56,20 +56,17 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
               <Link
                 key={`${project.id}-${i}`}
                 href={`/portfolio/${project.slug || project.id}`}
-                className="flex-shrink-0 w-[360px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
+                className="flex-shrink-0 w-[320px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
               >
-                <div className="relative h-48 overflow-hidden bg-gray-200">
+                <div className="relative overflow-hidden bg-gray-200">
                   {project.featuredImage ? (
-                    <img
-                      src={resolveImageUrl(project.featuredImage)}
+                    <PosterImage
+                      src={project.featuredImage}
                       alt={project.title}
-                      width={360}
-                      height={192}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
+                      className="rounded-none"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center">
+                    <div className="aspect-[4/5] w-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center">
                       <span className="text-white font-semibold text-sm text-center px-2">{project.title}</span>
                     </div>
                   )}

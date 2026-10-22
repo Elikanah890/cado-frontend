@@ -9,6 +9,7 @@ import JsonLd from '@/components/JsonLd';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { articleSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 import { sanitizeHtml } from '@/lib/sanitize';
 import BlogComments from './BlogComments';
 
@@ -170,8 +171,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
           </div>
           {resolvedImage && (
-            <div className="container-custom max-w-4xl">
-              <img src={resolvedImage} alt={title} width={1200} height={630} className="w-full max-h-[480px] object-cover rounded-t-2xl" loading="eager" />
+            <div className="container-custom">
+              <div className="max-w-md mx-auto pb-10">
+                <PosterImage src={resolvedImage} alt={title} loading="eager" className="rounded-2xl shadow-2xl" />
+              </div>
             </div>
           )}
         </section>
@@ -196,7 +199,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {galleryImages.map((img: string, i: number) => (
                         <a key={i} href={resolveImageUrl(img)} target="_blank" rel="noopener noreferrer" className="block rounded-xl overflow-hidden border hover:opacity-90 transition-opacity">
-                          <img src={resolveImageUrl(img)} alt={`${title} gallery ${i + 1}`} width={400} height={300} className="w-full h-40 md:h-48 object-cover" loading="lazy" />
+                          <PosterImage src={img} alt={`${title} gallery ${i + 1}`} className="rounded-none" />
                         </a>
                       ))}
                     </div>
@@ -250,11 +253,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <section className="section-padding pt-0">
             <div className="container-custom max-w-4xl">
               <h2 className="text-2xl font-bold text-primary-900 mb-6">Related Posts</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 {related.map((r: any) => (
                   <Link key={r.slug} href={`/blog/${r.slug}`} className="card group overflow-hidden">
-                    <div className="aspect-video bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
-                      {r.featuredImage ? <img src={resolveImageUrl(r.featuredImage)} alt={r.title} width={400} height={225} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-primary-400 text-sm">CadorDigital</div>}
+                    <div className="bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
+                      {r.featuredImage ? (
+                        <PosterImage
+                          src={r.featuredImage}
+                          alt={r.title}
+                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="aspect-[4/5] w-full flex items-center justify-center text-primary-400 text-sm">CadorDigital</div>
+                      )}
                     </div>
                     <div className="p-4">
                       <h3 className="font-bold text-primary-900 group-hover:text-gold-500 transition-colors line-clamp-2 text-sm">{r.title}</h3>

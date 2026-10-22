@@ -9,7 +9,8 @@ import {
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import { normalizePortraitImage } from '@/lib/portraitImage';
+import PosterImage from '@/components/PosterImage';
 import RichTextEditor from './RichTextEditor';
 import VideoUpload from './VideoUpload';
 import LessonCard from './LessonCard';
@@ -145,7 +146,8 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
     if (!file.type.startsWith('image/')) { toast.error('Only image files allowed'); return; }
     setUploadingThumb(true);
     try {
-      const url = await uploadSingleFile(file, 'course');
+      const prepared = await normalizePortraitImage(file);
+      const url = await uploadSingleFile(prepared, 'course');
       setForm((f) => ({ ...f, thumbnail: url, featuredImage: url }));
       toast.success('Course image uploaded');
     } catch (err: any) {
@@ -389,6 +391,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2"><ImageIcon className="w-4 h-4" /> Course Cover Image</label>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
               <input ref={thumbInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && handleThumbFiles(e.target.files)} />
               {!form.thumbnail && !form.featuredImage ? (
                 <div
@@ -399,12 +402,12 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
                 >
                   {uploadingThumb ? <Loader2 className="w-8 h-8 text-gold-500 animate-spin mx-auto" /> : <Upload className="w-8 h-8 text-gray-400 mx-auto" />}
                   <p className="mt-2 text-sm font-medium text-gray-600">Click or drag & drop to upload cover image</p>
-                  <p className="text-xs text-gray-400 mt-1">No size limit</p>
+                  <p className="text-xs text-gray-400 mt-1">Best at 1080 × 1350 px (4:5). Other ratios are auto-fitted.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <div className="relative inline-block">
-                    <img src={resolveImageUrl(form.thumbnail || form.featuredImage)} alt="Course cover" className="w-full max-w-[480px] h-auto max-h-[300px] object-cover rounded-xl border" />
+                  <div className="relative mx-auto w-full max-w-[320px]">
+                    <PosterImage src={form.thumbnail || form.featuredImage} alt="Course cover" className="rounded-xl border" />
                     {uploadingThumb && <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-xl"><Loader2 className="w-6 h-6 animate-spin text-gold-500" /></div>}
                   </div>
                   <div className="flex gap-2">

@@ -87,6 +87,42 @@ export interface CourseLesson {
   isFree: boolean;
 }
 
+export interface HeroSetting {
+  id: string;
+  tagline: string;
+  heading: string;
+  subtext: string;
+  primaryButtonText: string;
+  primaryButtonUrl: string;
+  secondaryButtonText: string;
+  secondaryButtonUrl: string;
+  stat1Value: string;
+  stat1Label: string;
+  stat2Value: string;
+  stat2Label: string;
+  heroImages: string[];
+  updatedAt?: string;
+}
+
+export interface ProductImage {
+  url: string;
+  alt?: string | null;
+}
+
+export interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  price: number;
+  currency: string;
+  images: ProductImage[];
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;

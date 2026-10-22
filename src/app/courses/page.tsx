@@ -7,7 +7,7 @@ import { publicApi } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { whatsappLink } from '@/lib/utils';
 import { useLanguage } from '@/lib/LanguageContext';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 
 export default function AcademyPage() {
   const { t } = useLanguage();
@@ -96,15 +96,21 @@ export default function AcademyPage() {
               <p className="text-gray-500">{t('academy.empty')}</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {courses.map((course) => (
                 <div key={course.slug} className="card group overflow-hidden flex flex-col">
                   <Link href={`/courses/${course.slug}`}>
-                    <div className="aspect-video bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center overflow-hidden">
+                    <div className="bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center overflow-hidden">
                       {course.thumbnail ? (
-                        <img src={resolveImageUrl(course.thumbnail)} alt={course.title} width={600} height={340} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <PosterImage
+                          src={course.thumbnail}
+                          alt={course.title}
+                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                        />
                       ) : (
-                        <BookOpen className="w-10 h-10 text-primary-400" />
+                        <div className="aspect-[4/5] w-full flex items-center justify-center">
+                          <BookOpen className="w-10 h-10 text-primary-400" />
+                        </div>
                       )}
                     </div>
                   </Link>

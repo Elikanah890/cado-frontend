@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, User } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 
 interface AcademyCourse {
   id: string;
@@ -63,18 +63,15 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
                 href={`/courses/${course.slug}`}
                 className="flex-shrink-0 w-[320px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
               >
-                <div className="relative h-44 overflow-hidden bg-primary-100">
+                <div className="relative overflow-hidden bg-primary-100">
                   {course.thumbnail || course.featuredImage ? (
-                    <img
-                      src={resolveImageUrl(course.thumbnail || course.featuredImage)}
+                    <PosterImage
+                      src={course.thumbnail || course.featuredImage || ''}
                       alt={course.title}
-                      width={320}
-                      height={176}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
+                      className="rounded-none"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center">
+                    <div className="aspect-[4/5] w-full bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center">
                       <BookOpen className="w-10 h-10 text-primary-600" />
                     </div>
                   )}

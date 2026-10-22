@@ -6,7 +6,8 @@ import { X, Trash2, Upload, Loader2, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import { normalizePortraitImage } from '@/lib/portraitImage';
+import PosterImage from '@/components/PosterImage';
 import RichTextEditor from './RichTextEditor';
 
 type Tab = 'general' | 'content' | 'media' | 'tags-seo' | 'advanced';
@@ -125,7 +126,8 @@ export default function BlogPostForm({ initialData, mode }: Props) {
     if (!file.type.startsWith('image/')) { toast.error('Only image files allowed'); return; }
     setUploadingFeatured(true);
     try {
-      const url = await uploadSingleFile(file, 'blog');
+      const prepared = await normalizePortraitImage(file);
+      const url = await uploadSingleFile(prepared, 'blog');
       handleChange('featuredImage', url);
       toast.success('Featured image uploaded');
     } catch (err: any) {
@@ -141,7 +143,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
     if (validFiles.length === 0) { toast.error('Only image files allowed'); return; }
     setUploadingGallery(true);
     try {
-      const urls = await Promise.all(validFiles.map((f) => uploadSingleFile(f, 'blog')));
+      const urls = await Promise.all(validFiles.map(async (f) => uploadSingleFile(await normalizePortraitImage(f), 'blog')));
       handleChange('galleryImages', [...form.galleryImages, ...urls]);
       toast.success(`${validFiles.length} image(s) uploaded`);
     } catch (err: any) {
@@ -285,6 +287,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Featured Image</label>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
               <input ref={featuredInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && handleFeaturedFiles(e.target.files)} />
               {!form.featuredImage ? (
                 <div
@@ -298,14 +301,14 @@ export default function BlogPostForm({ initialData, mode }: Props) {
                     {uploadingFeatured ? <Loader2 className="w-10 h-10 text-gold-500 animate-spin" /> : <Upload className="w-10 h-10 text-gray-400" />}
                     <div>
                       <p className="text-sm font-semibold text-gray-700">{uploadingFeatured ? 'Uploading...' : 'Upload Featured Image'}</p>
-                      <p className="text-xs text-gray-400 mt-1">Click or drag & drop (JPEG, PNG, WebP)</p>
+                      <p className="text-xs text-gray-400 mt-1">Click or drag & drop (JPEG, PNG, WebP). Best at 1080 × 1350 px (4:5).</p>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="relative">
-                    <img src={resolveImageUrl(form.featuredImage)} alt="Featured preview" className="w-full max-w-[400px] h-auto max-h-[300px] object-cover rounded-xl border mx-auto" />
+                  <div className="relative mx-auto w-full max-w-[320px]">
+                    <PosterImage src={form.featuredImage} alt="Featured preview" className="rounded-xl border" />
                     {uploadingFeatured && <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-xl"><Loader2 className="w-6 h-6 animate-spin text-gold-500" /> <span className="ml-2 text-sm">Uploading...</span></div>}
                   </div>
                   <div className="flex justify-center gap-3">
@@ -318,6 +321,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Gallery Images</label>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into 4:5 frames.</p>
               <input ref={galleryInputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => e.target.files && handleGalleryFiles(e.target.files)} />
               <button type="button" onClick={() => galleryInputRef.current?.click()} disabled={uploadingGallery}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium hover:bg-gray-50 disabled:opacity-50">
@@ -327,9 +331,9 @@ export default function BlogPostForm({ initialData, mode }: Props) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-4">
                   {form.galleryImages.map((url, i) => (
                     <div key={i} className="relative group rounded-lg overflow-hidden border">
-                      <img src={resolveImageUrl(url)} alt={`Gallery ${i + 1}`} className="w-full h-32 object-cover" />
+                      <PosterImage src={url} alt={`Gallery ${i + 1}`} className="rounded-none" />
                       <button type="button" onClick={() => handleChange('galleryImages', form.galleryImages.filter((_, idx) => idx !== i))}
-                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                         <Trash2 className="w-3 h-3" />
                       </button>
                     </div>

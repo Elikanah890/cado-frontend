@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type {
-  Service, Portfolio, Course, BlogPost,
+  Service, Portfolio, Course, BlogPost, Product, HeroSetting,
   BlogCategory, Testimonial, Lead, Comment,
   ApiResponse, PaginatedResponse
 } from '@/types';
@@ -47,6 +47,8 @@ export const publicApi = {
     portfolio: Portfolio[];
     blog: BlogPost[];
     academy: Course[];
+    hero: HeroSetting;
+    products: Product[];
     testimonials: any[];
     testimonialCount: number;
   }>>('/homepage').then((r) => r.data),
@@ -73,6 +75,9 @@ export const publicApi = {
   getPostComments: (slug: string) => api.get<ApiResponse<Comment[]>>(`/blog/${slug}/comments`, { cache: 'no-store' } as any).then((r) => r.data),
   createComment: (slug: string, data: { name: string; email?: string; content: string }) =>
     api.post<ApiResponse<Comment>>(`/blog/${slug}/comments`, data).then((r) => r.data),
+  getProducts: () => api.get<ApiResponse<Product[]>>('/products', { cache: 'no-store' } as any).then((r) => r.data),
+  getProduct: (slug: string) => api.get<ApiResponse<Product>>(`/products/${slug}`, { cache: 'no-store' } as any).then((r) => r.data),
+  getHero: () => api.get<ApiResponse<HeroSetting>>('/hero', { cache: 'no-store' } as any).then((r) => r.data),
   getTestimonials: () => api.get<ApiResponse<Testimonial[]>>('/testimonials', { cache: 'no-store' } as any).then((r) => r.data),
   getSettings: () => api.get<ApiResponse<Record<string, string | null>>>('/settings', { cache: 'no-store' } as any).then((r) => r.data),
   submitContact: (data: any) => api.post('/contact', data).then((r) => r.data),
@@ -98,6 +103,8 @@ export const adminApi = {
     api.put('/admin/password', data).then((r) => r.data),
   updatePassword: (data: any) => api.put('/admin/password', data).then((r) => r.data),
   getDashboard: () => api.get('/admin/dashboard/stats').then((r) => r.data),
+  getHero: () => api.get<ApiResponse<HeroSetting>>('/admin/hero').then((r) => r.data),
+  updateHero: (data: Partial<HeroSetting>) => api.put<ApiResponse<HeroSetting>>('/admin/hero', data).then((r) => r.data),
   getServices: () => api.get('/admin/services').then((r) => r.data),
   createService: (data: any) => api.post('/admin/services', data).then((r) => r.data),
   updateService: (id: string, data: any) => api.put(`/admin/services/${id}`, data).then((r) => r.data),
@@ -133,6 +140,11 @@ export const adminApi = {
   createCourse: (data: any) => api.post('/admin/academy', data).then((r) => r.data),
   updateCourse: (id: string, data: any) => api.put(`/admin/academy/${id}`, data).then((r) => r.data),
   deleteCourse: (id: string) => api.delete(`/admin/academy/${id}`).then((r) => r.data),
+  getProducts: () => api.get('/admin/products').then((r) => r.data),
+  getProductById: (id: string) => api.get(`/admin/products/${id}`).then((r) => r.data),
+  createProduct: (data: any) => api.post('/admin/products', data).then((r) => r.data),
+  updateProduct: (id: string, data: any) => api.put(`/admin/products/${id}`, data).then((r) => r.data),
+  deleteProduct: (id: string) => api.delete(`/admin/products/${id}`).then((r) => r.data),
   // Academy Lessons
   getCourseLessons: (courseId: string) => api.get(`/admin/academy/${courseId}/lessons`).then((r) => r.data),
   createLesson: (courseId: string, data: any) => api.post(`/admin/academy/${courseId}/lessons`, data).then((r) => r.data),

@@ -8,6 +8,7 @@ import JsonLd from '@/components/JsonLd';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { courseSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { whatsappLink } from '@/lib/utils';
 
@@ -66,9 +67,17 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
   return (
     <PublicLayout>
       <JsonLd data={[courseJson, breadcrumbJson]} />
-      <section className="bg-gray-900">
-        {cover ? <div className="relative h-72 md:h-96 w-full overflow-hidden"><img src={resolveImageUrl(cover)} alt={course.title} width={1200} height={600} loading="eager" className="w-full h-full object-cover" /></div> : <div className="h-56 w-full bg-gradient-to-b from-primary-800 to-primary-900" />}
-        <div className="container-custom max-w-4xl -mt-16 relative z-10 text-white">
+      <section className="bg-gray-900 pb-10">
+        {cover ? (
+          <div className="container-custom">
+            <div className="max-w-md mx-auto pt-10">
+              <PosterImage src={cover} alt={course.title} loading="eager" className="rounded-2xl shadow-2xl" />
+            </div>
+          </div>
+        ) : (
+          <div className="h-56 w-full bg-gradient-to-b from-primary-800 to-primary-900" />
+        )}
+        <div className={`container-custom max-w-4xl relative z-10 text-white ${cover ? 'mt-8' : 'pt-10'}`}>
           <Link href="/courses" className="text-white/60 hover:text-gold-400 text-sm mb-4 inline-block">← Back to Courses</Link>
           <div className="flex gap-3 mb-4">
             {course.category ? <span className="bg-gold-500/20 text-gold-400 px-3 py-1 rounded-full text-sm">{course.category}</span> : null}

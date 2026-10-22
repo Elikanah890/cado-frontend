@@ -7,7 +7,7 @@ import { publicApi } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Portfolio } from '@/types';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 
 export default function PortfolioPage() {
   const { t } = useLanguage();
@@ -73,10 +73,10 @@ export default function PortfolioPage() {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="card overflow-hidden animate-pulse">
-                  <div className="h-[250px] bg-gray-200" />
+                  <div className="aspect-[4/5] bg-gray-200" />
                   <div className="p-6 space-y-3">
                     <div className="h-5 bg-gray-200 rounded w-3/4" />
                     <div className="h-4 bg-gray-200 rounded w-1/2" />
@@ -94,25 +94,31 @@ export default function PortfolioPage() {
               <p className="text-gray-400 text-lg">{t('portfolioList.empty')}</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {projects.map((project) => (
                 <Link key={project.slug} href={`/portfolio/${project.slug}`} className="card group overflow-hidden">
-                  <div className="h-[250px] bg-gradient-to-br from-primary-200 to-primary-400 relative overflow-hidden">
+                  <div className="relative overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400">
                     {project.featuredImage ? (
-                      <img src={resolveImageUrl(project.featuredImage)} alt={project.title} width={600} height={400} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                    ) : null}
-                    <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/40 transition-colors flex items-center justify-center">
+                      <PosterImage
+                        src={project.featuredImage}
+                        alt={project.title}
+                        imageClassName="transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="aspect-[4/5]" />
+                    )}
+                    <div className="absolute inset-0 z-20 bg-primary-900/0 group-hover:bg-primary-900/40 transition-colors flex items-center justify-center">
                       <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-semibold flex items-center gap-1">
                         {t('portfolioList.viewProject')} <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
                     {project.category && (
-                      <span className="absolute top-3 left-3 bg-white/90 text-primary-900 px-3 py-1 rounded-full text-xs font-medium">
+                      <span className="absolute z-30 top-3 left-3 bg-white/90 text-primary-900 px-3 py-1 rounded-full text-xs font-medium">
                         {project.category}
                       </span>
                     )}
                     {project.isFeatured && (
-                      <span className="absolute top-3 right-3 bg-gold-500 text-white px-2 py-1 rounded-full text-xs font-medium">{t('portfolioList.featured')}</span>
+                      <span className="absolute z-30 top-3 right-3 bg-gold-500 text-white px-2 py-1 rounded-full text-xs font-medium">{t('portfolioList.featured')}</span>
                     )}
                   </div>
                   <div className="p-6">

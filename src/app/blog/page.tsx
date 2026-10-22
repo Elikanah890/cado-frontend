@@ -6,7 +6,7 @@ import { Clock, User, FileText, Search, Eye, MessageCircle, ChevronLeft, Chevron
 import PublicLayout from '@/components/PublicLayout';
 import { publicApi } from '@/lib/api';
 import { formatDate, slugify } from '@/lib/utils';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import PosterImage from '@/components/PosterImage';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Comment } from '@/types';
 
@@ -139,14 +139,18 @@ export default function BlogPage() {
               <button onClick={() => { setSearch(''); fetchPosts('All', 1, ''); setActiveCategory('All'); setPage(1); }} className="btn-primary mt-4">{t('blog.viewAll')}</button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {posts.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="card group overflow-hidden flex flex-col">
-                  <div className="aspect-video bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
+                  <div className="bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
                     {post.image ? (
-                      <img src={resolveImageUrl(post.image)} alt={post.title} width={600} height={340} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <PosterImage
+                        src={post.image}
+                        alt={post.title}
+                        imageClassName="transition-transform duration-500 group-hover:scale-105"
+                      />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
+                      <div className="aspect-[4/5] w-full flex items-center justify-center">
                         <FileText className="w-10 h-10 text-primary-400" />
                       </div>
                     )}

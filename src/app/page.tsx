@@ -1,52 +1,55 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  ArrowRight, Rocket, BookOpen, Hotel, HardHat,
-  HeartPulse, Handshake, ShoppingBag, Phone
-} from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import PortfolioCarousel from '@/components/PortfolioCarousel';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import AcademyCarousel from '@/components/AcademyCarousel';
+import PosterImage from '@/components/PosterImage';
 import { publicApi } from '@/lib/api';
 import { useLanguage } from '@/lib/LanguageContext';
-import { whatsappLink } from '@/lib/utils';
+import { formatCurrency, whatsappLink } from '@/lib/utils';
+import { resolveImageUrl } from '@/lib/imageUtils';
 import type { Service } from '@/types/service';
-import type { Portfolio } from '@/types';
+import type { HeroSetting, Portfolio, Product } from '@/types';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const industries = [
-  { key: 'home.industries.startups', icon: Rocket },
-  { key: 'home.industries.education', icon: BookOpen },
-  { key: 'home.industries.tourism', icon: Hotel },
-  { key: 'home.industries.construction', icon: HardHat },
-  { key: 'home.industries.healthcare', icon: HeartPulse },
-  { key: 'home.industries.ngos', icon: Handshake },
-  { key: 'home.industries.retail', icon: ShoppingBag },
-];
-
-const HERO_IMAGES = [
-  '/hero/hero1.jpeg',
-  '/hero/hero2.jpeg',
-  '/hero/hero3.jpeg',
-  '/hero/hero4.jpeg',
-  '/hero/hero5.jpeg',
-  '/hero/hero6.jpeg',
-];
+const DEFAULT_HERO: HeroSetting = {
+  id: 'main_hero',
+  tagline: 'Build. Market. Automate. Grow.',
+  heading: 'We Build Brands & Smart Systems That Drive Real Growth.',
+  subtext: 'Tailored digital solutions for ambitious businesses in Tanzania and beyond.',
+  primaryButtonText: 'Chat on WhatsApp',
+  primaryButtonUrl: 'https://wa.me/255716168903',
+  secondaryButtonText: 'View Portfolio',
+  secondaryButtonUrl: '/portfolio',
+  stat1Value: '6+',
+  stat1Label: 'Happy Clients',
+  stat2Value: '10+',
+  stat2Label: 'Projects Delivered',
+  heroImages: [
+    '/hero/hero1.jpeg',
+    '/hero/hero2.jpeg',
+    '/hero/hero3.jpeg',
+    '/hero/hero4.jpeg',
+    '/hero/hero5.jpeg',
+    '/hero/hero6.jpeg',
+  ],
+};
 
 export default function HomePage() {
   const { t } = useLanguage();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [clientCount, setClientCount] = useState<number | null>(null);
-  const [projectCount, setProjectCount] = useState<number | null>(null);
+  const [hero, setHero] = useState<HeroSetting>(DEFAULT_HERO);
   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const [academy, setAcademy] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -56,10 +59,10 @@ export default function HomePage() {
         const data = res.data;
         setServices(Array.isArray(data?.services) ? data.services : []);
         setPortfolio(Array.isArray(data?.portfolio) ? data.portfolio : []);
-        setProjectCount(Array.isArray(data?.portfolio) ? data.portfolio.length : 0);
-        setClientCount(typeof data?.testimonialCount === 'number' ? data.testimonialCount : Array.isArray(data?.testimonials) ? data.testimonials.length : 0);
+        if (data?.hero) setHero(data.hero);
         setTestimonials(Array.isArray(data?.testimonials) ? data.testimonials : []);
         setAcademy(Array.isArray(data?.academy) ? data.academy : []);
+        setProducts(Array.isArray(data?.products) ? data.products : []);
         setError(null);
       })
       .catch((err) => {
@@ -75,17 +78,31 @@ export default function HomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const productImage = (product: Product) => {
+    const first = Array.isArray(product.images) ? product.images[0] : null;
+    if (!first) return null;
+    return typeof first === 'string' ? first : first.url || null;
+  };
+
   const [heroIndex, setHeroIndex] = useState(0);
 
-  useEffect(() => {
-    const id = setInterval(() => setHeroIndex((i) => (i + 1) % HERO_IMAGES.length), 4000);
-    return () => clearInterval(id);
-  }, []);
+  const heroImages = Array.isArray(hero.heroImages) && hero.heroImages.length > 0
+    ? hero.heroImages
+    : DEFAULT_HERO.heroImages;
 
-  const heroImages = {
-    main: HERO_IMAGES[heroIndex],
-    left: HERO_IMAGES[(heroIndex + 1) % HERO_IMAGES.length],
-    right: HERO_IMAGES[(heroIndex + 2) % HERO_IMAGES.length],
+  useEffect(() => {
+    if (heroImages.length < 2) {
+      setHeroIndex(0);
+      return;
+    }
+    const id = setInterval(() => setHeroIndex((i) => (i + 1) % heroImages.length), 4000);
+    return () => clearInterval(id);
+  }, [heroImages.length]);
+
+  const heroCollage = {
+    main: resolveImageUrl(heroImages[heroIndex % heroImages.length]),
+    left: resolveImageUrl(heroImages[(heroIndex + 1) % heroImages.length]),
+    right: resolveImageUrl(heroImages[(heroIndex + 2) % heroImages.length]),
   };
 
   return (
@@ -103,25 +120,35 @@ export default function HomePage() {
             <div className="text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-gold-500 uppercase tracking-wider text-sm mb-8">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                {t('home.hero.badge')}
+                {hero.tagline}
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1]">
-                {t('home.hero.title')}
+                {hero.heading}
               </h1>
 
               <p className="text-lg md:text-xl text-white/60 mt-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                {t('home.hero.sub')}
+                {hero.subtext}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center lg:justify-start">
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-8 py-4 gap-2 group">
-                  {t('home.hero.startProject')}
+                <a
+                  href={hero.primaryButtonUrl}
+                  target={/^https?:\/\//i.test(hero.primaryButtonUrl) ? '_blank' : undefined}
+                  rel={/^https?:\/\//i.test(hero.primaryButtonUrl) ? 'noopener noreferrer' : undefined}
+                  className="btn-primary text-base px-8 py-4 gap-2 group"
+                >
+                  {hero.primaryButtonText}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
-                <Link href="/portfolio" className="btn-outline-light text-base px-8 py-4">
-                  {t('home.hero.viewPortfolio')}
-                </Link>
+                <a
+                  href={hero.secondaryButtonUrl}
+                  target={/^https?:\/\//i.test(hero.secondaryButtonUrl) ? '_blank' : undefined}
+                  rel={/^https?:\/\//i.test(hero.secondaryButtonUrl) ? 'noopener noreferrer' : undefined}
+                  className="btn-outline-light text-base px-8 py-4"
+                >
+                  {hero.secondaryButtonText}
+                </a>
               </div>
 
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 mt-12">
@@ -133,9 +160,9 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-white/50 text-sm">
-                  <span className="text-gold-400 font-bold">{clientCount ?? '10'}+</span> {t('home.hero.happyClients')}
+                  <span className="text-gold-400 font-bold">{hero.stat1Value}</span> {hero.stat1Label}
                   {' '}&middot;{' '}
-                  <span className="text-gold-400 font-bold">{projectCount ?? '10'}+</span> {t('home.hero.projectsDelivered')}
+                  <span className="text-gold-400 font-bold">{hero.stat2Value}</span> {hero.stat2Label}
                 </p>
               </div>
             </div>
@@ -149,7 +176,7 @@ export default function HomePage() {
                 <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}>
                   <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroImages.left} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+                    <img src={heroCollage.left} alt="" aria-hidden="true" className="w-full h-full object-contain" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </motion.div>
@@ -160,7 +187,7 @@ export default function HomePage() {
                 <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
                   <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroImages.main} alt="CadorDigital creative work" className="w-full h-full object-contain" />
+                    <img src={heroCollage.main} alt="CadorDigital creative work" className="w-full h-full object-contain" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </motion.div>
@@ -171,7 +198,7 @@ export default function HomePage() {
                 <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}>
                   <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroImages.right} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+                    <img src={heroCollage.right} alt="" aria-hidden="true" className="w-full h-full object-contain" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </motion.div>
@@ -186,24 +213,56 @@ export default function HomePage() {
       {/* Auto-Scrolling Portfolio Section */}
       <PortfolioCarousel title={t('home.recentWork')} projects={portfolio} />
 
-      {/* Industries */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.industries.label')}</span>
-            <h2 className="section-title mt-2">{t('home.industries.title')}</h2>
-            <p className="section-subtitle mx-auto">{t('home.industries.subtitle')}</p>
+      {/* Shop */}
+      {products.length > 0 && (
+        <section className="section-padding bg-white">
+          <div className="container-custom">
+            <div className="text-center mb-12">
+              <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.shop.label')}</span>
+              <h2 className="section-title mt-2">{t('home.shop.title')}</h2>
+              <p className="section-subtitle mx-auto">{t('home.shop.subtitle')}</p>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {products.slice(0, 4).map((product) => {
+                const image = productImage(product);
+                return (
+                  <Link key={product.id} href="/shop" className="card group overflow-hidden flex flex-col">
+                    <div className="bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
+                      {image ? (
+                        <PosterImage
+                          src={image}
+                          alt={product.title}
+                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="aspect-[4/5] w-full flex items-center justify-center">
+                          <ArrowRight className="w-8 h-8 text-primary-400" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4 flex flex-col flex-1">
+                      <h3 className="text-sm sm:text-base font-bold text-primary-900 group-hover:text-gold-500 transition-colors line-clamp-2">
+                        {product.title}
+                      </h3>
+                      <p className="text-gold-600 font-semibold mt-2 text-sm sm:text-base">{formatCurrency(product.price, product.currency)}</p>
+                      <span className="mt-3 inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-primary-700 group-hover:text-gold-600 transition-colors">
+                        Shop Now <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="text-center mt-8">
+              <Link href="/shop" className="btn-primary inline-flex items-center gap-2">
+                {t('home.shop.viewAll')} <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-            {industries.map((ind) => (
-              <div key={ind.key} className="card p-6 text-center hover:border-gold-500/50 cursor-default transition-all">
-                <ind.icon className="w-8 h-8 text-primary-600 mx-auto mb-3" />
-                <p className="text-sm font-medium text-primary-800">{t(ind.key)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Testimonials Carousel */}
       <TestimonialsCarousel testimonials={testimonials} />

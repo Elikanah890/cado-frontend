@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const orgJsonLd = organizationSchema();
   const siteJsonLd = websiteSchema();
   return (
-    <html lang="en" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

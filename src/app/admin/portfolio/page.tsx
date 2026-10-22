@@ -64,11 +64,17 @@ export default function AdminPortfolioPage() {
           {items.map((item: any) => (
             <div key={item.id} className="card overflow-hidden">
               {item.featuredImage ? (
-                <div className="w-full h-48 md:h-56 overflow-hidden rounded-t-lg">
+                <div className="relative w-full h-48 md:h-56 overflow-hidden rounded-t-lg bg-gray-100">
+                  <img
+                    src={resolveImageUrl(item.featuredImage)}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl"
+                  />
                   <img
                     src={resolveImageUrl(item.featuredImage)}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    className="relative z-10 w-full h-full object-contain"
                   />
                 </div>
               ) : (

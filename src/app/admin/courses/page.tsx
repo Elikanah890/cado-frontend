@@ -49,7 +49,10 @@ export default function AdminCoursesPage() {
             return (
               <div key={item.id} className="card overflow-hidden">
                 {coverFor(item) ? (
-                  <img src={coverFor(item)} alt={item.title} className="w-full h-40 object-cover" />
+                  <div className="relative w-full h-40 overflow-hidden bg-gray-100">
+                    <img src={coverFor(item)} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl" />
+                    <img src={coverFor(item)} alt={item.title} className="relative z-10 w-full h-full object-contain" />
+                  </div>
                 ) : (
                   <div className="w-full h-40 bg-gradient-to-br from-primary-100 to-primary-200" />
                 )}

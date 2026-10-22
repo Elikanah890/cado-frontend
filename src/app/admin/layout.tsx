@@ -7,7 +7,7 @@ import {
   LayoutDashboard, Briefcase, FolderOpen,
   GraduationCap, Newspaper, Settings,
   FileText, Activity, LogOut, Menu, X, ChevronDown, Tag,
-  Server, Wrench, Users, MessageSquareQuote
+  Server, Wrench, Users, MessageSquareQuote, ShoppingBag, Home
 } from 'lucide-react';
 import { adminApi } from '@/lib/api';
 import { cn } from '@/lib/utils';
@@ -19,6 +19,7 @@ type MenuItem =
 
 const menuItems: MenuItem[] = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
+  { label: 'Hero Settings', icon: Home, href: '/admin/hero' },
   { label: 'Visitors', icon: Users, href: '/admin/visitors' },
   { label: 'Services', icon: Briefcase, href: '/admin/services' },
   { label: 'Testimonials', icon: MessageSquareQuote, href: '/admin/testimonials' },
@@ -33,6 +34,7 @@ const menuItems: MenuItem[] = [
     { label: 'Categories', href: '/admin/blog/categories' },
     { label: 'Tags', href: '/admin/blog/tags' },
   ]},
+  { label: 'Shop', icon: ShoppingBag, href: '/admin/shop' },
   { label: 'Settings', icon: Settings, href: '/admin/settings' },
   { label: 'Activity Logs', icon: Activity, href: '/admin/activities' },
 ];

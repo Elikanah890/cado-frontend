@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Keep dev artifacts separate so `next build` can never corrupt a running dev server.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   // output: 'standalone' disabled for Vercel (uncomment for Docker self-hosting)
   // Use Vercel's default output; standalone breaks Vercel's nft.json trace
   ...(process.env.VERCEL ? {} : { output: 'standalone' }),
