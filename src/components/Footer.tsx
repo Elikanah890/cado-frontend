@@ -12,7 +12,7 @@ import { useLanguage } from '@/lib/LanguageContext';
 
 const quickLinks = [
   { key: 'nav.portfolio', href: '/portfolio' },
-  { key: 'nav.academy', href: '/academy' },
+  { key: 'nav.academy', href: '/courses' },
   { key: 'nav.blog', href: '/blog' },
   { key: 'nav.contact', href: '/contact' },
   { key: 'nav.whatsappUs', href: 'https://wa.me/255716168903' },

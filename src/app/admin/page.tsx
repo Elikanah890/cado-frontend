@@ -26,7 +26,7 @@ export default function AdminDashboard() {
   const quickActions = [
     { label: 'Add Service', href: '/admin/services', icon: Plus },
     { label: 'Create Blog Post', href: '/admin/blog', icon: Plus },
-    { label: 'Create Course', href: '/admin/academy', icon: Plus },
+    { label: 'Create Course', href: '/admin/courses', icon: Plus },
     { label: 'View Leads', href: '/admin/leads', icon: ArrowRight },
   ];
 

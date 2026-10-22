@@ -12,7 +12,7 @@ const NAV_KEYS: Record<string, string> = {
   '/': 'nav.home',
   '/services': 'nav.services',
   '/portfolio': 'nav.portfolio',
-  '/academy': 'nav.academy',
+  '/courses': 'nav.academy',
   '/blog': 'nav.blog',
   '/contact': 'nav.contact',
 };

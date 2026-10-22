@@ -81,7 +81,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ slug: s
       <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white p-8">
         <div className="text-center">
           <p className="text-red-400 mb-4">{error || t('coursePlayer.notFound')}</p>
-          <Link href="/academy" className="text-gold-500 hover:text-gold-400">← {t('coursePlayer.backAcademy')}</Link>
+          <Link href="/courses" className="text-gold-500 hover:text-gold-400">← {t('coursePlayer.backAcademy')}</Link>
         </div>
       </div>
     );
@@ -91,7 +91,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ slug: s
     return (
       <div className="min-h-screen bg-gray-900 flex flex-col">
         <header className="bg-gray-800 border-b border-gray-700 px-4 py-3">
-          <Link href={`/academy/${slug}`} className="text-gray-400 hover:text-white text-sm flex items-center gap-1">
+          <Link href={`/courses/${slug}`} className="text-gray-400 hover:text-white text-sm flex items-center gap-1">
             <ChevronLeft className="w-4 h-4" /> {t('coursePlayer.backCourse')}
           </Link>
         </header>
@@ -115,7 +115,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ slug: s
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white p-2 hover:bg-gray-700 rounded-lg lg:hidden">
             <MenuIcon className="w-5 h-5" />
           </button>
-          <Link href={`/academy/${slug}`} className="text-gray-400 hover:text-white text-sm flex items-center gap-1">
+          <Link href={`/courses/${slug}`} className="text-gray-400 hover:text-white text-sm flex items-center gap-1">
             <ChevronLeft className="w-4 h-4" /> {t('coursePlayer.backCourse')}
           </Link>
         </div>
@@ -139,7 +139,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ slug: s
               <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-primary w-full justify-center gap-2 inline-flex">
                 <MessageCircle className="w-4 h-4" /> {t('coursePlayer.enrollViaWhatsApp')}
               </a>
-              <Link href={`/academy/${slug}`} className="block mt-4 text-sm text-gold-500 hover:text-gold-400">
+              <Link href={`/courses/${slug}`} className="block mt-4 text-sm text-gold-500 hover:text-gold-400">
                 {t('coursePlayer.viewCourseDetails')}
               </Link>
             </div>

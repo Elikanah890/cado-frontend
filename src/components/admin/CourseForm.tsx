@@ -253,7 +253,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
         await adminApi.createCourse(payload);
         toast.success('Course created');
       }
-      router.push('/admin/academy');
+      router.push('/admin/courses');
       router.refresh();
     } catch (err: any) {
       toast.error(err?.response?.data?.message || err?.message || 'Failed to save course');
@@ -458,7 +458,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
         <button type="submit" disabled={saving} className="btn-primary gap-2">
           {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</> : 'Save Course'}
         </button>
-        <button type="button" onClick={() => router.push('/admin/academy')} className="btn-secondary">Cancel</button>
+        <button type="button" onClick={() => router.push('/admin/courses')} className="btn-secondary">Cancel</button>
       </div>
     </form>
   );

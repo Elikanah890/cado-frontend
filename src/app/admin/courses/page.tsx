@@ -7,7 +7,7 @@ import { adminApi } from '@/lib/api';
 import { toast } from 'sonner';
 import { resolveImageUrl } from '@/lib/imageUtils';
 
-export default function AdminAcademyPage() {
+export default function AdminCoursesPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,14 +33,14 @@ export default function AdminAcademyPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <div><h1 className="text-2xl font-bold text-primary-900">Academy</h1><p className="text-gray-500 mt-1">Manage courses, modules, and lessons with lock/unlock.</p></div>
-        <Link href="/admin/academy/new" className="btn-primary gap-2"><Plus className="w-4 h-4" /> Add Course</Link>
+        <div><h1 className="text-2xl font-bold text-primary-900">Courses</h1><p className="text-gray-500 mt-1">Manage courses, modules, and lessons with lock/unlock.</p></div>
+        <Link href="/admin/courses/new" className="btn-primary gap-2"><Plus className="w-4 h-4" /> Add Course</Link>
       </div>
 
       {loading ? <p className="text-gray-500">Loading...</p> : items.length === 0 ? (
         <div className="card p-12 text-center">
           <p className="text-gray-400 text-lg">No courses yet.</p>
-          <Link href="/admin/academy/new" className="btn-primary mt-4 inline-block">Create your first course</Link>
+          <Link href="/admin/courses/new" className="btn-primary mt-4 inline-block">Create your first course</Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -68,7 +68,7 @@ export default function AdminAcademyPage() {
                     <span>{Array.isArray(item.modules) ? item.modules.length : 0} modules</span>
                   </div>
                   <div className="flex gap-2">
-                    <Link href={`/admin/academy/edit/${item.id}`} className="flex-1 flex items-center justify-center gap-1 text-sm py-2 rounded-lg border border-gray-200 hover:bg-gray-50"><Pencil className="w-3 h-3" /> Edit</Link>
+                    <Link href={`/admin/courses/edit/${item.id}`} className="flex-1 flex items-center justify-center gap-1 text-sm py-2 rounded-lg border border-gray-200 hover:bg-gray-50"><Pencil className="w-3 h-3" /> Edit</Link>
                     <button className="flex items-center justify-center gap-1 text-sm py-2 px-3 rounded-lg border border-red-200 text-red-600 hover:bg-red-50" onClick={() => handleDelete(item)}><Trash2 className="w-3 h-3" /></button>
                   </div>
                 </div>

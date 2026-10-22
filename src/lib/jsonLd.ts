@@ -108,7 +108,7 @@ export function courseSchema(data: {
     '@type': 'Course',
     name: data.title,
     description: data.description,
-    url: absoluteUrl(`/academy/${data.slug}`),
+    url: absoluteUrl(`/courses/${data.slug}`),
     provider: { '@type': 'Organization', name: data.providerName || siteConfig.name, sameAs: siteConfig.url },
     image: data.image ? absoluteUrl(data.image) : absoluteUrl(siteConfig.ogImage),
     inLanguage: 'en-TZ',

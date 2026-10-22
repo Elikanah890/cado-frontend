@@ -226,7 +226,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                       <span className="text-gray-300">•</span>
                       <Link href="/portfolio" className="text-sm text-primary-700 hover:text-gold-600 font-medium">See our portfolio →</Link>
                       <span className="text-gray-300">•</span>
-                      <Link href="/academy" className="text-sm text-primary-700 hover:text-gold-600 font-medium">Learn in Academy →</Link>
+                      <Link href="/courses" className="text-sm text-primary-700 hover:text-gold-600 font-medium">Browse Courses →</Link>
                     </div>
                   </div>
                 )}

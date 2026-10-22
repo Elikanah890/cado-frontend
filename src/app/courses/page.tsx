@@ -99,7 +99,7 @@ export default function AcademyPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {courses.map((course) => (
                 <div key={course.slug} className="card group overflow-hidden flex flex-col">
-                  <Link href={`/academy/${course.slug}`}>
+                  <Link href={`/courses/${course.slug}`}>
                     <div className="aspect-video bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center overflow-hidden">
                       {course.thumbnail ? (
                         <img src={resolveImageUrl(course.thumbnail)} alt={course.title} width={600} height={340} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -117,7 +117,7 @@ export default function AcademyPage() {
                         <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">{course.level}</span>
                       ) : null}
                     </div>
-                    <Link href={`/academy/${course.slug}`}>
+                    <Link href={`/courses/${course.slug}`}>
                       <h3 className="text-lg font-bold text-primary-900 group-hover:text-gold-500 transition-colors mb-2">
                         {course.title}
                       </h3>

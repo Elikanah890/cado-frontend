@@ -26,7 +26,7 @@ const menuItems: MenuItem[] = [
     { label: 'Projects', href: '/admin/portfolio' },
     { label: 'Categories', href: '/admin/portfolio/categories' },
   ]},
-  { label: 'Academy', icon: GraduationCap, href: '/admin/academy' },
+  { label: 'Courses', icon: GraduationCap, href: '/admin/courses' },
   { label: 'Blog', icon: Newspaper, children: [
     { label: 'Posts', href: '/admin/blog' },
     { label: 'Comments', href: '/admin/blog/comments' },

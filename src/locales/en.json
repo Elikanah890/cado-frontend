@@ -12,7 +12,7 @@
     "home": "Home",
     "services": "Services",
     "portfolio": "Portfolio",
-    "academy": "Academy",
+    "academy": "Courses",
     "blog": "Blog",
     "contact": "Contact",
     "whatsappUs": "WhatsApp Us"
@@ -144,8 +144,8 @@
     "testimonialsLabel": "Testimonials",
     "testimonialsTitle": "What Our Clients Say",
     "testimonialsSubtitle": "Real stories from businesses we've helped grow.",
-    "academyLabel": "Academy",
-    "academyTitle": "Learn & Grow With Our Academy",
+    "academyLabel": "Courses",
+    "academyTitle": "Learn & Grow With Our Courses",
     "academySubtitle": "Practical courses to build your skills and business."
   },
   "servicesList": {
@@ -208,7 +208,7 @@
     "enroll": "Enroll"
   },
   "academyDetail": {
-    "back": "Back to Academy",
+    "back": "Back to Courses",
     "loading": "Loading course...",
     "loadError": "Failed to load course",
     "notFound": "Course not found",
@@ -239,7 +239,7 @@
     "backCourse": "Back to Course",
     "loading": "Loading course...",
     "notFound": "Course not found",
-    "backAcademy": "Back to Academy",
+    "backAcademy": "Back to Courses",
     "noLessons": "No lessons yet for this course.",
     "complete": "% Complete",
     "lockedTitle": "This lesson is locked",

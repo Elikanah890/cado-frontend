@@ -12,7 +12,7 @@
     "home": "Nyumbani",
     "services": "Huduma",
     "portfolio": "Kazi Zetu",
-    "academy": "Chuo",
+    "academy": "Kozi",
     "blog": "Blogi",
     "contact": "Wasiliana",
     "whatsappUs": "Wasiliana Nasi kwa WhatsApp"
@@ -144,8 +144,8 @@
     "testimonialsLabel": "Shuhuda",
     "testimonialsTitle": "Wateja Wetu Wanasema Nini",
     "testimonialsSubtitle": "Hadithi halisi kutoka kwa biashara tulizosaidia kukua.",
-    "academyLabel": "Akademi",
-    "academyTitle": "Jifunze na Kukua Kupitia Akademi Yetu",
+    "academyLabel": "Kozi",
+    "academyTitle": "Jifunze na Kukua Kupitia Kozi Zetu",
     "academySubtitle": "Kozi za vitendo za kukuza ujuzi na biashara yako."
   },
   "servicesList": {
@@ -208,7 +208,7 @@
     "enroll": "Jiandikisha"
   },
   "academyDetail": {
-    "back": "Rudi kwenye Chuo",
+    "back": "Rudi kwenye Kozi",
     "loading": "Inapakia kozi...",
     "loadError": "Imeshindikana kupakia kozi",
     "notFound": "Kozi haikupatikana",
@@ -239,7 +239,7 @@
     "backCourse": "Rudi kwenye Kozi",
     "loading": "Inapakia kozi...",
     "notFound": "Kozi haikupatikana",
-    "backAcademy": "Rudi kwenye Chuo",
+    "backAcademy": "Rudi kwenye Kozi",
     "noLessons": "Hakuna masomo bado kwa kozi hii.",
     "complete": "% Imekamilika",
     "lockedTitle": "Somo hili limefungwa",

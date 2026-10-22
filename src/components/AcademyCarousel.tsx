@@ -60,7 +60,7 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
             {doubled.map((course, i) => (
               <Link
                 key={`${course.id}-${i}`}
-                href={`/academy/${course.slug}`}
+                href={`/courses/${course.slug}`}
                 className="flex-shrink-0 w-[320px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
               >
                 <div className="relative h-44 overflow-hidden bg-primary-100">
@@ -102,7 +102,7 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
 
         <div className="text-center mt-6">
           <Link
-            href="/academy"
+            href="/courses"
             className="inline-block px-6 py-3 bg-primary-900 text-white font-semibold rounded-lg hover:bg-primary-800 transition-colors"
           >
             {t('nav.academy')} →

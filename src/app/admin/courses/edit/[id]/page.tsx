@@ -40,7 +40,7 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
     return (
       <div className="p-6 text-center">
         <p className="text-red-500 mb-4">{error || 'Course not found'}</p>
-        <Link href="/admin/academy" className="btn-primary">Back to Academy</Link>
+        <Link href="/admin/courses" className="btn-primary">Back to Courses</Link>
       </div>
     );
   }
@@ -48,8 +48,8 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
   return (
     <div>
       <div className="mb-6">
-        <Link href="/admin/academy" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gold-600">
-          <ArrowLeft className="w-4 h-4" /> Back to Academy
+        <Link href="/admin/courses" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gold-600">
+          <ArrowLeft className="w-4 h-4" /> Back to Courses
         </Link>
         <h1 className="text-2xl font-bold text-primary-900 mt-2">Edit Course</h1>
         <p className="text-gray-500 mt-1">Update course: {data.title}</p>

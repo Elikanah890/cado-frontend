@@ -6,6 +6,10 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/pricing', destination: '/contact', permanent: true },
+      { source: '/academy', destination: '/courses', permanent: true },
+      { source: '/academy/:path*', destination: '/courses/:path*', permanent: true },
+      { source: '/admin/academy', destination: '/admin/courses', permanent: true },
+      { source: '/admin/academy/:path*', destination: '/admin/courses/:path*', permanent: true },
     ];
   },
   images: {

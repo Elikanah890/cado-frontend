@@ -6,7 +6,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/services', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/portfolio', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/blog', priority: 0.8, changeFrequency: 'daily' },
-  { path: '/academy', priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/courses', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/contact', priority: 0.8, changeFrequency: 'yearly' },
   { path: '/about', priority: 0.8, changeFrequency: 'monthly' },
 ];
@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
   const courseUrls: MetadataRoute.Sitemap = courses.map((p) => ({
-    url: `${baseUrl}/academy/${p.slug}`,
+    url: `${baseUrl}/courses/${p.slug}`,
     lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
     changeFrequency: 'weekly',
     priority: 0.6,
