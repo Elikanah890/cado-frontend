@@ -181,6 +181,36 @@ export default function HomePage() {
         </div>
       </section>
 
+
+
+      {/* Auto-Scrolling Portfolio Section */}
+      <PortfolioCarousel title={t('home.recentWork')} projects={portfolio} />
+
+      {/* Industries */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.industries.label')}</span>
+            <h2 className="section-title mt-2">{t('home.industries.title')}</h2>
+            <p className="section-subtitle mx-auto">{t('home.industries.subtitle')}</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            {industries.map((ind) => (
+              <div key={ind.key} className="card p-6 text-center hover:border-gold-500/50 cursor-default transition-all">
+                <ind.icon className="w-8 h-8 text-primary-600 mx-auto mb-3" />
+                <p className="text-sm font-medium text-primary-800">{t(ind.key)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Carousel */}
+      <TestimonialsCarousel testimonials={testimonials} />
+
+      {/* Academy Carousel */}
+      <AcademyCarousel courses={academy} />
+
       {/* Services Section */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
@@ -221,34 +251,6 @@ export default function HomePage() {
           )}
         </div>
       </section>
-
-      {/* Industries */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.industries.label')}</span>
-            <h2 className="section-title mt-2">{t('home.industries.title')}</h2>
-            <p className="section-subtitle mx-auto">{t('home.industries.subtitle')}</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-            {industries.map((ind) => (
-              <div key={ind.key} className="card p-6 text-center hover:border-gold-500/50 cursor-default transition-all">
-                <ind.icon className="w-8 h-8 text-primary-600 mx-auto mb-3" />
-                <p className="text-sm font-medium text-primary-800">{t(ind.key)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Carousel */}
-      <TestimonialsCarousel testimonials={testimonials} />
-
-      {/* Academy Carousel */}
-      <AcademyCarousel courses={academy} />
-
-      {/* Auto-Scrolling Portfolio Section */}
-      <PortfolioCarousel title={t('home.recentWork')} projects={portfolio} />
 
       {/* Final CTA */}
       <section className="section-padding bg-gradient-to-br from-primary-900 to-primary-700 relative overflow-hidden">
