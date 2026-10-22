@@ -7,8 +7,10 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/portfolio', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/blog', priority: 0.8, changeFrequency: 'daily' },
   { path: '/courses', priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/shop', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/contact', priority: 0.8, changeFrequency: 'yearly' },
-  { path: '/about', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
+  { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
 ];
 
 async function fetchSlugs(endpoint: string): Promise<{ slug: string; updatedAt?: string; publishedAt?: string }[]> {
@@ -52,11 +54,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: r.priority,
   }));
 
-  const [blog, services, portfolio, courses] = await Promise.all([
+  const [blog, services, portfolio, courses, products] = await Promise.all([
     fetchBlogSlugs(),
     fetchSlugs('/services'),
     fetchSlugs('/portfolio'),
-    fetchSlugs('/academy'),
+    fetchSlugs('/courses'),
+    fetchSlugs('/products'),
   ]);
 
   const blogUrls: MetadataRoute.Sitemap = blog.map((p) => ({
@@ -83,6 +86,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'weekly',
     priority: 0.6,
   }));
+  const productUrls: MetadataRoute.Sitemap = products.map((p) => ({
+    url: `${baseUrl}/shop/${p.slug}`,
+    lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
 
-  return [...statics, ...blogUrls, ...serviceUrls, ...portfolioUrls, ...courseUrls];
+  return [...statics, ...blogUrls, ...serviceUrls, ...portfolioUrls, ...courseUrls, ...productUrls];
 }
