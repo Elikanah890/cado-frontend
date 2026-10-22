@@ -33,7 +33,7 @@ export const siteConfig = {
     'SEO Tanzania',
     'ecommerce development',
   ],
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://cador.digital').replace(/\/$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://cadordigital.co.tz').replace(/\/$/, ''),
   ogImage: '/og-image.png',
   locale: 'en_TZ',
   twitterHandle: '@CadorDigital',
