@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { publicApi } from '@/lib/api';
 import { useLanguage } from '@/lib/LanguageContext';
-import { useServices } from '@/lib/ServicesContext';
 
 const quickLinks = [
   { key: 'nav.portfolio', href: '/portfolio' },
@@ -23,7 +22,6 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showScroll, setShowScroll] = useState(false);
-  const services = useServices();
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -87,20 +85,11 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">{t('footer.servicesTitle')}</h4>
             <ul className="space-y-2.5">
-              {services.length > 0 ? (
-                services.map((s) => (
-                  <li key={s.id}>
-                    <Link
-                      href={`/services/${s.slug}`}
-                      className="text-gray-400 hover:text-gold-500 text-sm transition-colors"
-                    >
-                      {s.name}
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <li className="text-gray-500 text-sm">{t('footer.noServices')}</li>
-              )}
+              <li>
+                <Link href="/services" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
+                  {t('nav.services')}
+                </Link>
+              </li>
             </ul>
           </div>
 

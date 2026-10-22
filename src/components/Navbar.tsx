@@ -3,11 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, MessageCircle, Languages } from 'lucide-react';
+import { Menu, X, MessageCircle, Languages } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { whatsappLink } from '@/lib/utils';
 import { useLanguage } from '@/lib/LanguageContext';
-import { useServices } from '@/lib/ServicesContext';
 
 const NAV_KEYS: Record<string, string> = {
   '/': 'nav.home',
@@ -20,11 +19,8 @@ const NAV_KEYS: Record<string, string> = {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
-  const services = useServices();
-  const serviceLinks = services.map((s) => ({ label: s.name, href: whatsappLink(s.name) }));
 
   const isAdmin = pathname.startsWith('/admin');
   if (isAdmin) return null;
@@ -71,49 +67,14 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-8">
           {navHrefs.map((href) => {
-            if (href === '/services') {
-              return (
-                <div
-                  key={href}
-                  className="relative"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
-                >
-                  <Link
-                    href={href}
-                    className="flex items-center gap-1 font-medium text-gray-700 hover:text-gold-500 transition-colors text-sm"
-                  >
-                    {t(NAV_KEYS[href])}
-                    <ChevronDown className="w-4 h-4" />
-                  </Link>
-                  {servicesOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 animate-slide-down">
-                      {serviceLinks.map((sl) => (
-                        <a
-                          key={sl.href}
-                          href={sl.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-900 transition-colors"
-                          onClick={() => setServicesOpen(false)}
-                        >
-                          {sl.label}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            }
+            const isActive = pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
             return (
               <Link
                 key={href}
                 href={href}
                 className={cn(
                   'font-medium transition-colors text-sm',
-                  pathname === href
-                    ? 'text-gold-500'
-                    : 'text-gray-700 hover:text-gold-500'
+                  isActive ? 'text-gold-500' : 'text-gray-700 hover:text-gold-500'
                 )}
               >
                 {t(NAV_KEYS[href])}
@@ -140,21 +101,22 @@ export default function Navbar() {
       {isOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 shadow-2xl animate-slide-down">
           <div className="container-custom py-4 space-y-1">
-            {navHrefs.map((href) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  'block py-3 px-4 rounded-lg text-sm font-medium transition-colors',
-                  pathname === href
-                    ? 'text-gold-500 bg-primary-50'
-                    : 'text-gray-700 hover:bg-gray-50'
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                {t(NAV_KEYS[href])}
-              </Link>
-            ))}
+            {navHrefs.map((href) => {
+              const isActive = pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    'block py-3 px-4 rounded-lg text-sm font-medium transition-colors',
+                    isActive ? 'text-gold-500 bg-primary-50' : 'text-gray-700 hover:bg-gray-50'
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {t(NAV_KEYS[href])}
+                </Link>
+              );
+            })}
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center text-sm" onClick={() => setIsOpen(false)}>
               <MessageCircle className="w-4 h-4 inline mr-2" /> {t('nav.whatsappUs')}
             </a>
