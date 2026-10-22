@@ -146,18 +146,23 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} CadorDigital. {t('footer.rights')}
-          </p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
-              {t('footer.privacy')}
-            </Link>
-            <Link href="/terms" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
-              {t('footer.terms')}
-            </Link>
+        <div className="container-custom py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-gray-400 text-sm">
+              &copy; {new Date().getFullYear()} CadorDigital. {t('footer.rights')}
+            </p>
+            <div className="flex gap-6">
+              <Link href="/privacy" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
+                {t('footer.privacy')}
+              </Link>
+              <Link href="/terms" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
+                {t('footer.terms')}
+              </Link>
+            </div>
           </div>
+          <p className="mt-4 text-xs text-gray-500 leading-relaxed text-center sm:text-left">
+            CadorDigital (also known as Cador, Cadorgraphix, Kado, Kadographics, or Cadorgraphics) is a leading digital agency in Tanzania.
+          </p>
         </div>
       </div>
 

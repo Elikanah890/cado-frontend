@@ -1,17 +1,34 @@
+export const brandAliases = [
+  'Cador',
+  'Cadorgraphix',
+  'Kado',
+  'Kadographics',
+  'Cadorgraphics',
+];
+
 export const siteConfig = {
   name: 'CadorDigital',
+  aliases: brandAliases,
   tagline: 'Build. Market. Automate. Grow.',
   title: 'CadorDigital - Build. Market. Automate. Grow.',
   description:
     'CadorDigital helps startups, companies and organizations build professional brands, websites, marketing systems and automation solutions that create real business growth in Tanzania and beyond.',
   keywords: [
-    'digital agency Tanzania',
+    'CadorDigital',
+    'Cador',
+    'Cadorgraphix',
+    'Kado',
+    'Kadographics',
+    'Cadorgraphics',
+    'Digital Agency Tanzania',
+    'Web Development',
+    'Branding',
+    'Digital Marketing',
+    'SEO',
     'web development Tanzania',
     'branding Tanzania',
-    'digital marketing',
     'AI automation',
     'business registration Tanzania',
-    'CadorDigital',
     'website design Dar es Salaam',
     'SEO Tanzania',
     'ecommerce development',

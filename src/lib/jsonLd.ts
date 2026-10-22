@@ -1,4 +1,4 @@
-import { siteConfig, absoluteUrl } from './seo';
+import { siteConfig, brandAliases, absoluteUrl } from './seo';
 
 export function organizationSchema() {
   return {
@@ -6,12 +6,20 @@ export function organizationSchema() {
     '@type': 'Organization',
     '@id': `${siteConfig.url}/#organization`,
     name: siteConfig.name,
+    alternateName: brandAliases,
     url: siteConfig.url,
     logo: absoluteUrl('/cador-logo.png'),
     image: absoluteUrl(siteConfig.ogImage),
     description: siteConfig.description,
+    email: 'admin@cador.digital',
     foundingLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressCountry: 'TZ', addressLocality: 'Dar es Salaam' } },
-    sameAs: ['https://wa.me/255716168903'],
+    sameAs: [
+      'https://facebook.com/cadordigital',
+      'https://instagram.com/cadordigital',
+      'https://linkedin.com/company/cadordigital',
+      'https://twitter.com/cadordigital',
+      'https://wa.me/255716168903',
+    ],
     contactPoint: { '@type': 'ContactPoint', telephone: '+255716168903', contactType: 'customer service', availableLanguage: ['English', 'Swahili'] },
   };
 }
@@ -23,6 +31,7 @@ export function websiteSchema() {
     '@id': `${siteConfig.url}/#website`,
     url: siteConfig.url,
     name: siteConfig.name,
+    alternateName: brandAliases,
     description: siteConfig.description,
     publisher: { '@id': `${siteConfig.url}/#organization` },
     inLanguage: 'en-TZ',
