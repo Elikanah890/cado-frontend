@@ -118,11 +118,6 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: copy */}
             <div className="text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-gold-500 uppercase tracking-wider text-sm mb-8">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                {hero.tagline}
-              </div>
-
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1]">
                 {hero.heading}
               </h1>
@@ -303,11 +298,12 @@ export default function HomePage() {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="card p-8 animate-pulse">
-                  <div className="w-14 h-14 rounded-2xl bg-primary-50 mb-5" />
-                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-3" />
-                  <div className="h-4 bg-gray-200 rounded w-full mb-2" />
-                  <div className="h-4 bg-gray-200 rounded w-5/6" />
+                <div key={i} className="animate-pulse rounded-2xl border-t-4 border-gold-500/40 bg-white p-8 shadow-md shadow-gray-200/60">
+                  <div className="mb-6 h-14 w-14 rounded-xl bg-gold-50" />
+                  <div className="mb-3 h-6 w-3/4 rounded bg-gray-200" />
+                  <div className="mb-2 h-4 w-full rounded bg-gray-200" />
+                  <div className="mb-6 h-4 w-5/6 rounded bg-gray-200" />
+                  <div className="h-10 w-full rounded-xl bg-gray-100" />
                 </div>
               ))}
             </div>
@@ -319,15 +315,28 @@ export default function HomePage() {
               </button>
             </div>
           ) : services.length === 0 ? (
-            <div className="card p-12 text-center">
+            <div className="rounded-2xl border-t-4 border-gold-500 bg-white p-12 text-center shadow-md shadow-gray-200/60">
               <p className="text-gray-400 text-lg">{t('home.services.emptyTitle')}</p>
               <p className="text-gray-400 text-sm mt-2">{t('home.services.emptySub')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <ServiceCard key={service.id} service={service} style={{ animationDelay: `${index * 0.1}s` }} />
-              ))}
+              {services.map((service, index) => {
+                const placement =
+                  services.length % 3 === 1 && index === services.length - 1
+                    ? 'lg:col-start-2'
+                    : services.length % 3 === 2 && index === services.length - 2
+                      ? 'lg:col-start-2'
+                      : '';
+                return (
+                  <ServiceCard
+                    key={service.id}
+                    service={service}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className={placement}
+                  />
+                );
+              })}
             </div>
           )}
         </div>

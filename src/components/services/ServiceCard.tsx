@@ -1,6 +1,6 @@
 'use client';
 
-import { BookOpen, Globe, Palette, Cpu, Briefcase, Camera, Building2, Megaphone, ArrowRight } from 'lucide-react';
+import { Globe, Palette, Cpu, Briefcase, Camera, Building2, Megaphone, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Service } from '@/types';
@@ -23,32 +23,40 @@ type ServiceCardProps = {
   showLink?: boolean;
   showIcon?: boolean;
   style?: React.CSSProperties;
+  className?: string;
 };
 
-export function ServiceCard({ service, showLink = true, showIcon = true, style }: ServiceCardProps) {
+export function ServiceCard({ service, showLink = true, showIcon = true, style, className = '' }: ServiceCardProps) {
   const { t } = useLanguage();
   const IconComponent = showIcon ? (iconMap[(service.icon || '').toLowerCase()] || Globe) : null;
+
+  const content = (
+    <>
+      {IconComponent && (
+        <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gold-50 text-gold-600 transition-colors duration-300 group-hover:bg-gold-500 group-hover:text-white">
+          <IconComponent className="h-7 w-7" />
+        </div>
+      )}
+      <h3 className="mb-3 text-xl font-bold text-gray-900">{service.name}</h3>
+      <p className="mb-6 flex-1 text-sm leading-relaxed text-gray-600 sm:text-base">
+        {service.description || service.overview || ''}
+      </p>
+      {showLink && (
+        <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gold-500/30 bg-gold-50/60 px-4 py-2.5 text-sm font-semibold text-gold-700 transition-all duration-300 group-hover:bg-gold-500 group-hover:text-white">
+          {t('common.viewDetails')}
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+        </span>
+      )}
+    </>
+  );
 
   return (
     <Link
       href={showLink ? `/services/${service.slug}` : '#'}
-      className="card p-8 group animate-slide-up"
+      className={`group flex h-full animate-slide-up flex-col rounded-2xl border-t-4 border-gold-500 bg-white p-8 shadow-md shadow-gray-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${className}`}
       style={style}
     >
-      <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mb-5 group-hover:bg-gold-500/10 transition-colors">
-        {IconComponent && <IconComponent className="w-7 h-7 text-primary-700 group-hover:text-gold-500 transition-colors" />}
-      </div>
-      <h3 className="text-xl font-bold text-primary-900 mb-3 group-hover:text-gold-500 transition-colors">
-        {service.name}
-      </h3>
-      <p className="text-gray-600 text-sm leading-relaxed mb-4">
-        {service.description || service.overview || ''}
-      </p>
-      {showLink && (
-        <span className="text-gold-500 text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
-          {t('common.viewDetails')} <ArrowRight className="w-4 h-4" />
-        </span>
-      )}
+      {content}
     </Link>
   );
 }
