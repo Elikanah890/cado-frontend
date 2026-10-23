@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import {
-  Facebook, Instagram, Linkedin, Twitter, Youtube,
+  Facebook, Instagram, Youtube,
   MapPin, Mail, Phone, ArrowUp
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { publicApi } from '@/lib/api';
+import { useSocialLinks } from '@/lib/social';
 import { useLanguage } from '@/lib/LanguageContext';
 
 const quickLinks = [
@@ -24,6 +25,7 @@ export default function Footer() {
   const [loading, setLoading] = useState(false);
   const [showScroll, setShowScroll] = useState(false);
   const { t } = useLanguage();
+  const socialLinks = useSocialLinks();
 
   useEffect(() => {
     const handleScroll = () => setShowScroll(window.scrollY > 500);
@@ -66,15 +68,16 @@ export default function Footer() {
             </p>
             <div className="flex gap-3 mt-6">
               {[
-                { icon: Facebook, href: '#' },
-                { icon: Instagram, href: '#' },
-                { icon: Linkedin, href: '#' },
-                { icon: Twitter, href: '#' },
-                { icon: Youtube, href: '#' },
-              ].map((social, i) => (
+                { icon: Instagram, href: socialLinks.instagram, label: 'Instagram' },
+                { icon: Youtube, href: socialLinks.youtube, label: 'YouTube' },
+                { icon: Facebook, href: socialLinks.facebook, label: 'Facebook' },
+              ].filter((social) => Boolean(social.href)).map((social) => (
                 <a
-                  key={i}
+                  key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
                   className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-gold-500 transition-colors"
                 >
                   <social.icon className="w-4 h-4" />

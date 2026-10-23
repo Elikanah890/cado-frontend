@@ -7,6 +7,13 @@ import { toast } from 'sonner';
 
 interface SettingGroup { key: string; label: string; type: string; group: string; }
 
+const groupLabels: Record<string, string> = {
+  company: 'Company',
+  social: 'Social Media Links',
+  seo: 'SEO',
+  analytics: 'Analytics',
+};
+
 const settingFields = [
   { key: 'company_name', label: 'Company Name', type: 'text', group: 'company' },
   { key: 'company_tagline', label: 'Tagline', type: 'text', group: 'company' },
@@ -14,11 +21,9 @@ const settingFields = [
   { key: 'company_email', label: 'Email', type: 'email', group: 'company' },
   { key: 'company_phone', label: 'Phone', type: 'text', group: 'company' },
   { key: 'company_address', label: 'Address', type: 'text', group: 'company' },
-  { key: 'facebook_url', label: 'Facebook URL', type: 'url', group: 'social' },
-  { key: 'instagram_url', label: 'Instagram URL', type: 'url', group: 'social' },
-  { key: 'twitter_url', label: 'Twitter/X URL', type: 'url', group: 'social' },
-  { key: 'linkedin_url', label: 'LinkedIn URL', type: 'url', group: 'social' },
-  { key: 'youtube_url', label: 'YouTube URL', type: 'url', group: 'social' },
+  { key: 'social_instagram', label: 'Instagram URL', type: 'url', group: 'social' },
+  { key: 'social_youtube', label: 'YouTube URL', type: 'url', group: 'social' },
+  { key: 'social_facebook', label: 'Facebook URL', type: 'url', group: 'social' },
   { key: 'whatsapp_number', label: 'WhatsApp Number', type: 'text', group: 'social' },
   { key: 'seo_title', label: 'SEO Title', type: 'text', group: 'seo' },
   { key: 'seo_description', label: 'SEO Description', type: 'textarea', group: 'seo' },
@@ -254,7 +259,10 @@ export default function AdminSettingsPage() {
 
       {groups.map((group) => (
         <div key={group} className="card p-6 mb-6">
-          <h2 className="text-lg font-bold capitalize mb-4 text-primary-900">{group}</h2>
+          <h2 className="text-lg font-bold capitalize mb-4 text-primary-900">{groupLabels[group] || group}</h2>
+          {group === 'social' && (
+            <p className="text-sm text-gray-500 -mt-2 mb-4">Shown in the website header, footer, and SEO structured data.</p>
+          )}
           <div className="space-y-4">
             {settingFields.filter((f) => f.group === group).map((field) => (
               <div key={field.key}>

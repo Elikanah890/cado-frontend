@@ -1,3 +1,15 @@
+export type SocialLinks = {
+  instagram: string;
+  youtube: string;
+  facebook: string;
+};
+
+export const SOCIAL_LINKS: SocialLinks = {
+  instagram: 'https://www.instagram.com/cadorgraphix/',
+  youtube: 'https://www.youtube.com/@cadorgraphix',
+  facebook: 'https://www.facebook.com/cadorgraphix',
+};
+
 export const brandAliases = [
   'Cador',
   'Cadorgraphix',

@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, MessageCircle, Languages } from 'lucide-react';
+import { Menu, X, MessageCircle, Languages, Instagram, Youtube, Facebook } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { whatsappLink } from '@/lib/utils';
+import { useSocialLinks } from '@/lib/social';
 import { useLanguage } from '@/lib/LanguageContext';
 
 const NAV_KEYS: Record<string, string> = {
@@ -22,6 +23,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
+  const socialLinks = useSocialLinks();
 
   const isAdmin = pathname.startsWith('/admin');
   if (isAdmin) return null;
@@ -86,6 +88,24 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           {langToggle}
+          <div className="flex items-center gap-1">
+            {[
+              { icon: Instagram, href: socialLinks.instagram, label: 'Instagram' },
+              { icon: Youtube, href: socialLinks.youtube, label: 'YouTube' },
+              { icon: Facebook, href: socialLinks.facebook, label: 'Facebook' },
+            ].filter((social) => Boolean(social.href)).map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-500 hover:text-gold-500 hover:bg-gray-100 transition-colors"
+              >
+                <social.icon className="w-4 h-4" />
+              </a>
+            ))}
+          </div>
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm py-2.5 px-5 gap-2">
             <MessageCircle className="w-4 h-4" /> {t('nav.whatsappUs')}
           </a>

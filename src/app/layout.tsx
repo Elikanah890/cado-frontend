@@ -3,7 +3,7 @@ import './globals.css';
 import { Providers } from './providers';
 import VisitorTracker from '@/components/VisitorTracker';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { siteConfig, absoluteUrl } from '@/lib/seo';
+import { siteConfig, absoluteUrl, SOCIAL_LINKS, fetchSeo, type SocialLinks } from '@/lib/seo';
 import { organizationSchema, websiteSchema } from '@/lib/jsonLd';
 
 export const metadata: Metadata = {
@@ -58,8 +58,14 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const orgJsonLd = organizationSchema();
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const settings = await fetchSeo<Record<string, string | null>>('/settings', 3600);
+  const social: SocialLinks = {
+    instagram: settings?.social_instagram?.trim() || SOCIAL_LINKS.instagram,
+    youtube: settings?.social_youtube?.trim() || SOCIAL_LINKS.youtube,
+    facebook: settings?.social_facebook?.trim() || SOCIAL_LINKS.facebook,
+  };
+  const orgJsonLd = organizationSchema(social);
   const siteJsonLd = websiteSchema();
   return (
     <html lang="en" data-scroll-behavior="smooth" style={{ colorScheme: 'dark' }} suppressHydrationWarning>

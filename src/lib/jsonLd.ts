@@ -1,6 +1,6 @@
-import { siteConfig, brandAliases, absoluteUrl } from './seo';
+import { siteConfig, brandAliases, absoluteUrl, SOCIAL_LINKS, type SocialLinks } from './seo';
 
-export function organizationSchema() {
+export function organizationSchema(social: SocialLinks = SOCIAL_LINKS) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -13,13 +13,7 @@ export function organizationSchema() {
     description: siteConfig.description,
     email: 'admin@cador.digital',
     foundingLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressCountry: 'TZ', addressLocality: 'Dar es Salaam' } },
-    sameAs: [
-      'https://facebook.com/cadordigital',
-      'https://instagram.com/cadordigital',
-      'https://linkedin.com/company/cadordigital',
-      'https://twitter.com/cadordigital',
-      'https://wa.me/255716168903',
-    ],
+    sameAs: [social.instagram, social.youtube, social.facebook].filter(Boolean),
     contactPoint: { '@type': 'ContactPoint', telephone: '+255716168903', contactType: 'customer service', availableLanguage: ['English', 'Swahili'] },
   };
 }
