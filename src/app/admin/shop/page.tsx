@@ -13,6 +13,7 @@ interface Product {
   title: string;
   slug: string;
   price: number;
+  originalPrice?: number | null;
   currency: string;
   images: { url: string; alt?: string | null }[];
   isActive: boolean;
@@ -98,7 +99,14 @@ export default function AdminShopPage() {
                     </span>
                   </div>
 
-                  <p className="text-lg font-semibold text-gold-600">{formatCurrency(product.price, product.currency)}</p>
+                  {product.originalPrice && product.originalPrice > product.price ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-400 line-through">{formatCurrency(product.originalPrice, product.currency)}</span>
+                      <span className="text-lg font-semibold text-gold-600">{formatCurrency(product.price, product.currency)}</span>
+                    </div>
+                  ) : (
+                    <p className="text-lg font-semibold text-gold-600">{formatCurrency(product.price, product.currency)}</p>
+                  )}
                   <p className="text-xs text-gray-400 mt-1">{product.images?.length || 0} image(s)</p>
 
                   <div className="flex gap-2 mt-4">

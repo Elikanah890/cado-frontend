@@ -115,6 +115,7 @@ export interface Product {
   slug: string;
   description: string;
   price: number;
+  originalPrice?: number | null;
   currency: string;
   images: ProductImage[];
   isActive: boolean;

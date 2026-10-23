@@ -19,6 +19,7 @@ interface ProductFormData {
   slug: string;
   description: string;
   price: string;
+  originalPrice: string;
   currency: string;
   images: ProductImage[];
   isActive: boolean;
@@ -35,6 +36,7 @@ const emptyData: ProductFormData = {
   slug: '',
   description: '',
   price: '',
+  originalPrice: '',
   currency: 'TZS',
   images: [],
   isActive: true,
@@ -56,6 +58,7 @@ export default function ProductForm({ initialData, mode }: Props) {
     ...emptyData,
     ...initialData,
     price: initialData?.price !== undefined && initialData?.price !== null ? String(initialData.price) : '',
+    originalPrice: initialData?.originalPrice !== undefined && initialData?.originalPrice !== null ? String(initialData.originalPrice) : '',
     sortOrder: initialData?.sortOrder !== undefined && initialData?.sortOrder !== null ? String(initialData.sortOrder) : '0',
     images: normalizeImages(initialData?.images),
   }));
@@ -69,6 +72,7 @@ export default function ProductForm({ initialData, mode }: Props) {
         ...emptyData,
         ...initialData,
         price: initialData.price !== undefined && initialData.price !== null ? String(initialData.price) : '',
+        originalPrice: initialData.originalPrice !== undefined && initialData.originalPrice !== null ? String(initialData.originalPrice) : '',
         sortOrder: initialData.sortOrder !== undefined && initialData.sortOrder !== null ? String(initialData.sortOrder) : '0',
         images: normalizeImages(initialData.images),
       });
@@ -146,6 +150,10 @@ export default function ProductForm({ initialData, mode }: Props) {
       toast.error('Enter a valid price');
       return;
     }
+    if (form.originalPrice !== '' && (Number.isNaN(Number(form.originalPrice)) || Number(form.originalPrice) < 0)) {
+      toast.error('Enter a valid original price');
+      return;
+    }
 
     setSaving(true);
     try {
@@ -154,6 +162,7 @@ export default function ProductForm({ initialData, mode }: Props) {
         slug: slugify(form.slug || form.title),
         description: form.description,
         price: Number(form.price),
+        originalPrice: form.originalPrice.trim() === '' ? null : Number(form.originalPrice),
         currency: form.currency.trim() || 'TZS',
         images: form.images,
         isActive: form.isActive,
@@ -205,7 +214,7 @@ export default function ProductForm({ initialData, mode }: Props) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
             <input
@@ -218,6 +227,19 @@ export default function ProductForm({ initialData, mode }: Props) {
               placeholder="25000"
               required
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Original Price (Optional)</label>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={form.originalPrice}
+              onChange={(event) => handleChange('originalPrice', event.target.value)}
+              className="input-field"
+              placeholder="35000"
+            />
+            <p className="text-xs text-gray-400 mt-1">Leave empty if there is no discount. This will show as a strikethrough price.</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>

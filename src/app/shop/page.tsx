@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Package, ShoppingBag } from 'lucide-react';
+import { Package, ShoppingBag } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import PosterImage from '@/components/PosterImage';
 import { publicApi } from '@/lib/api';
@@ -75,13 +75,14 @@ export default function ShopPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {products.map((product) => {
                 const image = mainImage(product);
+                const productUrl = `/shop/${product.slug}`;
+                const price = formatCurrency(product.price, product.currency);
+                const hasDiscount = Boolean(product.originalPrice && product.originalPrice > product.price);
+                const message = `Habari CadorDigital, nahitaji kununua ${product.title} kwa bei ya ${price}`;
+                const whatsappHref = `https://wa.me/255716168903?text=${encodeURIComponent(message)}`;
                 return (
-                  <Link
-                    key={product.id}
-                    href={`/shop/${product.slug}`}
-                    className="card group overflow-hidden flex flex-col"
-                  >
-                    <div className="bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
+                  <div key={product.id} className="card group overflow-hidden flex flex-col">
+                    <Link href={productUrl} className="block bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
                       {image ? (
                         <PosterImage
                           src={image}
@@ -93,18 +94,36 @@ export default function ShopPage() {
                           <ShoppingBag className="w-10 h-10 text-primary-400" />
                         </div>
                       )}
-                    </div>
+                    </Link>
 
                     <div className="p-4 sm:p-5 flex flex-col flex-1">
-                      <h2 className="text-base sm:text-lg font-bold text-primary-900 group-hover:text-gold-500 transition-colors line-clamp-2">
-                        {product.title}
-                      </h2>
-                      <p className="text-gold-600 font-semibold mt-2">{formatCurrency(product.price, product.currency)}</p>
-                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-700 group-hover:text-gold-600 transition-colors">
-                        View Details <ArrowRight className="w-4 h-4" />
-                      </span>
+                      <Link href={productUrl}>
+                        <h2 className="text-base sm:text-lg font-bold text-primary-900 group-hover:text-gold-500 transition-colors line-clamp-2">
+                          {product.title}
+                        </h2>
+                      </Link>
+                      {hasDiscount ? (
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-gray-400 line-through text-sm">
+                            {formatCurrency(product.originalPrice!, product.currency)}
+                          </span>
+                          <span className="font-bold text-lg text-gray-900">
+                            {price}
+                          </span>
+                        </div>
+                      ) : (
+                        <p className="text-gold-600 font-semibold mt-2">{price}</p>
+                      )}
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-primary-900 px-6 py-3 text-lg font-bold text-white transition-all hover:bg-primary-800"
+                      >
+                        Buy Now
+                      </a>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
             </div>

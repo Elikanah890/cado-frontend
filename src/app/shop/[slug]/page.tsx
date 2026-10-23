@@ -20,6 +20,7 @@ interface Product {
   slug: string;
   description: string;
   price: number;
+  originalPrice?: number | null;
   currency: string;
   images: ProductImage[] | string[];
   isActive: boolean;
@@ -79,6 +80,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const gallery = images.slice(1);
 
   const price = formatPrice(product.price, product.currency);
+  const hasDiscount = Boolean(product.originalPrice && product.originalPrice > product.price);
   const message = `Habari CadorDigital, nahitaji kununua ${product.title} kwa bei ya ${price}`;
   const whatsappHref = `https://wa.me/255716168903?text=${encodeURIComponent(message)}`;
 
@@ -123,7 +125,16 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </span>
 
               <h1 className="text-3xl md:text-5xl font-bold mt-4 mb-4">{product.title}</h1>
-              <p className="text-3xl font-bold text-gold-400">{price}</p>
+              {hasDiscount ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-xl text-white/50 line-through">
+                    {formatPrice(product.originalPrice!, product.currency)}
+                  </span>
+                  <span className="text-3xl font-bold text-gold-400">{price}</span>
+                </div>
+              ) : (
+                <p className="text-3xl font-bold text-gold-400">{price}</p>
+              )}
 
               {product.description ? (
                 <p className="mt-6 text-white/70 leading-relaxed whitespace-pre-wrap">{product.description}</p>
@@ -134,9 +145,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2 text-base px-8 py-4"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold-500 px-8 py-4 text-lg font-bold text-white transition-all hover:bg-gold-600"
                 >
-                  <MessageCircle className="w-5 h-5" /> Buy on WhatsApp
+                  <MessageCircle className="w-5 h-5" /> Buy Now
                 </a>
                 <p className="mt-3 text-sm text-white/50">Chat with us to complete your purchase and receive your download.</p>
               </div>
