@@ -226,9 +226,13 @@ export default function HomePage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {products.slice(0, 4).map((product) => {
                 const image = productImage(product);
+                const price = formatCurrency(product.price, product.currency);
+                const hasDiscount = Boolean(product.originalPrice && product.originalPrice > product.price);
+                const message = `Habari CadorDigital, nahitaji kununua ${product.title} kwa bei ya ${price}`;
+                const whatsappHref = `https://wa.me/255716168903?text=${encodeURIComponent(message)}`;
                 return (
-                  <Link key={product.id} href="/shop" className="card group overflow-hidden flex flex-col">
-                    <div className="bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
+                  <div key={product.id} className="card group overflow-hidden flex flex-col">
+                    <Link href="/shop" className="block bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
                       {image ? (
                         <PosterImage
                           src={image}
@@ -240,17 +244,35 @@ export default function HomePage() {
                           <ArrowRight className="w-8 h-8 text-primary-400" />
                         </div>
                       )}
-                    </div>
+                    </Link>
                     <div className="p-4 flex flex-col flex-1">
-                      <h3 className="text-sm sm:text-base font-bold text-primary-900 group-hover:text-gold-500 transition-colors line-clamp-2">
-                        {product.title}
-                      </h3>
-                      <p className="text-gold-600 font-semibold mt-2 text-sm sm:text-base">{formatCurrency(product.price, product.currency)}</p>
-                      <span className="mt-3 inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-primary-700 group-hover:text-gold-600 transition-colors">
-                        Shop Now <ArrowRight className="w-4 h-4" />
-                      </span>
+                      <Link href="/shop">
+                        <h3 className="text-sm sm:text-base font-bold text-primary-900 group-hover:text-gold-500 transition-colors line-clamp-2">
+                          {product.title}
+                        </h3>
+                      </Link>
+                      {hasDiscount ? (
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-gray-400 line-through text-xs sm:text-sm">
+                            {formatCurrency(product.originalPrice!, product.currency)}
+                          </span>
+                          <span className="font-bold text-base sm:text-lg text-gray-900">
+                            {price}
+                          </span>
+                        </div>
+                      ) : (
+                        <p className="text-gold-600 font-semibold mt-2 text-sm sm:text-base">{price}</p>
+                      )}
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-primary-900 px-4 py-2.5 text-sm sm:text-base font-bold text-white transition-all hover:bg-primary-800"
+                      >
+                        Buy Now
+                      </a>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
             </div>
