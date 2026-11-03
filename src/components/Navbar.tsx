@@ -65,7 +65,7 @@ export default function Navbar() {
             width={140}
             height={56}
             loading="eager"
-            className="h-14 w-auto drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
+            className="h-14 w-auto"
           />
         </Link>
 
