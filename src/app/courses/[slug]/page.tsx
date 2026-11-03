@@ -14,7 +14,6 @@ import {
 import PublicLayout from '@/components/PublicLayout';
 import ShareButtons from '@/components/ShareButtons';
 import JsonLd from '@/components/JsonLd';
-import PosterImage from '@/components/PosterImage';
 import CourseTabs from './CourseTabs';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { courseSchema, breadcrumbSchema } from '@/lib/jsonLd';
@@ -135,15 +134,17 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
         if (introVideo.startsWith('http') || introVideo.startsWith('/uploads/') || introVideo.startsWith('//')) {
           return (
-            <video
-              src={resolveImageUrl(introVideo)}
-              controls
-              poster={poster}
-              className="w-full rounded-2xl bg-black shadow-lg"
-              preload="metadata"
-            >
-              Your browser does not support the video tag.
-            </video>
+            <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg">
+              <video
+                src={resolveImageUrl(introVideo)}
+                controls
+                poster={poster}
+                className="h-full w-full object-contain"
+                preload="metadata"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
           );
         }
 
@@ -192,12 +193,15 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
               <div className="mt-5"><ShareButtons title={course.title} /></div>
 
-              <div className="mt-8">
+              <div className="mt-8 max-w-[1066px]">
                 {videoPlayer ?? (cover ? (
-                  <div className="overflow-hidden rounded-2xl bg-primary-900 p-3 shadow-lg">
-                    <div className="mx-auto max-w-md">
-                      <PosterImage src={cover} alt={course.title} loading="eager" className="rounded-xl" />
-                    </div>
+                  <div className="aspect-video w-full overflow-hidden rounded-2xl bg-primary-900 shadow-lg">
+                    <img
+                      src={resolveImageUrl(cover)}
+                      alt={course.title}
+                      loading="eager"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                 ) : (
                   <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary-800 to-primary-900 shadow-lg">
