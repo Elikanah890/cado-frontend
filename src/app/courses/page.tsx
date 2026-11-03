@@ -5,7 +5,6 @@ import { Download, BookOpen, MessageCircle } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import { publicApi } from '@/lib/api';
 import { useEffect, useState } from 'react';
-import { whatsappLink } from '@/lib/utils';
 import { useLanguage } from '@/lib/LanguageContext';
 import PosterImage from '@/components/PosterImage';
 
@@ -132,14 +131,12 @@ export default function AcademyPage() {
                     <div className="flex items-center justify-between mb-4 mt-auto">
                       <span className="text-xs text-gray-400">{course.students} {t('academy.enrolled')}</span>
                     </div>
-                    <a
-                      href={whatsappLink(`enrolling in ${course.title}`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/register?type=course&slug=${course.slug}`}
                       className="btn-primary w-full text-center justify-center gap-2 inline-flex"
                     >
                       <MessageCircle className="w-4 h-4" /> {t('academy.enroll')}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))}

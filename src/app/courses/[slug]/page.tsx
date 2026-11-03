@@ -10,7 +10,6 @@ import { courseSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
 import PosterImage from '@/components/PosterImage';
 import { sanitizeHtml } from '@/lib/sanitize';
-import { whatsappLink } from '@/lib/utils';
 
 export const revalidate = 3600;
 
@@ -50,7 +49,6 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
   const lessons: any[] = modules.flatMap((m) => (Array.isArray(m.lessons) ? m.lessons : []));
   const cover = course.thumbnail || course.featuredImage;
   const introVideo: string | null = course.introVideo || null;
-  const waLink = whatsappLink(`enrolling in ${course.title}`);
   const freeCount = lessons.filter((l) => l.isFree).length;
   const breadcrumbJson = breadcrumbSchema([{ name: 'Home', url: siteConfig.url }, { name: 'Courses', url: absoluteUrl('/courses') }, { name: course.title, url: absoluteUrl(`/courses/${slug}`) }]);
   const courseJson = courseSchema({ title: course.title, description: course.subtitle || String(course.description || '').replace(/<[^>]*>/g, ' ').slice(0, 160), slug, image: cover });
@@ -109,7 +107,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
             </div>
             <div>
               <div className="card p-6 sticky top-28">
-                <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center py-3 mb-4 block"><MessageCircle className="w-4 h-4 inline mr-2" /> Enroll Now</a>
+                <Link href={`/register?type=course&slug=${course.slug}`} className="btn-primary w-full text-center py-3 mb-4 block"><MessageCircle className="w-4 h-4 inline mr-2" /> Register Now</Link>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> {lessons.length} lessons</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> {freeCount} free preview lessons</li>
@@ -117,7 +115,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Lifetime access</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Certificate of completion</li>
                 </ul>
-                <div className="mt-5 p-3 rounded-lg bg-primary-50 text-sm text-primary-800 border border-primary-100 text-center">Click Enroll to chat on WhatsApp</div>
+                <div className="mt-5 p-3 rounded-lg bg-primary-50 text-sm text-primary-800 border border-primary-100 text-center">Fill the registration form to continue on WhatsApp</div>
               </div>
             </div>
           </div>

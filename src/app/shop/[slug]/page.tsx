@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, Check, MessageCircle, Package } from 'lucide-react';
+import { ArrowLeft, Check, ClipboardList, MessageCircle, Package } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import PosterImage from '@/components/PosterImage';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
@@ -149,6 +149,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 >
                   <MessageCircle className="w-5 h-5" /> Buy Now
                 </a>
+                <Link
+                  href={`/register?type=product&slug=${product.slug}`}
+                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-white/30 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-white hover:text-primary-900"
+                >
+                  <ClipboardList className="w-5 h-5" /> Order / Register
+                </Link>
                 <p className="mt-3 text-sm text-white/50">Chat with us to complete your purchase and receive your download.</p>
               </div>
 

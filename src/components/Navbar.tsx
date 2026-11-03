@@ -17,6 +17,7 @@ const NAV_KEYS: Record<string, string> = {
   '/blog': 'nav.blog',
   '/shop': 'nav.shop',
   '/contact': 'nav.contact',
+  '/register': 'nav.register',
 };
 
 export default function Navbar() {

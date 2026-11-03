@@ -5,7 +5,6 @@ import { use } from 'react';
 import { ChevronLeft, ChevronRight, Play, CheckCircle, Lock, Unlock, Menu as MenuIcon, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { publicApi } from '@/lib/api';
-import { whatsappLink } from '@/lib/utils';
 import { resolveImageUrl } from '@/lib/imageUtils';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -106,7 +105,6 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ slug: s
   const isYouTube = videoUrl && (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be'));
   const youTubeId = isYouTube ? (videoUrl.match(/(?:v=|youtu\.be\/)([^&]+)/)?.[1] || '') : '';
   const isLocked = currentLesson ? !currentLesson.isFree : false;
-  const waLink = whatsappLink(`enrolling in ${course.title}`);
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
@@ -136,9 +134,9 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ slug: s
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">{t('coursePlayer.lockedTitle')}</h2>
               <p className="text-gray-400 mb-6">{t('coursePlayer.lockedSub')}</p>
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-primary w-full justify-center gap-2 inline-flex">
+              <Link href={`/register?type=course&slug=${slug}`} className="btn-primary w-full justify-center gap-2 inline-flex">
                 <MessageCircle className="w-4 h-4" /> {t('coursePlayer.enrollViaWhatsApp')}
-              </a>
+              </Link>
               <Link href={`/courses/${slug}`} className="block mt-4 text-sm text-gold-500 hover:text-gold-400">
                 {t('coursePlayer.viewCourseDetails')}
               </Link>
