@@ -173,8 +173,15 @@ export const adminApi = {
   deleteTestimonial: (id: string) => api.delete(`/admin/testimonials/${id}`).then((r) => r.data),
   getSettings: () => api.get('/admin/settings').then((r) => r.data),
   updateSettings: (settings: any) => api.put('/admin/settings', { settings }).then((r) => r.data),
-  uploadMedia: (formData: FormData) =>
-    api.post('/admin/media/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then((r) => r.data),
+  uploadMedia: (formData: FormData, onProgress?: (percent: number) => void) =>
+    api.post('/admin/media/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: (event) => {
+        if (onProgress && event.total) {
+          onProgress(Math.round((event.loaded * 100) / event.total));
+        }
+      },
+    }).then((r) => r.data),
   getMedia: (params?: any) => api.get('/admin/media', { params }).then((r) => r.data),
   deleteMedia: (id: string) => api.delete(`/admin/media/${id}`).then((r) => r.data),
   getActivities: (params?: any) => api.get('/admin/activities', { params }).then((r) => r.data),

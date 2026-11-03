@@ -20,6 +20,13 @@ export default function AdminMediaPage() {
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const maxVideoMb = Number(process.env.NEXT_PUBLIC_MAX_VIDEO_SIZE_MB) || 100;
+    const maxSizeMb = file.type.startsWith('video/') ? maxVideoMb : 20;
+    if (file.size > maxSizeMb * 1024 * 1024) {
+      toast.error(`File is too large. Maximum size is ${maxSizeMb}MB.`);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
     setUploading(true);
     try {
       const formData = new FormData();
