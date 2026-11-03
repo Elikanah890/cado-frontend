@@ -213,7 +213,8 @@
     "by": "na",
     "enrolled": "wamejiandikisha",
     "free": "Bure",
-    "enroll": "Jiandikisha"
+    "enroll": "Jiandikisha",
+    "buyNow": "Nunua Sasa"
   },
   "academyDetail": {
     "back": "Rudi kwenye Kozi",
@@ -237,6 +238,12 @@
     "startLearning": "Anza Kujifunza",
     "oneTime": "Malipo ya mara moja kupitia WhatsApp",
     "enrollNow": "Jiandikisha Sasa",
+    "courseInfo": "Taarifa za Kozi",
+    "reviews": "Maoni",
+    "noReviews": "Hakuna maoni bado. Kuwa wa kwanza kutoa maoni.",
+    "aCourseBy": "Kozi na",
+    "allLevels": "Viwango Vyote",
+    "duration": "Muda",
     "freePreviewLessons": "masomo ya hakiki ya bure",
     "hoursOfContent": "masaa ya maudhui",
     "lifetime": "Ufikiaji wa kudumu",

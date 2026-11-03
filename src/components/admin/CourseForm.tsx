@@ -68,6 +68,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
     level: '',
     category: '',
     price: 0,
+    originalPrice: 0,
     estimatedHours: 0,
     whatsappNumber: '',
     thumbnail: '',
@@ -95,6 +96,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
         level: initialData.level || '',
         category: initialData.category || '',
         price: initialData.price ?? 0,
+        originalPrice: initialData.originalPrice ?? 0,
         estimatedHours: initialData.estimatedHours || 0,
         whatsappNumber: initialData.whatsappNumber || '',
         thumbnail: initialData.thumbnail || '',
@@ -222,6 +224,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
         level: form.level || '',
         category: form.category || '',
         price: Number(form.price) || 0,
+        originalPrice: Number(form.originalPrice) || 0,
         estimatedHours: Number(form.estimatedHours) || 0,
         whatsappNumber: form.whatsappNumber || '',
         thumbnail: form.thumbnail || '',
@@ -375,6 +378,16 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
               <input type="text" value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className="input-field" placeholder="e.g. Marketing" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Price (TZS)</label>
+              <input type="number" min="0" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} className="input-field" placeholder="e.g. 120000" />
+              <p className="mt-1 text-xs text-gray-400">0 = Free</p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Original Price (TZS)</label>
+              <input type="number" min="0" value={form.originalPrice} onChange={(e) => setForm((f) => ({ ...f, originalPrice: Number(e.target.value) }))} className="input-field" placeholder="e.g. 200000" />
+              <p className="mt-1 text-xs text-gray-400">0 = no discount</p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Hours</label>

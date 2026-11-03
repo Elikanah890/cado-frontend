@@ -1,15 +1,26 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Clock, User, BookOpen, Check, MessageCircle, Lock, Unlock, PlayCircle, Video } from 'lucide-react';
+import {
+  BookOpen,
+  ChevronRight,
+  Clock,
+  GraduationCap,
+  MessageCircle,
+  Unlock,
+  User,
+  Users,
+} from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import ShareButtons from '@/components/ShareButtons';
 import JsonLd from '@/components/JsonLd';
+import PosterImage from '@/components/PosterImage';
+import CourseTabs from './CourseTabs';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { courseSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
-import PosterImage from '@/components/PosterImage';
 import { sanitizeHtml } from '@/lib/sanitize';
+import { formatCurrency } from '@/lib/utils';
 
 export const revalidate = 3600;
 
@@ -20,7 +31,18 @@ async function getCourse(slug: string) {
     if (!res.ok) return null;
     const json = await res.json();
     return json.data ?? json;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
+}
+
+function initials(name: string): string {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('') || 'CD';
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -45,79 +67,164 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
   const { slug } = await params;
   const course = await getCourse(slug);
   if (!course) notFound();
+
   const modules: any[] = Array.isArray(course.modules) ? course.modules : [];
-  const lessons: any[] = modules.flatMap((m) => (Array.isArray(m.lessons) ? m.lessons : []));
+  const lessons: any[] = modules.flatMap((module) => (Array.isArray(module.lessons) ? module.lessons : []));
   const cover = course.thumbnail || course.featuredImage;
   const introVideo: string | null = course.introVideo || null;
-  const freeCount = lessons.filter((l) => l.isFree).length;
-  const breadcrumbJson = breadcrumbSchema([{ name: 'Home', url: siteConfig.url }, { name: 'Courses', url: absoluteUrl('/courses') }, { name: course.title, url: absoluteUrl(`/courses/${slug}`) }]);
-  const courseJson = courseSchema({ title: course.title, description: course.subtitle || String(course.description || '').replace(/<[^>]*>/g, ' ').slice(0, 160), slug, image: cover });
+  const freeCount = lessons.filter((lesson) => lesson.isFree).length;
+  const instructor = course.instructorName || course.instructor || 'CadorDigital';
+  const instructorAvatar = course.instructorAvatar ? resolveImageUrl(course.instructorAvatar) : null;
+  const hours = course.estimatedHours ?? 0;
+  const enrolled = course.enrolledCount ?? 0;
+  const currency = course.currency || 'TZS';
+  const price = typeof course.price === 'number' ? course.price : null;
+  const originalPrice = typeof course.originalPrice === 'number' ? course.originalPrice : null;
+  const hasPrice = price !== null && price > 0;
+  const hasDiscount = hasPrice && originalPrice !== null && originalPrice > price!;
+  const descriptionHtml = course.description ? sanitizeHtml(course.description) : '';
 
-  const renderVideo = (videoUrl: string | null, title: string) => {
-    if (!videoUrl) return null;
+  const breadcrumbJson = breadcrumbSchema([
+    { name: 'Home', url: siteConfig.url },
+    { name: 'Courses', url: absoluteUrl('/courses') },
+    { name: course.title, url: absoluteUrl(`/courses/${slug}`) },
+  ]);
+  const courseJson = courseSchema({
+    title: course.title,
+    description: course.subtitle || String(course.description || '').replace(/<[^>]*>/g, ' ').slice(0, 160),
+    slug,
+    image: cover,
+  });
+
+  const renderVideo = (videoUrl: string, title: string) => {
     const isYT = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
     const ytId = isYT ? (videoUrl.match(/(?:v=|youtu\.be\/)([^&]+)/)?.[1] || '') : '';
-    if (isYT && ytId) return <iframe src={`https://www.youtube.com/embed/${ytId}`} title={title} className="w-full aspect-video rounded-xl" allowFullScreen loading="lazy" />;
-    if (videoUrl.startsWith('http') || videoUrl.startsWith('/uploads/')) return <video src={resolveImageUrl(videoUrl)} controls className="w-full aspect-video rounded-xl bg-black" preload="metadata" />;
+    if (isYT && ytId) {
+      return <iframe src={`https://www.youtube.com/embed/${ytId}`} title={title} className="aspect-video w-full rounded-xl" allowFullScreen loading="lazy" />;
+    }
+    if (videoUrl.startsWith('http') || videoUrl.startsWith('/uploads/')) {
+      return <video src={resolveImageUrl(videoUrl)} controls className="aspect-video w-full rounded-xl bg-black" preload="metadata" />;
+    }
     return null;
   };
 
   return (
     <PublicLayout>
       <JsonLd data={[courseJson, breadcrumbJson]} />
-      <section className="bg-gray-900 pb-10">
-        {cover ? (
-          <div className="container-custom">
-            <div className="max-w-md mx-auto pt-10">
-              <PosterImage src={cover} alt={course.title} loading="eager" className="rounded-2xl shadow-2xl" />
-            </div>
-          </div>
-        ) : (
-          <div className="h-56 w-full bg-gradient-to-b from-primary-800 to-primary-900" />
-        )}
-        <div className={`container-custom max-w-4xl relative z-10 text-white ${cover ? 'mt-8' : 'pt-10'}`}>
-          <Link href="/courses" className="text-white/60 hover:text-gold-400 text-sm mb-4 inline-block">← Back to Courses</Link>
-          <div className="flex gap-3 mb-4">
-            {course.category ? <span className="bg-gold-500/20 text-gold-400 px-3 py-1 rounded-full text-sm">{course.category}</span> : null}
-            {course.level ? <span className="bg-white/10 text-white px-3 py-1 rounded-full text-sm">{course.level}</span> : null}
-          </div>
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">{course.title}</h1>
-          {course.subtitle ? <p className="text-xl text-white/70 mb-4">{course.subtitle}</p> : null}
-          <div className="flex flex-wrap items-center gap-6 text-white/70 text-sm">
-            <span className="flex items-center gap-1"><User className="w-4 h-4" /> {course.instructor || course.instructorName || 'CadorDigital'}</span>
-            <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {course.estimatedHours ?? 0} hours</span>
-            <span className="flex items-center gap-1"><BookOpen className="w-4 h-4" /> {lessons.length} lessons</span>
-            <span className="flex items-center gap-1"><Unlock className="w-4 h-4" /> {freeCount} free previews</span>
-            <span>{course.enrolledCount ?? 0} enrolled</span>
-          </div>
-          <div className="mt-6 pb-6"><ShareButtons title={course.title} /></div>
-        </div>
-      </section>
 
-      <section className="section-padding">
-        <div className="container-custom max-w-4xl">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <section className="bg-slate-50">
+        <div className="container-custom py-10 md:py-14">
+          <nav className="flex items-center gap-1 text-sm text-gray-500" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-gold-600">Home</Link>
+            <ChevronRight className="h-4 w-4" />
+            <Link href="/courses" className="hover:text-gold-600">Courses</Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="truncate text-gray-700">{course.title}</span>
+          </nav>
+
+          <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
             <div className="lg:col-span-2">
-              {introVideo ? <div className="mb-10"><h2 className="text-2xl font-bold text-primary-900 mb-4 flex items-center gap-2"><Video className="w-5 h-5 text-gold-500" /> Course Intro</h2>{renderVideo(introVideo, course.title)}</div> : null}
-              <h2 className="text-2xl font-bold text-primary-900 mb-4">About this course</h2>
-              {course.description ? <div className="text-gray-600 leading-relaxed mb-8 prose prose-primary max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(course.description) }} /> : <p className="text-gray-600 leading-relaxed mb-8">No description available.</p>}
-              <h2 className="text-2xl font-bold text-primary-900 mb-4">Curriculum</h2>
-              {lessons.length === 0 ? <p className="text-gray-500">No lessons yet.</p> : <div className="space-y-6">{modules.map((module) => <div key={module.id || module.title} className="border rounded-xl overflow-hidden"><div className="bg-primary-900 text-white px-5 py-3 font-bold flex items-center justify-between"><span>{module.title || 'Course Content'}</span><span className="text-xs font-medium text-white/70">{module.lessons?.length || 0} lessons</span></div><div className="divide-y divide-gray-100">{(module.lessons || []).map((lesson: any, i: number) => <div key={lesson.id || i} className="flex items-center gap-4 p-4 bg-white hover:bg-gray-50 transition-colors">{lesson.isFree ? <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-700 shrink-0"><Unlock className="w-4 h-4" /></span> : <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-100 text-amber-700 shrink-0"><Lock className="w-4 h-4" /></span>}<div className="flex-1 min-w-0"><p className="font-medium text-primary-900 flex items-center gap-2">{lesson.isFree ? <PlayCircle className="w-4 h-4 text-green-600 shrink-0" /> : <Lock className="w-4 h-4 text-amber-500 shrink-0" />}{lesson.title}</p>{lesson.videoDuration ? <p className="text-xs text-gray-400 mt-0.5">{lesson.videoDuration} min</p> : null}</div>{lesson.isFree ? <span className="text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1 rounded-full shrink-0">Free Preview</span> : <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full shrink-0">Locked</span>}</div>)}</div></div>)}</div>}
-              <div className="mt-8"><Link href={`/courses/${course.slug}/learn`} className="btn-primary inline-block">Start Learning →</Link></div>
-            </div>
-            <div>
-              <div className="card p-6 sticky top-28">
-                <Link href={`/register?type=course&slug=${course.slug}`} className="btn-primary w-full text-center py-3 mb-4 block"><MessageCircle className="w-4 h-4 inline mr-2" /> Register Now</Link>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> {lessons.length} lessons</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> {freeCount} free preview lessons</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> {course.estimatedHours ?? 0} hours of content</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Lifetime access</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500" /> Certificate of completion</li>
-                </ul>
-                <div className="mt-5 p-3 rounded-lg bg-primary-50 text-sm text-primary-800 border border-primary-100 text-center">Fill the registration form to continue on WhatsApp</div>
+              <div className="flex flex-wrap gap-2">
+                {course.category ? (
+                  <span className="rounded-full bg-gold-50 px-3 py-1 text-xs font-semibold text-gold-700">{course.category}</span>
+                ) : null}
+                {course.level ? (
+                  <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">{course.level}</span>
+                ) : null}
+                {course.isFeatured ? (
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">Featured</span>
+                ) : null}
               </div>
+
+              <h1 className="mt-4 text-3xl font-bold leading-tight text-primary-900 md:text-5xl">{course.title}</h1>
+              {course.subtitle ? <p className="mt-3 text-lg text-gray-600">{course.subtitle}</p> : null}
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-gray-500">
+                <span className="inline-flex items-center gap-1.5"><User className="h-4 w-4 text-gold-500" /> {instructor}</span>
+                <span className="inline-flex items-center gap-1.5"><Users className="h-4 w-4 text-gold-500" /> {enrolled} enrolled</span>
+                <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4 text-gold-500" /> {hours} hours</span>
+                <span className="inline-flex items-center gap-1.5"><BookOpen className="h-4 w-4 text-gold-500" /> {lessons.length} lessons</span>
+                <span className="inline-flex items-center gap-1.5"><Unlock className="h-4 w-4 text-green-500" /> {freeCount} free previews</span>
+              </div>
+
+              <div className="mt-5"><ShareButtons title={course.title} /></div>
+
+              <div className="mt-8 overflow-hidden rounded-2xl bg-primary-900 p-3 shadow-lg">
+                {introVideo ? (
+                  renderVideo(introVideo, course.title)
+                ) : cover ? (
+                  <div className="mx-auto max-w-md">
+                    <PosterImage src={cover} alt={course.title} loading="eager" className="rounded-xl" />
+                  </div>
+                ) : (
+                  <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary-800 to-primary-900">
+                    <BookOpen className="h-16 w-16 text-white/20" />
+                  </div>
+                )}
+              </div>
+
+              <CourseTabs
+                descriptionHtml={descriptionHtml}
+                modules={modules}
+                lessons={lessons}
+                freeCount={freeCount}
+                courseSlug={course.slug}
+              />
             </div>
+
+            <aside className="lg:col-span-1">
+              <div className="space-y-5 lg:sticky lg:top-28">
+                <div className="rounded-2xl border-t-4 border-gold-500 bg-white p-6 shadow-xl">
+                  {hasPrice ? (
+                    <>
+                      {hasDiscount ? (
+                        <p className="text-sm text-gray-400 line-through">
+                          {formatCurrency(originalPrice!, currency)}
+                        </p>
+                      ) : null}
+                      <p className="text-4xl font-bold text-primary-900">{formatCurrency(price!, currency)}</p>
+                    </>
+                  ) : (
+                    <p className="text-4xl font-bold text-green-600">Free</p>
+                  )}
+
+                  <Link
+                    href={`/register?type=course&slug=${course.slug}`}
+                    className="btn-primary mt-5 w-full justify-center py-4 text-lg"
+                  >
+                    <MessageCircle className="h-5 w-5" /> Register Now
+                  </Link>
+                  <p className="mt-3 text-center text-xs text-gray-400">Continue on WhatsApp after registration.</p>
+
+                  <ul className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-sm text-gray-600">
+                    <li className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-gold-500" /> {course.level || 'All Levels'}</li>
+                    <li className="flex items-center gap-2"><Users className="h-4 w-4 text-gold-500" /> {enrolled} enrolled</li>
+                    <li className="flex items-center gap-2"><Clock className="h-4 w-4 text-gold-500" /> {hours} hours</li>
+                    <li className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-gold-500" /> {lessons.length} lessons</li>
+                    <li className="flex items-center gap-2"><Unlock className="h-4 w-4 text-green-500" /> {freeCount} free previews</li>
+                  </ul>
+                </div>
+
+                <div className="rounded-2xl bg-white p-6 shadow-md">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">A Course By</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    {instructorAvatar ? (
+                      <img src={instructorAvatar} alt={instructor} className="h-12 w-12 rounded-full object-cover" />
+                    ) : (
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-50 text-sm font-bold text-primary-700">
+                        {initials(instructor)}
+                      </span>
+                    )}
+                    <div>
+                      <p className="font-bold text-primary-900">{instructor}</p>
+                      {course.instructorBio ? (
+                        <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-gray-500">{course.instructorBio}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
       </section>

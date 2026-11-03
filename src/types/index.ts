@@ -48,6 +48,7 @@ export interface Course {
   introVideo: string | null;
   whatsappNumber: string | null;
   price: number | null;
+  originalPrice: number | null;
   currency: string;
   level: string | null;
   category: string | null;

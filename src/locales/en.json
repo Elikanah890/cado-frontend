@@ -213,7 +213,8 @@
     "by": "by",
     "enrolled": "enrolled",
     "free": "Free",
-    "enroll": "Enroll"
+    "enroll": "Enroll",
+    "buyNow": "Buy Now"
   },
   "academyDetail": {
     "back": "Back to Courses",
@@ -237,6 +238,12 @@
     "startLearning": "Start Learning",
     "oneTime": "One-time payment via WhatsApp",
     "enrollNow": "Enroll Now",
+    "courseInfo": "Course Info",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet. Be the first to review this course.",
+    "aCourseBy": "A Course By",
+    "allLevels": "All Levels",
+    "duration": "Duration",
     "freePreviewLessons": "free preview lessons",
     "hoursOfContent": "hours of content",
     "lifetime": "Lifetime access",
