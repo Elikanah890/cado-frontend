@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { BookOpen, Bookmark, Clock, ShoppingCart, Users } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
-import PosterImage from '@/components/PosterImage';
 import { publicApi } from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
+import { resolveImageUrl } from '@/lib/imageUtils';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 
@@ -87,7 +87,7 @@ export default function AcademyPage() {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[...Array(6)].map((_, index) => (
                 <div key={index} className="animate-pulse overflow-hidden rounded-2xl bg-white shadow-md">
-                  <div className="aspect-[4/5] bg-gray-200" />
+                  <div className="aspect-video bg-gray-200" />
                   <div className="space-y-3 p-5">
                     <div className="h-5 w-3/4 rounded bg-gray-200" />
                     <div className="h-4 w-1/2 rounded bg-gray-100" />
@@ -149,16 +149,18 @@ export default function AcademyPage() {
                   >
                     <Link
                       href={`/courses/${course.slug}`}
-                      className="relative block overflow-hidden bg-gradient-to-br from-primary-100 to-primary-200"
+                      className="relative block aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-100 to-primary-200"
                     >
                       {course.thumbnail ? (
-                        <PosterImage
-                          src={course.thumbnail}
+                        <img
+                          src={resolveImageUrl(course.thumbnail)}
                           alt={course.title}
-                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="flex aspect-[4/5] w-full items-center justify-center">
+                        <div className="flex h-full w-full items-center justify-center">
                           <BookOpen className="h-10 w-10 text-primary-400" />
                         </div>
                       )}
