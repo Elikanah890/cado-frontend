@@ -81,6 +81,7 @@ export const publicApi = {
   getTestimonials: () => api.get<ApiResponse<Testimonial[]>>('/testimonials', { cache: 'no-store' } as any).then((r) => r.data),
   getSettings: () => api.get<ApiResponse<Record<string, string | null>>>('/settings', { cache: 'no-store' } as any).then((r) => r.data),
   submitContact: (data: any) => api.post('/contact', data).then((r) => r.data),
+  createRegistration: (data: any) => api.post('/registrations', data).then((r) => r.data),
   subscribeNewsletter: (email: string) => api.post('/newsletter', { email }).then((r) => r.data),
 };
 
@@ -120,6 +121,12 @@ export const adminApi = {
   getLeadStats: () => api.get('/admin/leads/stats').then((r) => r.data),
   updateLead: (id: string, data: any) => api.put(`/admin/leads/${id}`, data).then((r) => r.data),
   deleteLead: (id: string) => api.delete(`/admin/leads/${id}`).then((r) => r.data),
+  getRegistrations: (params?: any) => api.get('/admin/registrations', { params }).then((r) => r.data),
+  getRegistrationStats: () => api.get('/admin/registrations/stats').then((r) => r.data),
+  getRegistration: (id: string) => api.get(`/admin/registrations/${id}`).then((r) => r.data),
+  createManualRegistration: (data: any) => api.post('/admin/registrations', data).then((r) => r.data),
+  updateRegistration: (id: string, data: any) => api.put(`/admin/registrations/${id}`, data).then((r) => r.data),
+  deleteRegistration: (id: string) => api.delete(`/admin/registrations/${id}`).then((r) => r.data),
   getBlogPosts: () => api.get('/admin/blog/posts').then((r) => r.data),
   getBlogPostById: (id: string) => api.get(`/admin/blog/posts/${id}`).then((r) => r.data),
   createBlogPost: (data: any) => api.post('/admin/blog/posts', data).then((r) => r.data),

@@ -233,6 +233,37 @@ export interface HostingPlan {
 
 
 
+export type RegistrationCategory = 'COURSE' | 'PRODUCT' | 'SERVICE';
+export type RegistrationStatus = 'PENDING' | 'CONTACTED' | 'PAID' | 'COMPLETED' | 'CANCELLED';
+
+export interface Registration {
+  id: string;
+  ref: string;
+  fullName: string;
+  email: string | null;
+  phone: string;
+  location: string | null;
+  category: RegistrationCategory;
+  itemName: string;
+  itemSlug: string | null;
+  details: Record<string, any> | null;
+  message: string | null;
+  preferredContact: string;
+  consent: boolean;
+  status: RegistrationStatus;
+  internalNotes: string | null;
+  source: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RegistrationStats {
+  total: number;
+  pending: number;
+  confirmed: number;
+  thisMonth: number;
+}
+
 export interface ApiResponse<T> {
   status: string;
   code: number;
