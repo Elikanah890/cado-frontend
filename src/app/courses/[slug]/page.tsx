@@ -22,12 +22,12 @@ import { resolveImageUrl } from '@/lib/imageUtils';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { formatCurrency } from '@/lib/utils';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 async function getCourse(slug: string) {
   try {
     const base = getApiBase();
-    const res = await fetch(`${base}/academy/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${base}/academy/${encodeURIComponent(slug)}`, { cache: 'no-store' });
     if (!res.ok) return null;
     const json = await res.json();
     return json.data ?? json;
@@ -96,17 +96,60 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
     image: cover,
   });
 
-  const renderVideo = (videoUrl: string, title: string) => {
-    const isYT = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
-    const ytId = isYT ? (videoUrl.match(/(?:v=|youtu\.be\/)([^&]+)/)?.[1] || '') : '';
-    if (isYT && ytId) {
-      return <iframe src={`https://www.youtube.com/embed/${ytId}`} title={title} className="aspect-video w-full rounded-xl" allowFullScreen loading="lazy" />;
-    }
-    if (videoUrl.startsWith('http') || videoUrl.startsWith('/uploads/')) {
-      return <video src={resolveImageUrl(videoUrl)} controls className="aspect-video w-full rounded-xl bg-black" preload="metadata" />;
-    }
-    return null;
-  };
+  const videoPlayer = introVideo
+    ? (() => {
+        const isYouTube = introVideo.includes('youtube.com') || introVideo.includes('youtu.be');
+        const youtubeId = isYouTube ? (introVideo.match(/(?:v=|youtu\.be\/)([^&]+)/)?.[1] || '') : '';
+        const vimeoId = introVideo.match(/vimeo\.com\/(?:video\/)?(\d+)/)?.[1] || '';
+        const poster = cover ? resolveImageUrl(cover) : undefined;
+
+        if (isYouTube && youtubeId) {
+          return (
+            <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg">
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeId}`}
+                title={course.title}
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          );
+        }
+
+        if (vimeoId) {
+          return (
+            <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg">
+              <iframe
+                src={`https://player.vimeo.com/video/${vimeoId}`}
+                title={course.title}
+                className="h-full w-full"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          );
+        }
+
+        if (introVideo.startsWith('http') || introVideo.startsWith('/uploads/') || introVideo.startsWith('//')) {
+          return (
+            <video
+              src={resolveImageUrl(introVideo)}
+              controls
+              poster={poster}
+              className="w-full rounded-2xl bg-black shadow-lg"
+              preload="metadata"
+            >
+              Your browser does not support the video tag.
+            </video>
+          );
+        }
+
+        return null;
+      })()
+    : null;
 
   return (
     <PublicLayout>
@@ -149,18 +192,18 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
               <div className="mt-5"><ShareButtons title={course.title} /></div>
 
-              <div className="mt-8 overflow-hidden rounded-2xl bg-primary-900 p-3 shadow-lg">
-                {introVideo ? (
-                  renderVideo(introVideo, course.title)
-                ) : cover ? (
-                  <div className="mx-auto max-w-md">
-                    <PosterImage src={cover} alt={course.title} loading="eager" className="rounded-xl" />
+              <div className="mt-8">
+                {videoPlayer ?? (cover ? (
+                  <div className="overflow-hidden rounded-2xl bg-primary-900 p-3 shadow-lg">
+                    <div className="mx-auto max-w-md">
+                      <PosterImage src={cover} alt={course.title} loading="eager" className="rounded-xl" />
+                    </div>
                   </div>
                 ) : (
-                  <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary-800 to-primary-900">
+                  <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary-800 to-primary-900 shadow-lg">
                     <BookOpen className="h-16 w-16 text-white/20" />
                   </div>
-                )}
+                ))}
               </div>
 
               <CourseTabs
