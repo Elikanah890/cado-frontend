@@ -119,8 +119,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-gold-500 flex-shrink-0" />
-                <a href="mailto:admin@cador.digital" className="hover:text-gold-500 transition-colors">
-                  admin@cador.digital
+                <a href="mailto:cadordigital@gmail.com" className="hover:text-gold-500 transition-colors">
+                  cadordigital@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-3">

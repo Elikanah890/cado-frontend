@@ -52,7 +52,7 @@ export default function ContactPage() {
             <div className="card p-6 text-center">
               <Mail className="w-8 h-8 text-gold-500 mx-auto mb-3" />
               <h3 className="font-bold text-primary-900 mb-1">{t('contact.emailTitle')}</h3>
-              <p className="text-gray-600 text-sm">admin@cador.digital</p>
+              <p className="text-gray-600 text-sm">cadordigital@gmail.com</p>
               <p className="text-gray-600 text-sm">{t('contact.emailReply')}</p>
             </div>
             <div className="card p-6 text-center">
@@ -116,7 +116,7 @@ export default function ContactPage() {
             <a href="https://wa.me/255716168903" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors font-medium">
               <MessageCircle className="w-5 h-5" /> {t('common.whatsapp')}
             </a>
-            <a href="mailto:admin@cador.digital" className="flex items-center gap-2 px-6 py-3 border-2 border-primary-800 text-primary-800 rounded-full hover:bg-primary-800 hover:text-white transition-colors font-medium">
+            <a href="mailto:cadordigital@gmail.com" className="flex items-center gap-2 px-6 py-3 border-2 border-primary-800 text-primary-800 rounded-full hover:bg-primary-800 hover:text-white transition-colors font-medium">
               <Mail className="w-5 h-5" /> {t('contact.emailDirect')}
             </a>
           </div>

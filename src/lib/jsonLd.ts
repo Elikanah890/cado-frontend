@@ -11,7 +11,7 @@ export function organizationSchema(social: SocialLinks = SOCIAL_LINKS) {
     logo: absoluteUrl('/cador-logo.png'),
     image: absoluteUrl(siteConfig.ogImage),
     description: siteConfig.description,
-    email: 'admin@cador.digital',
+    email: 'cadordigital@gmail.com',
     foundingLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressCountry: 'TZ', addressLocality: 'Dar es Salaam' } },
     sameAs: [social.instagram, social.youtube, social.facebook].filter(Boolean),
     contactPoint: { '@type': 'ContactPoint', telephone: '+255716168903', contactType: 'customer service', availableLanguage: ['English', 'Swahili'] },
