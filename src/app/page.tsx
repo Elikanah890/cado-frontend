@@ -15,6 +15,7 @@ import type { HeroSetting, Portfolio, Product } from '@/types';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import FrameImage from '@/components/FrameImage';
 
 const DEFAULT_HERO: HeroSetting = {
   id: 'main_hero',
@@ -228,12 +229,10 @@ export default function HomePage() {
                   <div key={product.id} className="card group overflow-hidden flex flex-col">
                     <Link href="/shop" className="relative block aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-100 to-primary-200">
                       {image ? (
-                        <img
-                          src={resolveImageUrl(image)}
+                        <FrameImage
+                          src={image}
                           alt={product.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                          className="transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center">

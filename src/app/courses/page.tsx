@@ -5,9 +5,9 @@ import { BookOpen, Bookmark, Clock, ShoppingCart, Users } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
 import { publicApi } from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
-import { resolveImageUrl } from '@/lib/imageUtils';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
+import FrameImage from '@/components/FrameImage';
 
 type CourseCard = {
   id: string;
@@ -152,12 +152,10 @@ export default function AcademyPage() {
                       className="relative block aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-100 to-primary-200"
                     >
                       {course.thumbnail ? (
-                        <img
-                          src={resolveImageUrl(course.thumbnail)}
+                        <FrameImage
+                          src={course.thumbnail}
                           alt={course.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center">

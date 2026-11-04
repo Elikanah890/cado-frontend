@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ImageIcon, Quote } from 'lucide-react';
+import FrameImage from '@/components/FrameImage';
 
 type Testimonial = { quote: string; author?: string | null; role?: string | null } | null;
 type GalleryImage = { url: string; alt?: string | null };
@@ -106,13 +107,8 @@ export default function ProjectTabs({
           {galleryImages.length > 0 ? (
             <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
               {galleryImages.map((image, index) => (
-                <div key={`${image.url}-${index}`} className="aspect-video overflow-hidden rounded-xl border border-gray-100 bg-gray-100 shadow-sm">
-                  <img
-                    src={image.url}
-                    alt={image.alt || `Project gallery ${index + 1}`}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
+                <div key={`${image.url}-${index}`} className="relative aspect-video overflow-hidden rounded-xl border border-gray-100 bg-gray-100 shadow-sm">
+                  <FrameImage src={image.url} alt={image.alt || `Project gallery ${index + 1}`} />
                 </div>
               ))}
             </div>

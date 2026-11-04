@@ -6,8 +6,8 @@ import PublicLayout from '@/components/PublicLayout';
 import { publicApi } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
-import { resolveImageUrl } from '@/lib/imageUtils';
 import type { Portfolio } from '@/types';
+import FrameImage from '@/components/FrameImage';
 
 export default function PortfolioPage() {
   const { t } = useLanguage();
@@ -99,12 +99,10 @@ export default function PortfolioPage() {
                 <Link key={project.slug} href={`/portfolio/${project.slug}`} className="card group overflow-hidden">
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400">
                     {project.featuredImage ? (
-                      <img
-                        src={resolveImageUrl(project.featuredImage)}
+                      <FrameImage
+                        src={project.featuredImage}
                         alt={project.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="h-full w-full" />

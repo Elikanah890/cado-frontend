@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, User } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import FrameImage from '@/components/FrameImage';
 
 interface AcademyCourse {
   id: string;
@@ -65,11 +65,9 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
               >
                 <div className="relative aspect-video overflow-hidden bg-primary-100">
                   {course.thumbnail || course.featuredImage ? (
-                    <img
-                      src={resolveImageUrl(course.thumbnail || course.featuredImage || '')}
+                    <FrameImage
+                      src={course.thumbnail || course.featuredImage || ''}
                       alt={course.title}
-                      loading="lazy"
-                      className="h-full w-full object-contain"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-200 to-primary-400">

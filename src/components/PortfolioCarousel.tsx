@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
-import { resolveImageUrl } from '@/lib/imageUtils';
+import FrameImage from '@/components/FrameImage';
 
 interface PortfolioProject {
   id: string;
@@ -60,11 +60,9 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
               >
                 <div className="relative aspect-video overflow-hidden bg-gray-200">
                   {project.featuredImage ? (
-                    <img
-                      src={resolveImageUrl(project.featuredImage)}
+                    <FrameImage
+                      src={project.featuredImage}
                       alt={project.title}
-                      loading="lazy"
-                      className="h-full w-full object-contain"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-800 to-gray-600">

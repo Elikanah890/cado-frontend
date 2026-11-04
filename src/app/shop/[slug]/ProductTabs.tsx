@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Star } from 'lucide-react';
+import FrameImage from '@/components/FrameImage';
 
 type GalleryImage = { url: string; alt?: string };
 
@@ -53,13 +54,8 @@ export default function ProductTabs({
               <h3 className="text-lg font-bold text-primary-900">Gallery</h3>
               <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
                 {gallery.map((image, index) => (
-                  <div key={`${image.url}-${index}`} className="aspect-video overflow-hidden rounded-xl border border-gray-100 bg-gray-100 shadow-sm">
-                    <img
-                      src={image.url}
-                      alt={image.alt || `Product image ${index + 2}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
+                  <div key={`${image.url}-${index}`} className="relative aspect-video overflow-hidden rounded-xl border border-gray-100 bg-gray-100 shadow-sm">
+                    <FrameImage src={image.url} alt={image.alt || `Product image ${index + 2}`} />
                   </div>
                 ))}
               </div>

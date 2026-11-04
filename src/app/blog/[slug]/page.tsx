@@ -11,6 +11,7 @@ import { articleSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
 import { sanitizeHtml } from '@/lib/sanitize';
 import BlogComments from './BlogComments';
+import FrameImage from '@/components/FrameImage';
 
 export const revalidate = 3600;
 
@@ -172,13 +173,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {resolvedImage && (
             <div className="container-custom">
               <div className="mx-auto max-w-3xl pb-10">
-                <div className="aspect-video w-full overflow-hidden rounded-2xl bg-primary-800 shadow-2xl">
-                  <img
-                    src={resolvedImage}
-                    alt={title}
-                    loading="eager"
-                    className="h-full w-full object-cover"
-                  />
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-primary-800 shadow-2xl">
+                  <FrameImage src={resolvedImage} alt={title} loading="eager" />
                 </div>
               </div>
             </div>
@@ -205,12 +201,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {galleryImages.map((img: string, i: number) => (
                         <a key={i} href={resolveImageUrl(img)} target="_blank" rel="noopener noreferrer" className="relative block aspect-video overflow-hidden rounded-xl border bg-gray-100 hover:opacity-90 transition-opacity">
-                          <img
-                            src={resolveImageUrl(img)}
-                            alt={`${title} gallery ${i + 1}`}
-                            loading="lazy"
-                            className="h-full w-full object-cover"
-                          />
+                          <FrameImage src={img} alt={`${title} gallery ${i + 1}`} />
                         </a>
                       ))}
                     </div>
@@ -267,14 +258,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 {related.map((r: any) => (
                   <Link key={r.slug} href={`/blog/${r.slug}`} className="card group overflow-hidden">
-                    <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-200 to-primary-300">
+                    <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-200 to-primary-300">
                       {r.featuredImage ? (
-                        <img
-                          src={resolveImageUrl(r.featuredImage)}
-                          alt={r.title}
-                          loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                        <FrameImage src={r.featuredImage} alt={r.title} className="transition-transform duration-500 group-hover:scale-105" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center text-primary-400 text-sm">CadorDigital</div>
                       )}

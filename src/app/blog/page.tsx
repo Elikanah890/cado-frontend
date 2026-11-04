@@ -6,9 +6,9 @@ import { Clock, User, FileText, Search, Eye, MessageCircle, ChevronLeft, Chevron
 import PublicLayout from '@/components/PublicLayout';
 import { publicApi } from '@/lib/api';
 import { formatDate, slugify } from '@/lib/utils';
-import { resolveImageUrl } from '@/lib/imageUtils';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { Comment } from '@/types';
+import FrameImage from '@/components/FrameImage';
 
 interface BlogCard {
   slug: string;
@@ -142,14 +142,12 @@ export default function BlogPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {posts.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="card group overflow-hidden flex flex-col">
-                  <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-200 to-primary-300">
+                  <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-200 to-primary-300">
                     {post.image ? (
-                      <img
-                        src={resolveImageUrl(post.image)}
+                      <FrameImage
+                        src={post.image}
                         alt={post.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center">

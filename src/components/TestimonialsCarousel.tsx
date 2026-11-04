@@ -27,17 +27,17 @@ export default function TestimonialsCarousel({ title, testimonials }: { title?: 
   const items = testimonials.slice(0, 9);
   const doubled = [...items, ...items];
 
-  const CARD_WIDTH = 380;
-  const GAP = 24;
+  const CARD_WIDTH = 320;
+  const GAP = 20;
   const singleSetWidth = items.length * (CARD_WIDTH + GAP);
   const duration = items.length * 5;
 
   return (
-    <section className="py-16 bg-white border-t border-gray-100 overflow-hidden">
+    <section className="py-10 bg-white border-t border-gray-100 overflow-hidden">
       <div className="container-custom">
         <span className="block text-center text-gold-500 font-semibold text-sm uppercase tracking-wider">{t('home.testimonialsLabel')}</span>
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 mt-2 text-primary-900">{heading}</h2>
-        <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto">{t('home.testimonialsSubtitle')}</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 mt-2 text-primary-900">{heading}</h2>
+        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">{t('home.testimonialsSubtitle')}</p>
 
         <div
           className="relative w-full overflow-hidden"
@@ -45,7 +45,7 @@ export default function TestimonialsCarousel({ title, testimonials }: { title?: 
           onMouseLeave={() => setPaused(false)}
         >
           <div
-            className="flex gap-6"
+            className="flex gap-5"
             style={{
               width: 'max-content',
               animation: `scroll-left ${duration}s linear infinite`,
@@ -55,9 +55,9 @@ export default function TestimonialsCarousel({ title, testimonials }: { title?: 
             {doubled.map((item, i) => (
               <div
                 key={`${item.id}-${i}`}
-                className="flex-shrink-0 w-[380px] bg-gray-50 border border-gray-100 rounded-2xl p-6 flex flex-col"
+                className="flex-shrink-0 w-[320px] bg-gray-50 border border-gray-100 rounded-2xl p-5 flex flex-col"
               >
-                <div className="flex items-center gap-1 mb-4">
+                <div className="flex items-center gap-1 mb-3">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
                       key={star}
@@ -65,9 +65,9 @@ export default function TestimonialsCarousel({ title, testimonials }: { title?: 
                     />
                   ))}
                 </div>
-                <Quote className="w-8 h-8 text-gold-500/30 mb-3" />
-                <p className="text-gray-700 leading-relaxed flex-1">&ldquo;{item.content}&rdquo;</p>
-                <div className="flex items-center gap-3 mt-6 pt-5 border-t border-gray-200">
+                <Quote className="w-6 h-6 text-gold-500/30 mb-2" />
+                <p className="line-clamp-4 text-sm text-gray-600 leading-relaxed flex-1">&ldquo;{item.content}&rdquo;</p>
+                <div className="flex items-center gap-2.5 mt-4 pt-4 border-t border-gray-200">
                   {item.clientAvatar ? (
                     <img
                       src={resolveImageUrl(item.clientAvatar)}
@@ -75,10 +75,10 @@ export default function TestimonialsCarousel({ title, testimonials }: { title?: 
                       width={48}
                       height={48}
                       loading="lazy"
-                      className="w-12 h-12 rounded-full object-cover"
+                      className="w-10 h-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-sm font-bold">
                       {(item.clientName || '?')[0]?.toUpperCase()}
                     </div>
                   )}
@@ -93,7 +93,7 @@ export default function TestimonialsCarousel({ title, testimonials }: { title?: 
                       width={56}
                       height={56}
                       loading="lazy"
-                      className="w-14 h-14 rounded-lg object-cover ml-auto shrink-0"
+                      className="w-12 h-12 rounded-lg object-cover ml-auto shrink-0"
                     />
                   )}
                 </div>

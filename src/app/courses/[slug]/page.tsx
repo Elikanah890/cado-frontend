@@ -20,6 +20,7 @@ import { courseSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { formatCurrency } from '@/lib/utils';
+import FrameImage from '@/components/FrameImage';
 
 export const dynamic = 'force-dynamic';
 
@@ -195,13 +196,8 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
               <div className="mt-8 max-w-[1066px]">
                 {videoPlayer ?? (cover ? (
-                  <div className="aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 shadow-lg">
-                    <img
-                      src={resolveImageUrl(cover)}
-                      alt={course.title}
-                      loading="eager"
-                      className="h-full w-full object-cover"
-                    />
+                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 shadow-lg">
+                    <FrameImage src={cover} alt={course.title} loading="eager" />
                   </div>
                 ) : (
                   <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary-800 to-primary-900 shadow-lg">
