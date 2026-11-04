@@ -36,7 +36,7 @@ export default function PortfolioLightbox({ src, alt }: { src: string; alt: stri
         aria-label={`View ${alt} full size`}
         className="group relative block w-full overflow-hidden rounded-2xl bg-primary-800 shadow-2xl cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
       >
-        <div className="relative aspect-video w-full bg-primary-800">
+        <div className="relative aspect-[4/3] w-full bg-primary-800">
           <FrameImage src={src} alt={alt} loading="eager" className="transition-transform duration-500 group-hover:scale-[1.02]" />
         </div>
         <span className="pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-black/60 px-3 py-2 text-xs font-medium text-white backdrop-blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100">

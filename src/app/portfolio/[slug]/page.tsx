@@ -154,7 +154,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 {project.featuredImage ? (
                   <PortfolioLightbox src={resolveImageUrl(project.featuredImage)} alt={project.title} />
                 ) : (
-                  <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-lg">
+                  <div className="flex aspect-[4/3] w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-lg">
                     <div className="text-center">
                       <p className="text-lg text-white/30">No image available</p>
                       <p className="mt-1 text-sm text-white/20">{project.title}</p>

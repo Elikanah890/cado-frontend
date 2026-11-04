@@ -76,7 +76,7 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="card overflow-hidden animate-pulse">
-                  <div className="aspect-video bg-gray-200" />
+                  <div className="aspect-[4/3] bg-gray-200" />
                   <div className="p-6 space-y-3">
                     <div className="h-5 bg-gray-200 rounded w-3/4" />
                     <div className="h-4 bg-gray-200 rounded w-1/2" />
@@ -97,7 +97,7 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {projects.map((project) => (
                 <Link key={project.slug} href={`/portfolio/${project.slug}`} className="card group overflow-hidden">
-                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400">
                     {project.featuredImage ? (
                       <img
                         src={resolveImageUrl(project.featuredImage)}

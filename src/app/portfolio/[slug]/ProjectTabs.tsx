@@ -107,7 +107,7 @@ export default function ProjectTabs({
           {galleryImages.length > 0 ? (
             <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
               {galleryImages.map((image, index) => (
-                <div key={`${image.url}-${index}`} className="relative aspect-video overflow-hidden rounded-xl border border-gray-100 bg-gray-100 shadow-sm">
+                <div key={`${image.url}-${index}`} className="relative aspect-[4/3] overflow-hidden rounded-xl border border-gray-100 bg-gray-100 shadow-sm">
                   <FrameImage src={image.url} alt={image.alt || `Project gallery ${index + 1}`} />
                 </div>
               ))}

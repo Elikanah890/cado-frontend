@@ -58,7 +58,7 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
                 href={`/portfolio/${project.slug || project.id}`}
                 className="flex-shrink-0 w-[320px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
               >
-                <div className="relative aspect-video overflow-hidden bg-gray-200">
+                <div className="relative aspect-[4/3] overflow-hidden bg-gray-200">
                   {project.featuredImage ? (
                     <FrameImage
                       src={project.featuredImage}
