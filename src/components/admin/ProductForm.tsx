@@ -240,6 +240,11 @@ export default function ProductForm({ initialData, mode }: Props) {
               placeholder="35000"
             />
             <p className="text-xs text-gray-400 mt-1">Leave empty if there is no discount. This will show as a strikethrough price.</p>
+            {Number(form.originalPrice) > 0 && Number(form.originalPrice) <= Number(form.price) && (
+              <p className="mt-1 text-xs font-medium text-amber-600">
+                Original price must be higher than the current price to show a discount.
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>

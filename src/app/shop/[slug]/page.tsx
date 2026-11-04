@@ -6,7 +6,7 @@ import PublicLayout from '@/components/PublicLayout';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { resolveImageUrl } from '@/lib/imageUtils';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 interface ProductImage {
   url: string;
@@ -28,7 +28,7 @@ interface Product {
 async function getProduct(slug: string): Promise<Product | null> {
   try {
     const base = getApiBase();
-    const res = await fetch(`${base}/products/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${base}/products/${encodeURIComponent(slug)}`, { cache: 'no-store' });
     if (!res.ok) return null;
     const json = await res.json();
     return json.data ?? json;
