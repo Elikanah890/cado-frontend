@@ -70,11 +70,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <div className="container-custom relative z-10 py-12 md:py-16">
           <Link href="/portfolio" className="text-white/60 hover:text-gold-500 text-sm mb-6 inline-block">← Back to Portfolio</Link>
 
-          <div className="w-full max-w-md sm:max-w-2xl md:max-w-3xl mx-auto">
+          <div className="w-full max-w-[1066px] mx-auto">
             {project.featuredImage ? (
               <PortfolioLightbox src={resolveImageUrl(project.featuredImage)} alt={project.title} />
             ) : (
-              <div className="aspect-[4/5] w-full rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-2xl flex items-center justify-center">
+              <div className="aspect-video w-full rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-2xl flex items-center justify-center">
                 <div className="text-center">
                   <p className="text-white/30 text-lg">No image available</p>
                   <p className="text-white/20 text-sm mt-1">{project.title}</p>
@@ -156,7 +156,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <h2 className="text-3xl font-bold text-primary-900 text-center mb-8">Project Gallery</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {galleryImages.map((img, i) => (
-                <div key={i} className="aspect-[4/5] overflow-hidden rounded-xl border bg-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div key={i} className="aspect-video overflow-hidden rounded-xl border bg-gray-100 shadow-sm hover:shadow-md transition-shadow">
                   <img
                     src={resolveImageUrl(img.url)}
                     alt={img.alt || `${project.title} gallery ${i + 1}`}

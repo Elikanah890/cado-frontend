@@ -6,7 +6,7 @@ import { X, Plus, Trash2, Upload, Loader2, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { normalizePortraitImage } from '@/lib/portraitImage';
+import { normalizeLandscapeImage } from '@/lib/landscapeImage';
 import PosterImage from '@/components/PosterImage';
 
 type Tab = 'general' | 'content' | 'media' | 'testimonial' | 'tech' | 'seo' | 'advanced';
@@ -175,7 +175,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
     }
     setUploadingFeatured(true);
     try {
-      const prepared = await normalizePortraitImage(file);
+      const prepared = await normalizeLandscapeImage(file);
       const url = await uploadSingleFile(prepared, 'portfolio');
       handleChange('featuredImage', url);
       toast.success('Featured image uploaded');
@@ -197,7 +197,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
     try {
       const uploaded = await Promise.all(
         imageFiles.map(async (file) => {
-          const prepared = await normalizePortraitImage(file);
+          const prepared = await normalizeLandscapeImage(file);
           const url = await uploadSingleFile(prepared, 'portfolio/gallery');
           return { url, alt: file.name.replace(/\.[^.]+$/, '') };
         })
@@ -383,7 +383,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
             {/* Featured Image - Single Image Only */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Project Image (Featured)</label>
-              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1920 × 1080 px (16:9 landscape). Other ratios are auto-fitted into a 16:9 frame.</p>
               <input ref={featuredInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && handleFeaturedFiles(e.target.files)} />
               {!form.featuredImage ? (
                 <div
@@ -421,7 +421,7 @@ export default function PortfolioForm({ initialData, mode }: Props) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Gallery Images</label>
-              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into 4:5 frames.</p>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1920 × 1080 px (16:9 landscape). Other ratios are auto-fitted into 16:9 frames.</p>
               <input ref={galleryInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={(e) => e.target.files && handleGalleryFiles(e.target.files)} />
               <div
                 onDragOver={(e) => { e.preventDefault(); setDragOverGallery(true); }}

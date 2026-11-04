@@ -35,7 +35,7 @@ export default function PortfolioLightbox({ src, alt }: { src: string; alt: stri
         aria-label={`View ${alt} full size`}
         className="group relative block w-full overflow-hidden rounded-2xl bg-primary-800 shadow-2xl cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
       >
-        <div className="aspect-[4/5] w-full bg-primary-800">
+        <div className="aspect-video w-full bg-primary-800">
           <img
             src={src}
             alt={alt}
@@ -78,7 +78,7 @@ export default function PortfolioLightbox({ src, alt }: { src: string; alt: stri
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.2 }}
-                  className="max-h-[90vh] max-w-[92vw] rounded-lg object-contain shadow-2xl"
+                  className="max-h-[80vh] max-w-5xl w-auto rounded-lg object-contain shadow-2xl"
                   onClick={(event) => event.stopPropagation()}
                 />
               </motion.div>

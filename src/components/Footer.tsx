@@ -11,6 +11,28 @@ import { publicApi } from '@/lib/api';
 import { useSocialLinks } from '@/lib/social';
 import { useLanguage } from '@/lib/LanguageContext';
 
+type FooterService = { slug: string; name: string };
+
+let footerServicesPromise: Promise<FooterService[]> | null = null;
+
+function loadFooterServices(): Promise<FooterService[]> {
+  if (!footerServicesPromise) {
+    footerServicesPromise = publicApi.getServices()
+      .then((res) => {
+        const data = (res as any)?.data;
+        const list = Array.isArray(data) ? data : [];
+        return list
+          .map((service: any) => ({ slug: service?.slug, name: service?.name }))
+          .filter((service: FooterService) => service.slug && service.name);
+      })
+      .catch(() => {
+        footerServicesPromise = null;
+        return [];
+      });
+  }
+  return footerServicesPromise;
+}
+
 const quickLinks = [
   { key: 'nav.portfolio', href: '/portfolio' },
   { key: 'nav.academy', href: '/courses' },
@@ -24,6 +46,7 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showScroll, setShowScroll] = useState(false);
+  const [services, setServices] = useState<FooterService[]>([]);
   const { t } = useLanguage();
   const socialLinks = useSocialLinks();
 
@@ -31,6 +54,16 @@ export default function Footer() {
     const handleScroll = () => setShowScroll(window.scrollY > 500);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    loadFooterServices().then((list) => {
+      if (active) setServices(list);
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
@@ -87,13 +120,25 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">{t('footer.servicesTitle')}</h4>
+            <Link href="/services" className="inline-block">
+              <h4 className="text-lg font-semibold mb-4 transition-colors hover:text-gold-500">{t('footer.servicesTitle')}</h4>
+            </Link>
             <ul className="space-y-2.5">
-              <li>
-                <Link href="/services" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">
-                  {t('nav.services')}
-                </Link>
-              </li>
+              {services.length > 0 ? (
+                services.map((service) => (
+                  <li key={service.slug}>
+                    <Link href={`/services/${service.slug}`} className="text-sm text-gray-400 transition-colors hover:text-gold-500">
+                      {service.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li>
+                  <Link href="/services" className="text-sm text-gray-400 transition-colors hover:text-gold-500">
+                    {t('nav.services')}
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
