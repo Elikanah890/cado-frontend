@@ -93,7 +93,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-6 border-b border-white/10">
           <Link href="/admin">
             <img
-              src="/cador-logo.png"
+              src="/logo.png"
               alt={companyName}
               className="h-14 w-auto"
             />

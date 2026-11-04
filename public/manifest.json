@@ -6,5 +6,11 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0A1628",
-  "icons": [{ "src": "/cador-logo.png", "sizes": "512x512", "type": "image/png" }]
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "1000x1000",
+      "type": "image/png"
+    }
+  ]
 }

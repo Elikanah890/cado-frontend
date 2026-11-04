@@ -55,7 +55,7 @@ export default function Footer() {
           <div>
             <Link href="/">
               <img
-                src="/cador-logo.png"
+                src="/logo.png"
                 alt="CadorDigital"
                 width={140}
                 height={56}

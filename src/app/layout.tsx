@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
   icons: {
-    icon: '/cador-logo.png',
-    shortcut: '/cador-logo.png',
-    apple: '/cador-logo.png',
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
   manifest: '/manifest.json',
   verification: {
@@ -75,7 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href={new URL(siteConfig.url).origin} />
         {process.env.NEXT_PUBLIC_API_URL ? <link rel="preconnect" href={new URL(process.env.NEXT_PUBLIC_API_URL).origin} /> : null}
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        <link rel="preload" as="image" href="/cador-logo.png" />
+        <link rel="preload" as="image" href="/logo.png" />
       </head>
       <body className="min-h-screen flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />

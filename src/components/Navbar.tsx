@@ -60,7 +60,7 @@ export default function Navbar() {
       <div className="container-custom flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
           <img
-            src="/cador-logo.png"
+            src="/logo.png"
             alt="CadorDigital"
             width={140}
             height={56}
