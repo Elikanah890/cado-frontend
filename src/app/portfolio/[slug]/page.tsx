@@ -5,7 +5,6 @@ import { ArrowRight, ExternalLink, Calendar, Tag, User, CheckCircle, Clock, Star
 import PublicLayout from '@/components/PublicLayout';
 import ShareButtons from '@/components/ShareButtons';
 import PortfolioLightbox from '@/components/PortfolioLightbox';
-import PosterImage from '@/components/PosterImage';
 import JsonLd from '@/components/JsonLd';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { portfolioSchema, breadcrumbSchema } from '@/lib/jsonLd';
@@ -75,7 +74,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             {project.featuredImage ? (
               <PortfolioLightbox src={resolveImageUrl(project.featuredImage)} alt={project.title} />
             ) : (
-              <div className="aspect-[4/5] w-full rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-2xl flex items-center justify-center">
+              <div className="aspect-video w-full rounded-2xl bg-gradient-to-br from-primary-800 via-primary-900 to-primary-800 shadow-2xl flex items-center justify-center">
                 <div className="text-center">
                   <p className="text-white/30 text-lg">No image available</p>
                   <p className="text-white/20 text-sm mt-1">{project.title}</p>
@@ -157,8 +156,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <h2 className="text-3xl font-bold text-primary-900 text-center mb-8">Project Gallery</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {galleryImages.map((img, i) => (
-                <div key={i} className="rounded-xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition-shadow">
-                  <PosterImage src={img.url} alt={img.alt || `${project.title} gallery ${i + 1}`} className="rounded-none" />
+                <div key={i} className="aspect-video overflow-hidden rounded-xl border bg-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                  <img
+                    src={resolveImageUrl(img.url)}
+                    alt={img.alt || `${project.title} gallery ${i + 1}`}
+                    loading="lazy"
+                    className="h-full w-full object-contain"
+                  />
                 </div>
               ))}
             </div>

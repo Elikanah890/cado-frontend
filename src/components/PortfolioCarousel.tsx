@@ -64,7 +64,7 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
                       src={resolveImageUrl(project.featuredImage)}
                       alt={project.title}
                       loading="lazy"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-contain"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-800 to-gray-600">

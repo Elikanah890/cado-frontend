@@ -94,12 +94,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div className="w-full">
               {mainImage ? (
-                <div className="aspect-video w-full overflow-hidden rounded-2xl bg-primary-900 shadow-2xl">
+                <div className="aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 shadow-2xl">
                   <img
                     src={mainImage}
                     alt={images[0]?.alt || product.title}
                     loading="eager"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain"
                   />
                 </div>
               ) : (
@@ -116,13 +116,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                       href={resolveImageUrl(image.url)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative block aspect-video overflow-hidden rounded-lg border border-white/10 hover:border-gold-500 transition-colors"
+                      className="relative block aspect-video overflow-hidden rounded-lg border border-white/10 bg-gray-100 hover:border-gold-500 transition-colors"
                     >
                       <img
                         src={resolveImageUrl(image.url)}
                         alt={image.alt || `${product.title} image ${index + 2}`}
                         loading="lazy"
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-contain"
                       />
                     </a>
                   ))}

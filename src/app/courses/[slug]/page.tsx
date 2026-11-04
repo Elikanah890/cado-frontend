@@ -195,12 +195,12 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
               <div className="mt-8 max-w-[1066px]">
                 {videoPlayer ?? (cover ? (
-                  <div className="aspect-video w-full overflow-hidden rounded-2xl bg-primary-900 shadow-lg">
+                  <div className="aspect-video w-full overflow-hidden rounded-2xl bg-gray-100 shadow-lg">
                     <img
                       src={resolveImageUrl(cover)}
                       alt={course.title}
                       loading="eager"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-contain"
                     />
                   </div>
                 ) : (

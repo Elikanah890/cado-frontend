@@ -69,7 +69,7 @@ export default function AcademyCarousel({ title, courses }: { title?: string; co
                       src={resolveImageUrl(course.thumbnail || course.featuredImage || '')}
                       alt={course.title}
                       loading="lazy"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-contain"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-200 to-primary-400">

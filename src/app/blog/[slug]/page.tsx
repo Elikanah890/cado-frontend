@@ -9,7 +9,6 @@ import JsonLd from '@/components/JsonLd';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { articleSchema, breadcrumbSchema } from '@/lib/jsonLd';
 import { resolveImageUrl } from '@/lib/imageUtils';
-import PosterImage from '@/components/PosterImage';
 import { sanitizeHtml } from '@/lib/sanitize';
 import BlogComments from './BlogComments';
 
@@ -172,8 +171,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
           {resolvedImage && (
             <div className="container-custom">
-              <div className="max-w-md mx-auto pb-10">
-                <PosterImage src={resolvedImage} alt={title} loading="eager" className="rounded-2xl shadow-2xl" />
+              <div className="mx-auto max-w-3xl pb-10">
+                <div className="aspect-video w-full overflow-hidden rounded-2xl bg-primary-800 shadow-2xl">
+                  <img
+                    src={resolvedImage}
+                    alt={title}
+                    loading="eager"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -198,8 +204,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <h2 className="text-xl font-bold text-primary-900 mb-4">Gallery</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       {galleryImages.map((img: string, i: number) => (
-                        <a key={i} href={resolveImageUrl(img)} target="_blank" rel="noopener noreferrer" className="block rounded-xl overflow-hidden border hover:opacity-90 transition-opacity">
-                          <PosterImage src={img} alt={`${title} gallery ${i + 1}`} className="rounded-none" />
+                        <a key={i} href={resolveImageUrl(img)} target="_blank" rel="noopener noreferrer" className="relative block aspect-video overflow-hidden rounded-xl border bg-gray-100 hover:opacity-90 transition-opacity">
+                          <img
+                            src={resolveImageUrl(img)}
+                            alt={`${title} gallery ${i + 1}`}
+                            loading="lazy"
+                            className="h-full w-full object-contain"
+                          />
                         </a>
                       ))}
                     </div>
@@ -256,15 +267,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 {related.map((r: any) => (
                   <Link key={r.slug} href={`/blog/${r.slug}`} className="card group overflow-hidden">
-                    <div className="bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
+                    <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-200 to-primary-300">
                       {r.featuredImage ? (
-                        <PosterImage
-                          src={r.featuredImage}
+                        <img
+                          src={resolveImageUrl(r.featuredImage)}
                           alt={r.title}
-                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="aspect-[4/5] w-full flex items-center justify-center text-primary-400 text-sm">CadorDigital</div>
+                        <div className="flex h-full w-full items-center justify-center text-primary-400 text-sm">CadorDigital</div>
                       )}
                     </div>
                     <div className="p-4">

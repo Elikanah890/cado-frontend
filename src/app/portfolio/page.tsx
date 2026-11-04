@@ -6,8 +6,8 @@ import PublicLayout from '@/components/PublicLayout';
 import { publicApi } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { resolveImageUrl } from '@/lib/imageUtils';
 import type { Portfolio } from '@/types';
-import PosterImage from '@/components/PosterImage';
 
 export default function PortfolioPage() {
   const { t } = useLanguage();
@@ -76,7 +76,7 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="card overflow-hidden animate-pulse">
-                  <div className="aspect-[4/5] bg-gray-200" />
+                  <div className="aspect-video bg-gray-200" />
                   <div className="p-6 space-y-3">
                     <div className="h-5 bg-gray-200 rounded w-3/4" />
                     <div className="h-4 bg-gray-200 rounded w-1/2" />
@@ -97,15 +97,17 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {projects.map((project) => (
                 <Link key={project.slug} href={`/portfolio/${project.slug}`} className="card group overflow-hidden">
-                  <div className="relative overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400">
+                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400">
                     {project.featuredImage ? (
-                      <PosterImage
-                        src={project.featuredImage}
+                      <img
+                        src={resolveImageUrl(project.featuredImage)}
                         alt={project.title}
-                        imageClassName="transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="aspect-[4/5]" />
+                      <div className="h-full w-full" />
                     )}
                     <div className="absolute inset-0 z-20 bg-primary-900/0 group-hover:bg-primary-900/40 transition-colors flex items-center justify-center">
                       <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-semibold flex items-center gap-1">

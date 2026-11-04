@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, ZoomIn } from 'lucide-react';
-import PosterImage from '@/components/PosterImage';
 
 export default function PortfolioLightbox({ src, alt }: { src: string; alt: string }) {
   const [open, setOpen] = useState(false);
@@ -36,13 +35,14 @@ export default function PortfolioLightbox({ src, alt }: { src: string; alt: stri
         aria-label={`View ${alt} full size`}
         className="group relative block w-full overflow-hidden rounded-2xl bg-primary-800 shadow-2xl cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
       >
-        <PosterImage
-          src={src}
-          alt={alt}
-          loading="eager"
-          className="rounded-none"
-          imageClassName="transition-transform duration-500 group-hover:scale-[1.02]"
-        />
+        <div className="aspect-video w-full bg-primary-800">
+          <img
+            src={src}
+            alt={alt}
+            loading="eager"
+            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        </div>
         <span className="pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-black/60 px-3 py-2 text-xs font-medium text-white backdrop-blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <ZoomIn className="h-4 w-4" /> View full size
         </span>
