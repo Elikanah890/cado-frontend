@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Check, ClipboardList, MessageCircle, Package } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
-import PosterImage from '@/components/PosterImage';
 import { siteConfig, absoluteUrl, getApiBase } from '@/lib/seo';
 import { resolveImageUrl } from '@/lib/imageUtils';
 
@@ -93,11 +92,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-            <div className="w-full max-w-md mx-auto">
+            <div className="w-full">
               {mainImage ? (
-                <PosterImage src={mainImage} alt={images[0]?.alt || product.title} loading="eager" className="rounded-2xl shadow-2xl" />
+                <div className="aspect-video w-full overflow-hidden rounded-2xl bg-primary-900 shadow-2xl">
+                  <img
+                    src={mainImage}
+                    alt={images[0]?.alt || product.title}
+                    loading="eager"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               ) : (
-                <div className="aspect-[4/5] w-full rounded-2xl bg-primary-800 shadow-2xl flex items-center justify-center">
+                <div className="aspect-video w-full rounded-2xl bg-primary-800 shadow-2xl flex items-center justify-center">
                   <Package className="w-16 h-16 text-white/20" />
                 </div>
               )}
@@ -110,9 +116,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                       href={resolveImageUrl(image.url)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block rounded-lg overflow-hidden border border-white/10 hover:border-gold-500 transition-colors"
+                      className="relative block aspect-video overflow-hidden rounded-lg border border-white/10 hover:border-gold-500 transition-colors"
                     >
-                      <PosterImage src={image.url} alt={image.alt || `${product.title} image ${index + 2}`} className="rounded-none" />
+                      <img
+                        src={resolveImageUrl(image.url)}
+                        alt={image.alt || `${product.title} image ${index + 2}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
                     </a>
                   ))}
                 </div>

@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Package, ShoppingBag } from 'lucide-react';
 import PublicLayout from '@/components/PublicLayout';
-import PosterImage from '@/components/PosterImage';
 import { publicApi } from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
+import { resolveImageUrl } from '@/lib/imageUtils';
 import type { Product } from '@/types';
 
 export default function ShopPage() {
@@ -53,7 +53,7 @@ export default function ShopPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {[...Array(6)].map((_, index) => (
                 <div key={index} className="card overflow-hidden animate-pulse">
-                  <div className="aspect-[4/5] bg-gray-200" />
+                  <div className="aspect-video bg-gray-200" />
                   <div className="p-5 space-y-3">
                     <div className="h-5 bg-gray-200 rounded w-3/4" />
                     <div className="h-4 bg-gray-200 rounded w-1/2" />
@@ -82,15 +82,17 @@ export default function ShopPage() {
                 const whatsappHref = `https://wa.me/255716168903?text=${encodeURIComponent(message)}`;
                 return (
                   <div key={product.id} className="card group overflow-hidden flex flex-col">
-                    <Link href={productUrl} className="block bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
+                    <Link href={productUrl} className="relative block aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-100 to-primary-200">
                       {image ? (
-                        <PosterImage
-                          src={image}
+                        <img
+                          src={resolveImageUrl(image)}
                           alt={product.title}
-                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="aspect-[4/5] w-full flex items-center justify-center">
+                        <div className="flex h-full w-full items-center justify-center">
                           <ShoppingBag className="w-10 h-10 text-primary-400" />
                         </div>
                       )}

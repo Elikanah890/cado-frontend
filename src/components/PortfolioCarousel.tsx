@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
-import PosterImage from '@/components/PosterImage';
+import { resolveImageUrl } from '@/lib/imageUtils';
 
 interface PortfolioProject {
   id: string;
@@ -58,15 +58,16 @@ export default function PortfolioCarousel({ title, projects }: { title?: string;
                 href={`/portfolio/${project.slug || project.id}`}
                 className="flex-shrink-0 w-[320px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 block"
               >
-                <div className="relative overflow-hidden bg-gray-200">
+                <div className="relative aspect-video overflow-hidden bg-gray-200">
                   {project.featuredImage ? (
-                    <PosterImage
-                      src={project.featuredImage}
+                    <img
+                      src={resolveImageUrl(project.featuredImage)}
                       alt={project.title}
-                      className="rounded-none"
+                      loading="lazy"
+                      className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="aspect-[4/5] w-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center">
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-800 to-gray-600">
                       <span className="text-white font-semibold text-sm text-center px-2">{project.title}</span>
                     </div>
                   )}

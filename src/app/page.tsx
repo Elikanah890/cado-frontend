@@ -6,7 +6,6 @@ import PublicLayout from '@/components/PublicLayout';
 import PortfolioCarousel from '@/components/PortfolioCarousel';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import AcademyCarousel from '@/components/AcademyCarousel';
-import PosterImage from '@/components/PosterImage';
 import { publicApi } from '@/lib/api';
 import { useLanguage } from '@/lib/LanguageContext';
 import { formatCurrency, whatsappLink } from '@/lib/utils';
@@ -227,15 +226,17 @@ export default function HomePage() {
                 const whatsappHref = `https://wa.me/255716168903?text=${encodeURIComponent(message)}`;
                 return (
                   <div key={product.id} className="card group overflow-hidden flex flex-col">
-                    <Link href="/shop" className="block bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
+                    <Link href="/shop" className="relative block aspect-video w-full overflow-hidden bg-gradient-to-br from-primary-100 to-primary-200">
                       {image ? (
-                        <PosterImage
-                          src={image}
+                        <img
+                          src={resolveImageUrl(image)}
                           alt={product.title}
-                          imageClassName="transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="aspect-[4/5] w-full flex items-center justify-center">
+                        <div className="flex h-full w-full items-center justify-center">
                           <ArrowRight className="w-8 h-8 text-primary-400" />
                         </div>
                       )}
