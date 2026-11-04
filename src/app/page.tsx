@@ -171,7 +171,7 @@ export default function HomePage() {
                 <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}>
                   <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroCollage.left} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+                    <img src={heroCollage.left} alt="" aria-hidden="true" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </motion.div>
@@ -182,7 +182,7 @@ export default function HomePage() {
                 <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
                   <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroCollage.main} alt="CadorDigital creative work" className="w-full h-full object-contain" />
+                    <img src={heroCollage.main} alt="CadorDigital creative work" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </motion.div>
@@ -193,7 +193,7 @@ export default function HomePage() {
                 <motion.div className="w-full h-full" animate={{ y: [0, -15, 0] }} transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}>
                   <div className="relative w-full h-full rounded-2xl shadow-2xl border-4 border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={heroCollage.right} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+                    <img src={heroCollage.right} alt="" aria-hidden="true" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </motion.div>
