@@ -6,7 +6,7 @@ import { Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { normalizePortraitImage } from '@/lib/portraitImage';
+import { normalizeLandscapeImage } from '@/lib/landscapeImage';
 import PosterImage from '@/components/PosterImage';
 
 interface ProductImage {
@@ -116,7 +116,7 @@ export default function ProductForm({ initialData, mode }: Props) {
     try {
       const uploaded = await Promise.all(
         imageFiles.map(async (file) => {
-          const prepared = await normalizePortraitImage(file);
+          const prepared = await normalizeLandscapeImage(file);
           const url = await uploadSingleFile(prepared);
           return { url, alt: form.title || file.name.replace(/\.[^.]+$/, '') };
         })
@@ -294,7 +294,7 @@ export default function ProductForm({ initialData, mode }: Props) {
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
             <h2 className="text-lg font-bold text-primary-900">Product Images</h2>
-            <p className="text-xs text-gray-400 mt-1">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
+            <p className="text-xs text-gray-400 mt-1">Recommended: 1920 × 1080 px (16:9 landscape). Other ratios are auto-fitted into a 16:9 frame.</p>
           </div>
           <button
             type="button"

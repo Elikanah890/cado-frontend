@@ -99,7 +99,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                     src={mainImage}
                     alt={images[0]?.alt || product.title}
                     loading="eager"
-                    className="h-full w-full object-contain"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : (
@@ -122,7 +122,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         src={resolveImageUrl(image.url)}
                         alt={image.alt || `${product.title} image ${index + 2}`}
                         loading="lazy"
-                        className="h-full w-full object-contain"
+                        className="h-full w-full object-cover"
                       />
                     </a>
                   ))}

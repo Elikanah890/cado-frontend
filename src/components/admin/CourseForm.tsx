@@ -9,7 +9,7 @@ import {
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { normalizePortraitImage } from '@/lib/portraitImage';
+import { normalizeLandscapeImage } from '@/lib/landscapeImage';
 import PosterImage from '@/components/PosterImage';
 import RichTextEditor from './RichTextEditor';
 import VideoUpload from './VideoUpload';
@@ -148,7 +148,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
     if (!file.type.startsWith('image/')) { toast.error('Only image files allowed'); return; }
     setUploadingThumb(true);
     try {
-      const prepared = await normalizePortraitImage(file);
+      const prepared = await normalizeLandscapeImage(file);
       const url = await uploadSingleFile(prepared, 'course');
       setForm((f) => ({ ...f, thumbnail: url, featuredImage: url }));
       toast.success('Course image uploaded');
@@ -404,7 +404,7 @@ export default function CourseForm({ initialData, mode = 'create' }: Props) {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2"><ImageIcon className="w-4 h-4" /> Course Cover Image</label>
-              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1920 × 1080 px (16:9 landscape). Other ratios are auto-fitted into a 16:9 frame.</p>
               <input ref={thumbInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && handleThumbFiles(e.target.files)} />
               {!form.thumbnail && !form.featuredImage ? (
                 <div

@@ -177,7 +177,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     src={resolvedImage}
                     alt={title}
                     loading="eager"
-                    className="h-full w-full object-contain"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               </div>
@@ -209,7 +209,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                             src={resolveImageUrl(img)}
                             alt={`${title} gallery ${i + 1}`}
                             loading="lazy"
-                            className="h-full w-full object-contain"
+                            className="h-full w-full object-cover"
                           />
                         </a>
                       ))}
@@ -273,7 +273,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                           src={resolveImageUrl(r.featuredImage)}
                           alt={r.title}
                           loading="lazy"
-                          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center text-primary-400 text-sm">CadorDigital</div>

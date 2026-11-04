@@ -157,7 +157,7 @@ export default function AcademyPage() {
                           alt={course.title}
                           loading="lazy"
                           decoding="async"
-                          className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center">

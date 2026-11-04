@@ -200,7 +200,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                       src={resolveImageUrl(cover)}
                       alt={course.title}
                       loading="eager"
-                      className="h-full w-full object-contain"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                 ) : (

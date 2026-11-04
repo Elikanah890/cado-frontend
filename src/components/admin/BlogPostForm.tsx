@@ -6,7 +6,7 @@ import { X, Trash2, Upload, Loader2, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/lib/api';
 import { slugify } from '@/lib/utils';
-import { normalizePortraitImage } from '@/lib/portraitImage';
+import { normalizeLandscapeImage } from '@/lib/landscapeImage';
 import PosterImage from '@/components/PosterImage';
 import RichTextEditor from './RichTextEditor';
 
@@ -126,7 +126,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
     if (!file.type.startsWith('image/')) { toast.error('Only image files allowed'); return; }
     setUploadingFeatured(true);
     try {
-      const prepared = await normalizePortraitImage(file);
+      const prepared = await normalizeLandscapeImage(file);
       const url = await uploadSingleFile(prepared, 'blog');
       handleChange('featuredImage', url);
       toast.success('Featured image uploaded');
@@ -143,7 +143,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
     if (validFiles.length === 0) { toast.error('Only image files allowed'); return; }
     setUploadingGallery(true);
     try {
-      const urls = await Promise.all(validFiles.map(async (f) => uploadSingleFile(await normalizePortraitImage(f), 'blog')));
+      const urls = await Promise.all(validFiles.map(async (f) => uploadSingleFile(await normalizeLandscapeImage(f), 'blog')));
       handleChange('galleryImages', [...form.galleryImages, ...urls]);
       toast.success(`${validFiles.length} image(s) uploaded`);
     } catch (err: any) {
@@ -287,7 +287,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Featured Image</label>
-              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into a 4:5 frame.</p>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1920 × 1080 px (16:9 landscape). Other ratios are auto-fitted into a 16:9 frame.</p>
               <input ref={featuredInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && handleFeaturedFiles(e.target.files)} />
               {!form.featuredImage ? (
                 <div
@@ -321,7 +321,7 @@ export default function BlogPostForm({ initialData, mode }: Props) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Gallery Images</label>
-              <p className="text-xs text-gray-400 mb-3">Recommended: 1080 × 1350 px (4:5 portrait). Other ratios are auto-fitted into 4:5 frames.</p>
+              <p className="text-xs text-gray-400 mb-3">Recommended: 1920 × 1080 px (16:9 landscape). Other ratios are auto-fitted into 16:9 frames.</p>
               <input ref={galleryInputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => e.target.files && handleGalleryFiles(e.target.files)} />
               <button type="button" onClick={() => galleryInputRef.current?.click()} disabled={uploadingGallery}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium hover:bg-gray-50 disabled:opacity-50">
